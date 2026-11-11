@@ -15,6 +15,11 @@ icons.mkdir(exist_ok=True)
 for source in (ROOT / "apps" / "web" / "public" / "icons").glob("*.svg"):
     shutil.copy2(source, icons / source.name)
 
+challenges = []
+for name in ("javascript.json", "advanced.json"):
+    challenges.extend(json.loads((ROOT / "content" / "challenges" / name).read_text(encoding="utf-8")))
+(DEST / "challenges.json").write_text(json.dumps(challenges), encoding="utf-8")
+
 def slug(text: str) -> str:
     return re.sub(r"(^-|-$)", "", re.sub(r"[^a-z0-9]+", "-", text.lower()))[:60]
 
@@ -27,4 +32,4 @@ for source in (ROOT / "content" / "lessons").glob("*/*.json"):
     target.write_text(json.dumps({key: lesson[key] for key in ("explain", "file", "code", "exercise", "tip")}), encoding="utf-8")
     count += 1
 
-print(f"Packaged original UI, {len(list(icons.glob('*.svg')))} logos and {count} lessons")
+print(f"Packaged original UI, {len(list(icons.glob('*.svg')))} logos, {count} lessons and {len(challenges)} challenges")

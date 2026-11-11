@@ -556,9 +556,12 @@ h1{font-size:clamp(46px,8vw,104px)}
 /* course view */
 .ch{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-bottom:28px;margin-bottom:32px;border-bottom:1px solid var(--line)}
 .chm{width:76px;height:76px;flex:none;border-radius:22px;display:grid;place-items:center;background:linear-gradient(145deg,var(--c),color-mix(in srgb,var(--c) 45%,#000));font:800 28px "Bricolage Grotesque",sans-serif;letter-spacing:-.05em;color:#000;text-transform:lowercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
-.chm img{width:52px;height:52px;object-fit:contain}
-.mg{width:88px;height:88px;object-fit:contain;opacity:.17;bottom:7px;right:8px}
-.folder:hover .mg{opacity:.3}
+.chm{background:none;box-shadow:none;border-radius:0}
+.chm img{width:70px;height:70px;object-fit:contain}
+.mg{width:48px;height:48px;object-fit:contain;opacity:1;top:18px;right:17px;bottom:auto;filter:drop-shadow(0 3px 8px #0005)}
+.folder:hover .mg{opacity:1;transform:scale(1.08)}
+.folder[data-id="rust"] .mg,.chm img[src="icons/rust.svg"]{filter:invert(1)}
+@media(max-width:760px){.chm{width:60px;height:60px}.chm img{width:58px;height:58px}}
 .cht{flex:1;min-width:240px}
 .cht .path{font-size:12.5px;margin:0 0 6px}
 .cht h2{margin:0 0 6px;font-size:clamp(34px,5vw,54px);letter-spacing:-.045em;line-height:1}
@@ -645,7 +648,7 @@ h1{font-size:clamp(46px,8vw,104px)}
   <div class="grid" id="grid"></div>
 
   <div class="sec"><h2>Built to actually teach</h2></div>
-  <div class="feat"><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M8 7h8M8 11h6"/></svg></i><h3>Lessons you can use</h3><p>Each lesson has a plain explanation, code you can run, an exercise, and the common mistake to avoid.</p></div><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></i><h3>Tests that actually run</h3><p>Practice challenges run your JavaScript against hidden tests, right here in the page.</p></div><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg></i><h3>A tutor that knows the lessons</h3><p>Ask a question and get an answer grounded in the saved lessons, with real sources to read next.</p></div><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg></i><h3>Review that sticks</h3><p>Questions you miss come back on a schedule, so you remember them next week, not just today.</p></div></div>
+  <div class="feat"><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M8 7h8M8 11h6"/></svg></i><h3>Lessons you can use</h3><p>Each lesson has a plain explanation, code you can run, an exercise, and the common mistake to avoid.</p></div><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-5 4 5 4M16 8h5l-5 4M14 5l-4 14"/></svg></i><h3>Tests that actually run</h3><p>Practice challenges run your JavaScript against browser based tests, right here in the page.</p></div><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg></i><h3>A tutor that knows the lessons</h3><p>Ask a question and get an answer grounded in the saved lessons, with real sources to read next.</p></div><div class="fc"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg></i><h3>Review that sticks</h3><p>Questions you miss come back on a schedule, so you remember them next week, not just today.</p></div></div>
   <div class="sec"><h2 id="wsTitle">Workspace</h2><span class="mono" id="wsMeta"></span></div>
   <div class="ws" id="ws">
     <div class="tree" id="tree"></div>
@@ -659,13 +662,13 @@ h1{font-size:clamp(46px,8vw,104px)}
 <main class="view" id="v-lang"><div class="pg" id="lg"></div></main>
 <main class="view" id="v-tutor"><div class="pg"><div class="path mono">~/devoal/<b>tutor</b></div><h2 class="pt">Tutor</h2><p class="sub">Ask about any language. Type @ to pull a course in and / for commands.</p>
 <div class="dv"><div class="t-col"><div id="thread"><div class="t-empty" id="tempty"><h3>What do you want to learn today?</h3><p>Ask about any concept. Answers come from the saved lessons, with real sources to read next.</p><div class="t-sug"><button>Explain closures in JavaScript</button><button>How do goroutines work in Go?</button><button>What are SQL joins?</button><button>Difference between a list and a dict in Python</button></div></div></div><div id="composer"></div></div><aside id="insights"></aside></div></div></main>
-<main class="view" id="v-practice"><div class="pg"><div class="path mono">~/devoal/<b>practice</b></div><h2 class="pt">Practice</h2><p class="sub">Real JavaScript challenges. Your code runs against hidden tests, right in the browser.</p><div class="prg" id="prg"></div></div></main>
+<main class="view" id="v-practice"><div class="pg"><div class="path mono">~/devoal/<b>practice</b></div><h2 class="pt">Practice</h2><p class="sub">Real JavaScript challenges. Your code runs against browser based tests in an isolated frame.</p><div class="prg" id="prg"></div></div></main>
 <main class="view" id="v-resources"><div class="pg"><div class="path mono">~/devoal/<b>resources</b></div><h2 class="pt">Resources</h2><p class="sub">The best free places to learn each language, straight from the source. Every link goes to the original site.</p><div class="rsg" id="rsg"></div></div></main>
 <main class="view" id="v-roadmap"><div class="pg"><div class="path mono">~/devoal/<b>roadmap</b></div><h2 class="pt">Roadmaps</h2><p class="sub">Five stages per language, in the order that actually works. Pick one and follow it top to bottom.</p><div class="chips" id="rchips"></div><div class="acts" style="margin:-10px 0 26px"><button class="btn off" id="seed">Load available lessons</button><span id="seedst" class="chs"></span></div><ol class="tl" id="tl"></ol><div id="rrs"></div></div></main>
 <main class="view" id="v-play"><div class="pg"><div class="path mono">~/devoal/<b>playground</b></div><h2 class="pt">Playground</h2><p class="sub">Write JavaScript, press Ctrl+Enter, read the console. Nothing leaves your browser.</p>
 <div class="pbar mono"><select id="pre" aria-label="Snippet"></select><span id="pst"></span><button class="btn" id="run">Run</button></div>
 <div class="pw"><div class="pgrid" id="pg"><textarea id="src" class="mono" spellcheck="false" aria-label="Code editor"></textarea><pre id="out" class="mono" aria-live="polite"></pre></div><aside id="ftc"></aside></div></div></main>
-<main class="view" id="v-quiz"><div class="pg"><div class="path mono">~/devoal/<b>quiz</b></div><h2 class="pt">Quiz</h2><p class="sub">Eight questions, instant explanations. Wrong answers teach more than right ones.</p><div class="chips" id="qchips"></div><div class="acts" style="margin:-12px 0 22px"><button class="btn off" id="qgen">Generate new questions</button><span id="qgs" class="chs"></span></div><div class="qbox" id="qbox"></div></div></main>
+<main class="view" id="v-quiz"><div class="pg"><div class="path mono">~/devoal/<b>quiz</b></div><h2 class="pt">Quiz</h2><p class="sub">Eight questions, instant explanations. Wrong answers teach more than right ones.</p><div class="chips" id="qchips"></div><div class="acts" style="margin:-12px 0 22px"><button class="btn off" id="qgen">Start a new round</button><span id="qgs" class="chs"></span></div><div class="qbox" id="qbox"></div></div></main>
 <main class="view" id="v-prog"><div class="pg"><div class="path mono">~/devoal/<b>progress</b></div><h2 class="pt">Progress</h2><div class="dash" id="dash"></div></div></main>
 <footer><div class="fw"><div><b class="fbrand"><img data-logo alt="" width="26" height="26">Devoal</b><p>Built for people who read code at 2 a.m.</p></div><div class="fl"><a href="#courses">Courses</a><a href="#roadmap">Roadmap</a><a href="#tutor">Tutor</a><a href="#prog">Progress</a></div><div class="fb">Built by <span class="hwn">Anshu</span></div></div></footer>
 
@@ -874,7 +877,7 @@ let body;
 if(lgT){const si=stageOf(l,lgT);body=`<div class="les-k mono">Stage ${si} · ${ST[si-1]}</div><h3>${esc(tc(lgT))}</h3><div id="tbody"><div class="skl"><i style="width:92%"></i><i style="width:78%"></i><i style="width:60%"></i><i style="width:100%;height:130px"></i></div></div>`}
 else if(cap)body=`<div class="les-k mono">Capstone</div><h3>Capstone project</h3><p>${PJ[l.id]}</p><div class="try"><b>How to ship it</b>Plan the features on paper first. Build the smallest working version, then add one feature at a time. Push it to GitHub with a README that explains how to run it.</div>`;
 else{const f=l.l[lgI],e=E[l.id][lgI],dn=!!prog[l.id+lgI];
-body=`<div class="les-k mono">Quick start · ${lgI+1} of ${n}</div><h3>${f[1]}</h3><p>${e[0]}</p>${cb(l.id+"/"+f[0],f[2],l.id,lgI)}<div class="try"><b>Try it</b>${e[1]}</div><div class="chk"><textarea id="ans" class="mono" placeholder="Paste your solution to have it checked…" spellcheck="false" aria-label="Your solution"></textarea><div class="acts" style="margin-top:10px"><button class="btn off" id="chkb">Check my answer</button><span id="chks" class="chs"></span></div></div>${rsl(l,f)}<div class="acts" style="margin-top:14px"><button class="btn${dn?" off":""}" id="lmark">${dn?"Mark as not done":"Mark as done"}</button></div>`}
+body=`<div class="les-k mono">Quick start · ${lgI+1} of ${n}</div><h3>${f[1]}</h3><p>${e[0]}</p>${cb(l.id+"/"+f[0],f[2],l.id,lgI)}<div class="try"><b>Try it</b>${e[1]}</div><div class="chk"><textarea id="ans" class="mono" placeholder="Write your solution for self review…" spellcheck="false" aria-label="Your solution"></textarea><div class="acts" style="margin-top:10px"><button class="btn off" id="chkb">Review my approach</button><span id="chks" class="chs"></span></div></div>${rsl(l,f)}<div class="acts" style="margin-top:14px"><button class="btn${dn?" off":""}" id="lmark">${dn?"Mark as not done":"Mark as done"}</button></div>`}
 const lab=x=>x.k==="q"?qn(l.l[x.i]):x.k==="t"?tc(x.t):"Capstone project";
 const pn=`<nav class="pn">${ci>0?`<button class="pnb" data-go="${ci-1}"><span>← Previous</span><b>${esc(lab(sq[ci-1]))}</b></button>`:"<span></span>"}${ci<sq.length-1?`<button class="pnb nx" data-go="${ci+1}"><span>Next →</span><b>${esc(lab(sq[ci+1]))}</b></button>`:""}</nav>`;
 const side=`<div class="sg"><h5>Quick start<span>${dq}/${n}</span></h5>${l.l.map((x,i)=>`<button class="lt${!lgT&&i===lgI?" on":""}${prog[l.id+i]?" done":""}" data-i="${i}"><em>${i+1}</em>${esc(qn(x))}<span class="tk"></span></button>`).join("")}</div>`+R[l.id].map((g,si)=>{const ts=g.split(", "),dn=ts.filter(t=>prog["t:"+l.id+":"+t]).length;return `<div class="sg"><h5>${si+1} · ${ST[si]}<span>${dn}/${ts.length}</span></h5>${ts.map((t,k)=>`<button class="lt${lgT===t?" on":""}${prog["t:"+l.id+":"+t]?" done":""}" data-topic="${esc(t)}"><em>${si+1}.${k+1}</em>${esc(tc(t))}<span class="tk"></span></button>`).join("")}</div>`}).join("")+`<div class="sg"><button class="lt${cap?" on":""}" data-i="${n}"><em>★</em>Capstone project</button></div>`;
@@ -884,14 +887,11 @@ $("lg").innerHTML=`<div class="ch"><div class="chm"><img src="icons/${l.id}.svg"
 if(lgT)fillTopic(l,lgT)}
 async function fillTopic(l,t){const box=$("tbody");if(!box)return;
   try{const r=await genLesson(l,t);if(lgT!==t||lgL!==l||!$("tbody"))return;const dn=!!prog["t:"+l.id+":"+t],b=$("tbody");b.dataset.code=r.code;
-    b.innerHTML=`<p class="lead">${md(r.explain)}</p>${cbPlain(l.id+"/"+r.file,r.code)}<div class="try"><b>Try it</b>${md(r.exercise)}</div><div class="try"><b>Common mistake</b>${md(r.tip)}</div><div class="chk"><textarea id="ans" class="mono" placeholder="Paste your solution to have it checked…" spellcheck="false" aria-label="Your solution"></textarea><div class="acts" style="margin-top:10px"><button class="btn off" id="tchk">Check my answer</button><span id="chks" class="chs"></span></div></div>${resHtml(l,t).replace("Learn it from the source","Go deeper")}<div class="acts" style="margin-top:14px"><button class="btn${dn?" off":""}" id="tmark">${dn?"Learned ✓ (undo)":"Mark as learned"}</button>${PGOK(l,r)?'<button class="btn off" id="tpg">Open in Playground</button>':""}</div>`}
-  catch(e){if(lgT!==t||!$("tbody"))return;$("tbody").innerHTML=(e.message==="nosample"?'<p class="why">This lesson has not been written yet, and writing it needs Claude access. The links below go to the best free sources.</p>':'<p class="why">Could not load this lesson right now.</p>')+resHtml(l,t)}}
-async function checkTopic(){const a=$("ans").value.trim(),st=$("chks"),b=$("tbody");if(a.length<3){st.className="chs";st.textContent="Write your answer first.";return}
-  const sm=await getSampleG();if(!sm){st.className="chs";st.textContent="Checking needs Claude access in this view.";return}
-  const l=lgL,t=lgT;st.className="chs";st.innerHTML='<span class="t-sp"></span>Checking…';
-  try{const les=await genLesson(l,t),r=await sm.json(`You grade a beginner's code. Language: ${l.n}. Topic: ${t}. Task: ${les.exercise}\nReference example from the lesson:\n${les.code}\nStudent answer:\n${a}\nBe fair: different valid approaches pass. Reply ONLY JSON: {"pass":true or false,"feedback":"one sentence","hint":"one sentence, empty if pass"}`,{cache:false,modelTier:"quick"});
-    st.className="chs "+(r.pass?"ok":"no");st.innerHTML=`<b>${r.pass?"✓ Looks right":"✗ Not yet"}</b> ${esc(r.feedback||"")}${!r.pass&&r.hint?`<br><span>Hint: ${esc(r.hint)}</span>`:""}`;
-    if(r.pass){const k="t:"+l.id+":"+t;if(!prog[k]){prog[k]=true;bump();save();toast("Correct · marked as learned")}const o=document.querySelector(".lt.on");if(o)o.classList.add("done")}}catch(e){st.className="chs";st.textContent="Could not check right now."}}
+    b.innerHTML=`<p class="lead">${md(r.explain)}</p>${cbPlain(l.id+"/"+r.file,r.code)}<div class="try"><b>Try it</b>${md(r.exercise)}</div><div class="try"><b>Common mistake</b>${md(r.tip)}</div><div class="chk"><textarea id="ans" class="mono" placeholder="Write your solution for self review…" spellcheck="false" aria-label="Your solution"></textarea><div class="acts" style="margin-top:10px"><button class="btn off" id="tchk">Review my approach</button><span id="chks" class="chs"></span></div></div>${resHtml(l,t).replace("Learn it from the source","Go deeper")}<div class="acts" style="margin-top:14px"><button class="btn${dn?" off":""}" id="tmark">${dn?"Learned ✓ (undo)":"Mark as learned"}</button>${PGOK(l,r)?'<button class="btn off" id="tpg">Open in Playground</button>':""}</div>`}
+  catch(e){if(lgT!==t||!$("tbody"))return;$("tbody").innerHTML='<p class="why">This lesson is being prepared. Use the links below for now.</p>'+resHtml(l,t)}}
+async function checkTopic(){const a=$("ans").value.trim(),st=$("chks");if(a.length<3){st.textContent="Write your answer first.";return}
+  try{const les=await genLesson(lgL,lgT);st.innerHTML=`<b>Self review:</b> ${md(les.tip)} Compare your approach with the example above, then mark the lesson as learned when ready.`}
+  catch(e){st.textContent="The reference lesson could not load. Try again."}}
 function navTo(i){const sq=seqOf(lgL),x=sq[Math.max(0,Math.min(sq.length-1,i))];if(x.k==="t"){lgT=x.t}else{lgT=null;lgI=x.k==="cap"?lgL.l.length:x.i}lgR();const a=document.querySelector(".les");if(a)a.scrollIntoView({block:"start",behavior:"smooth"})}
 const navStep=d=>navTo(curIdx(lgL,seqOf(lgL))+d);
 $("lg").addEventListener("click",e=>{const t=e.target,b=t.closest(".lt");
@@ -967,10 +967,9 @@ async function reply(text){
   m.innerHTML=`<div class="t-ld" role="status">${px()}<span class="t-shm">Churning</span><span class="t-tm" data-t>0.0s</span></div>`;
   const t0=Date.now(),iv=setInterval(()=>{const q=m.querySelector("[data-t]");if(q)q.textContent=((Date.now()-t0)/1000).toFixed(1)+"s"},100);
   await sl(350);clearInterval(iv);m.innerHTML="";
-  const live=!!(await getSampleG());
-  await think(m,[`Matching the closest ${l.n} lesson`,"Loading lesson context",live?"Asking Claude":"Using built-in lesson notes"]);
+  await think(m,[`Matching the closest ${l.n} lesson`,"Loading lesson context","Using saved lesson notes"]);
   await stream(m,l,await groundE(l,e,text),text);
-  if(!live)m.append(mk('<p class="t-note">Built-in lesson notes. Live answers need Claude access, which this view does not have.</p>'))}
+  m.append(mk('<p class="t-note">This guide uses saved lessons. Live Grok answers will be available after the server tutor is deployed.</p>'))}
 const user=t=>{const em=$("tempty");if(em)em.remove();$("thread").append(mk(`<div class="t-user">${esc(t)}</div>`))};
 function approval(){
   const Q=[["Which language first?","r",["Python","JavaScript","Rust"]],["How much time per day?","r",["30 min","1 hour","2+ hours"]],["What do you want to build?","c",["Websites","AI and data","Games"]]],a=[[],[],[]];let qi=0,tm;
@@ -1117,7 +1116,7 @@ async function cloudInit(){try{const db=await window.claude?.use("db"),us=await 
   try{localStorage.setItem("coal-prog",JSON.stringify(prog));localStorage.setItem("dv-st",JSON.stringify(S))}catch(e){}
   await push(true);grid()}catch(e){setSync("Local only","off")}finally{dbOk()}}
 async function board(){const d=$("dash");if(!d)return;const due=Object.values(S.srs||{}).filter(x=>x.d<=Date.now()).length;
-  d.insertAdjacentHTML("beforeend",`<div class="card" style="--d:6"><h4 class="mono">Due for review</h4><div class="big">${due}</div><p class="why mono">Missed questions come back on a schedule.</p><button class="btn off" id="rvw">Review now</button></div><div class="card" style="--d:7"><h4 class="mono">Progress card</h4><p class="why">Download a card you can share.</p><button class="btn" id="shr">Download card</button></div><div class="card wide" id="lb" style="--d:8"><h4 class="mono">Leaderboard</h4><p class="why">${DB?"Loading…":"Open this page signed in to claude.ai to join the leaderboard."}</p></div>`);
+  d.insertAdjacentHTML("beforeend",`<div class="card" style="--d:6"><h4 class="mono">Due for review</h4><div class="big">${due}</div><p class="why mono">Missed questions come back on a schedule.</p><button class="btn off" id="rvw">Review now</button></div><div class="card" style="--d:7"><h4 class="mono">Progress card</h4><p class="why">Download a card you can share.</p><button class="btn" id="shr">Download card</button></div><div class="card wide" id="lb" style="--d:8"><h4 class="mono">${DB?"Leaderboard":"Next milestone"}</h4><p class="why">${DB?"Loading…":allDone()+" of "+allTotal()+" roadmap lessons finished. Continue a course to reach your next milestone."}</p></div>`);
   if(!DB)return;
   try{const q=await DB.collection("board").orderBy("wxp","desc").limit(30).get(),rows=q.docs.map(x=>({id:x.id,...x.data()})).filter(r=>r.wk===wkKey()).slice(0,10);let nm={};try{nm=await UP.profiles(rows.map(r=>r.id))}catch(e){}
     $("lb").innerHTML='<h4 class="mono">Leaderboard · this week</h4>'+(rows.map((r,i)=>`<div class="lr mono"><span style="width:24px">${i+1}</span><span style="flex:1;width:auto">${esc((nm[r.id]&&nm[r.id].name)||"Someone")}${r.id===UID?" (you)":""}</span><span style="width:auto">${r.wxp||0} XP</span></div>`).join("")||'<p class="why">No one yet. You could be first.</p>')}
@@ -1127,19 +1126,15 @@ $("dash").addEventListener("click",async e=>{const t=e.target;if(t.id==="rvw"){q
     try{if(UP){const pr=await UP.profiles([UID]);name=(pr[UID]&&pr[UID].name)||name}}catch(e){}
     const T=(y,sz,c,w,x)=>`<text x="90" y="${y}" fill="${c}" font-family="sans-serif" font-size="${sz}" font-weight="${w}">${esc(x)}</text>`;
     const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#000"/><rect x="40" y="40" width="1120" height="550" rx="28" fill="#0e0e11" stroke="#2a2a31"/>${T(130,28,"#7d7d88",500,"Devoal · built by Anshu")}${T(260,84,"#fff",800,name)}${T(340,34,"#a8a8b2",500,"Level "+(Math.floor(xp/200)+1)+" · "+xp+" XP")}${T(430,40,"#fff",500,dn+" lessons finished · "+S.c+" quiz answers right")}${T(500,30,"#7d7d88",500,"Strongest: "+top.n)}</svg>`;
-    try{const dl=await window.claude?.use("downloads");if(!dl){t.textContent="Not available here";return}await dl.save({filename:"devoal-progress.svg",data:new Blob([svg],{type:"image/svg+xml"})});t.textContent="Saved"}catch(err){t.textContent="Download declined"}}});
+    try{const url=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml"})),link=document.createElement("a");link.href=url;link.download="devoal-progress.svg";document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);t.textContent="Downloaded"}catch(err){t.textContent="Download failed"}}});
 const HIST=[];
 async function liveFill(p,cur,l,e,text){const sm=await getSampleG();if(!sm)return false;
   const ctx=HIST.slice(-6).map(x=>x[0]+": "+x[1]).join("\n");
   try{await sm(`You are Devoal's coding tutor for beginners. Be accurate and concise (max 120 words), plain text, no markdown headings; at most 8 lines of code if needed. If you are not sure, say so. Never invent URLs, APIs or version numbers.\n${e.nf?"Language: "+l.n+".":"Reference lesson: "+l.n+". "+e[0]}\n${ctx?"Conversation so far:\n"+ctx+"\n":""}Student: ${text}`,{cache:false,modelTier:"quick",onText:u=>{p.textContent=u.text;p.append(cur)}});HIST.push(["Student",text],["Tutor",p.textContent.slice(0,600)]);return true}
   catch(err){p.textContent="";p.append(cur);return false}}
 async function checkAns(){const a=$("ans").value.trim(),st=$("chks");if(a.length<3){st.className="chs";st.textContent="Write your answer first.";return}
-  const sm=await getSampleG();if(!sm){st.className="chs";st.textContent="Checking needs Claude access in this view.";return}
-  const l=lgL,i=lgI;st.className="chs";st.innerHTML='<span class="t-sp"></span>Checking…';
-  try{const ref=SOL[l.id][i].split("\n").filter(x=>x[0]!=="-").map(x=>x.slice(1)).join("\n");
-    const r=await sm.json(`You grade a beginner's code. Language: ${l.n}. Task: ${E[l.id][i][1]}\nReference answer:\n${ref}\nStudent answer:\n${a}\nBe fair: different valid approaches pass. Reply ONLY JSON: {"pass":true or false,"feedback":"one sentence","hint":"one sentence, empty if pass"}`,{cache:false,modelTier:"quick"});
-    st.className="chs "+(r.pass?"ok":"no");st.innerHTML=`<b>${r.pass?"✓ Looks right":"✗ Not yet"}</b> ${esc(r.feedback||"")}${!r.pass&&r.hint?`<br><span>Hint: ${esc(r.hint)}</span>`:""}`;
-    if(r.pass){prog[l.id+i]=true;bump();save();toast("Correct · marked as done");const o=document.querySelector(".lt.on");if(o)o.classList.add("done")}}catch(e){st.className="chs";st.textContent="Could not check right now."}}
+  const l=lgL,i=lgI;st.className="chs";
+  st.innerHTML=`<b>Self review:</b> ${md(E[l.id][i][0])} Open the solution tab above to compare your code, then mark the lesson as done when ready.`}
 $("lg").addEventListener("click",e=>{if(e.target.id==="chkb")checkAns()});
 const drw=document.createElement("aside");drw.className="drw";drw.hidden=true;drw.innerHTML='<div class="drh"><b></b><button aria-label="Close">×</button></div><div class="drb"></div>';document.body.append(drw);
 drw.querySelector("button").onclick=()=>drw.hidden=true;addEventListener("keydown",e=>{if(e.key==="Escape")drw.hidden=true});
@@ -1158,13 +1153,7 @@ const DOCDOM={python:"docs.python.org",javascript:"developer.mozilla.org",typesc
 const GEN=[["CS50x: Introduction to Computer Science","https://cs50.harvard.edu/x/","Course"],["The Odin Project","https://www.theodinproject.com/","Course"],["roadmap.sh","https://roadmap.sh/","Roadmaps"],["Exercism","https://exercism.org/","Practice"],["LeetCode","https://leetcode.com/","Practice"],["The Missing Semester of Your CS Education","https://missing.csail.mit.edu/","Course"],["Pro Git (free book)","https://git-scm.com/book","Book"],["Teach Yourself Computer Science","https://teachyourselfcs.com/","Guide"],["MIT OCW: Intro to CS and Programming in Python","https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/","Course"]];
 function resPg(){$("rsg").innerHTML=L.map(l=>`<section class="card rsc" style="--c:${l.c}"><h4 class="mono"><i style="background:${l.c}"></i>${l.n}</h4><div class="rsl">${RES[l.id].map(r=>`<a href="${r[1]}" target="_blank" rel="noreferrer"><span>${esc(r[0])}</span><i>${r[2]}</i></a>`).join("")}</div></section>`).join("")+`<section class="card rsc wide"><h4 class="mono">Beyond one language</h4><div class="rsl rsw">${GEN.map(r=>`<a href="${r[1]}" target="_blank" rel="noreferrer"><span>${esc(r[0])}</span><i>${r[2]}</i></a>`).join("")}</div></section>`}
 try{JSON.parse(localStorage.getItem("dv-gq")||"[]").forEach(q=>Q.push(q))}catch(e){}
-async function genQuiz(){const st=$("qgs");if(qf==="all"){st.textContent="Pick a language first.";return}const l=L.find(x=>x.id===qf),sm=await getSampleG();if(!sm){st.textContent="Needs Claude access in this view.";return}
-  st.innerHTML='<span class="t-sp"></span>Writing questions…';
-  try{const r=await sm.json(`Write 6 accurate multiple-choice questions for a beginner learning ${l.n}. Vary the topics. Each has exactly 4 options and exactly one correct answer. Reply ONLY JSON: {"questions":[{"q":"...","opts":["","","",""],"a":0,"why":"one sentence"}]}`,{cache:false,modelTier:"quick"});
-    const have=new Set(Q.map(x=>x[1])),add=(r.questions||[]).filter(x=>x&&x.q&&Array.isArray(x.opts)&&x.opts.length===4&&Number.isInteger(x.a)&&x.a>=0&&x.a<4&&!have.has(x.q)).map(x=>[l.id,String(x.q),x.opts.map(String),x.a,String(x.why||"")]);
-    add.forEach(q=>Q.push(q));try{const g=JSON.parse(localStorage.getItem("dv-gq")||"[]");localStorage.setItem("dv-gq",JSON.stringify(g.concat(add)))}catch(e){}
-    st.textContent=add.length+" new questions added.";qstart()}catch(e){st.textContent="Could not write questions right now."}}
-$("qgen").onclick=genQuiz;
+$("qgen").onclick=()=>{qstart();$("qgs").textContent="New round ready."};
 const slug=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
 const resHtml=(l,t)=>{const dom=DOCDOM[l.id];return `<div class="rsl"><b>Learn it from the source</b><a href="https://duckduckgo.com/?q=${encodeURIComponent("site:"+dom+" "+t)}" target="_blank" rel="noreferrer"><span>Search the official docs</span><i>${dom}</i></a>${RES[l.id].slice(0,3).map(r=>`<a href="${r[1]}" target="_blank" rel="noreferrer"><span>${esc(r[0])}</span><i>${r[2]}</i></a>`).join("")}</div>`};
 const rsl=(l,f)=>resHtml(l,f[1].replace(/\.$/,"")).replace("Learn it from the source","Go deeper");
@@ -1210,7 +1199,7 @@ function bump(){const d=new Date().toDateString();S.day=S.day&&S.day.d===d?S.day
 function heat(){const d=$("dash");if(!d)return;const h=S.hist||{},t=new Date();t.setHours(0,0,0,0);const st=new Date(t);st.setDate(st.getDate()-83);let cells="<i style=\"visibility:hidden\"></i>".repeat(st.getDay()),tot=0;
   for(let i=0;i<84;i++){const x=new Date(st);x.setDate(st.getDate()+i);const n=h[ymd(x)]||0;tot+=n;cells+=`<i data-l="${n===0?0:n===1?1:n<4?2:n<7?3:4}" title="${ymd(x)}: ${n}"></i>`}
   d.insertAdjacentHTML("beforeend",`<div class="card wide" style="--d:9"><h4 class="mono">Activity · last 12 weeks</h4><div class="hm">${cells}</div><p class="why mono">${tot} ${tot===1?"action":"actions"} · ${sk.n||1} day streak</p></div>`)}
-const CH=[
+let CH=[
 {i:"sum",n:"Sum an array",v:"Easy",f:"sum",p:"Return the sum of all numbers in the array. An empty array sums to 0.",s:"function sum(nums) {\n  // your code\n}",k:[[[[1,2,3]],6],[[[]],0],[[[-1,1,5]],5]]},
 {i:"reverse",n:"Reverse a string",v:"Easy",f:"reverse",p:"Return the string written backwards.",s:"function reverse(str) {\n  // your code\n}",k:[[["abc"],"cba"],[[""],""],[["Devoal"],"laoveD"]]},
 {i:"capitalize",n:"Capitalize words",v:"Easy",f:"capitalize",p:"Capitalize the first letter of every word. Words are separated by single spaces.",s:"function capitalize(s) {\n  // your code\n}",k:[[["hello world"],"Hello World"],[["a"],"A"],[[""],""]]},
@@ -1223,19 +1212,35 @@ const CH=[
 {i:"countwords",n:"Count words",v:"Medium",f:"countWords",p:"Return an object with how many times each word appears. Words are separated by spaces. An empty string gives an empty object.",s:"function countWords(text) {\n  // your code\n}",k:[[["the cat the dog"],{the:2,cat:1,dog:1}],[[""],{}],[["go go go"],{go:3}]]},
 {i:"twosum",n:"Two sum",v:"Medium",f:"twoSum",p:"Return the indices of the two numbers that add up to the target, smaller index first. Exactly one pair exists.",s:"function twoSum(nums, target) {\n  // your code\n}",k:[[[[2,7,11,15],9],[0,1]],[[[3,2,4],6],[1,2]],[[[3,3],6],[0,1]]]},
 {i:"groupby",n:"Group by length",v:"Medium",f:"groupByLength",p:"Return an object whose keys are word lengths and whose values are arrays of the words with that length, in original order.",s:"function groupByLength(words) {\n  // your code\n}",k:[[[["a","bb","cc"]],{"1":["a"],"2":["bb","cc"]}],[[[]],{}],[[["abc","d"]],{"1":["d"],"3":["abc"]}]]}];
-let pc=CH[0],pcode={};
+let pc=CH[0],pcode={};try{pcode=JSON.parse(localStorage.getItem("dv-practice-code")||"{}")||{}}catch(e){}
+async function loadChallenges(){try{const response=await fetch("challenges.json");if(!response.ok)return;const data=await response.json();if(!Array.isArray(data)||!data.length)return;CH=data.map(c=>({i:c.id,n:c.title,v:c.level,f:c.function,p:c.prompt,s:c.starter,k:c.tests.map(t=>[t.args,t.expected])}));pc=CH.find(c=>c.i===pc.i)||CH[0];if(location.hash==="#practice")prac()}catch(e){}}
+const savePracticeCode=()=>{try{localStorage.setItem("dv-practice-code",JSON.stringify(pcode))}catch(e){}};
 function prac(){const done=c=>prog["c:"+c.i];
   $("prg").innerHTML=`<div class="side">${CH.map((c,i)=>`<button class="lt${c===pc?" on":""}${done(c)?" done":""}" data-i="${i}"><em>${i+1}</em>${c.n}<span class="tk"></span></button>`).join("")}</div><article class="les"><h3>${pc.n}<span class="lv">${pc.v}</span></h3><p>${pc.p}</p><div class="chk" style="margin-top:18px"><textarea id="pcode" class="mono" spellcheck="false" aria-label="Your code" style="min-height:170px">${esc(pcode[pc.i]??pc.s)}</textarea></div><div class="acts" style="margin-top:12px"><button class="btn" id="prun">Run tests</button><button class="btn off" id="prst">Reset</button></div><div id="pres"></div></article>`}
-function runTests(c,code){let fn;try{fn=new Function(code+"\nreturn typeof "+c.f+"==='function'?"+c.f+":null;")()}catch(e){return{err:e instanceof EvalError?"This host blocks running code, so tests cannot run here.":e.name+": "+e.message}}
-  if(!fn)return{err:"Define a function named "+c.f+"."};
-  return{rows:c.k.map(([a,x])=>{let g,ok=false;try{g=fn(...JSON.parse(JSON.stringify(a)));ok=JSON.stringify(g)===JSON.stringify(x)}catch(e){g="Error: "+e.message}return{a,x,g,ok}})}}
-$("prg").addEventListener("click",e=>{const t=e.target,b=t.closest(".lt");
-  if(b){pcode[pc.i]=$("pcode")?.value??pcode[pc.i];pc=CH[+b.dataset.i];prac();return}
-  if(t.id==="prst"){delete pcode[pc.i];prac();return}
-  if(t.id==="prun"){const code=$("pcode").value;pcode[pc.i]=code;const r=runTests(pc,code),o=$("pres"),sh=a=>JSON.stringify(a)??"undefined";
+function runTests(c,code){return new Promise(resolve=>{
+  const frame=document.createElement("iframe"),token=Math.random().toString(36).slice(2);
+  frame.setAttribute("sandbox","allow-scripts");frame.setAttribute("aria-hidden","true");frame.style.display="none";
+  let finished=false;const done=result=>{if(finished)return;finished=true;clearTimeout(timer);removeEventListener("message",receive);frame.remove();resolve(result)};
+  const receive=e=>{if(e.source===frame.contentWindow&&e.data?.token===token)done(e.data.result)};
+  let timer=setTimeout(()=>done({err:"Practice runner could not start."}),8000);
+  addEventListener("message",receive);
+  frame.srcdoc=`<!doctype html><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; form-action 'none'"><script>
+  addEventListener('message',async e=>{const {token,code,name,tests}=e.data;let result;
+    try{const fn=new Function(code+'\\nreturn typeof '+name+'===\"function\"?'+name+':null;')();
+      if(!fn)throw new Error('Define a function named '+name+'.');
+      result={rows:[]};for(const [a,x] of tests){try{const actual=await fn(...JSON.parse(JSON.stringify(a))),got=JSON.stringify(actual),ok=got===JSON.stringify(x);result.rows.push({a,x,g:got===undefined?'undefined':JSON.parse(got),ok})}catch(error){result.rows.push({a,x,g:'Error: '+error.message,ok:false})}}
+    }catch(error){result={err:error.name+': '+error.message}}
+    parent.postMessage({token,result},'*')});<\/script>`;
+  frame.addEventListener("load",()=>{clearTimeout(timer);timer=setTimeout(()=>done({err:"Time limit exceeded (3 seconds). Check for an infinite loop."}),3000);frame.contentWindow?.postMessage({token,code,name:c.f,tests:c.k},"*")},{once:true});
+  document.body.append(frame)
+})}
+$("prg").addEventListener("click",async e=>{const t=e.target,b=t.closest(".lt");
+  if(b){pcode[pc.i]=$("pcode")?.value??pcode[pc.i];savePracticeCode();pc=CH[+b.dataset.i];prac();return}
+  if(t.id==="prst"){delete pcode[pc.i];savePracticeCode();prac();return}
+  if(t.id==="prun"){const current=pc,code=$("pcode").value;pcode[current.i]=code;savePracticeCode();const o=$("pres");o.textContent="Running tests…";t.disabled=true;const r=await runTests(current,code),sh=a=>JSON.stringify(a)??"undefined";t.disabled=false;if(pc!==current)return;
     if(r.err){o.innerHTML=`<div class="tbn no">${esc(r.err)}</div>`;return}
     const n=r.rows.filter(x=>x.ok).length;
-    o.innerHTML=`<div class="tres">${r.rows.map((x,i)=>i<2?`<div class="tr2 ${x.ok?"ok":"no"}" style="animation-delay:${i*70}ms"><b>${x.ok?"✓":"✗"}</b><code>${esc(pc.f+"("+x.a.map(sh).join(", ")+")")}</code><span>${x.ok?"":"expected "+esc(sh(x.x))+", got "+esc(sh(x.g))}</span></div>`:`<div class="tr2 ${x.ok?"ok":"no"}" style="animation-delay:${i*70}ms"><b>${x.ok?"✓":"✗"}</b><code>Hidden test ${i-1}</code><span>${x.ok?"":"failed"}</span></div>`).join("")}</div><div class="tbn ${n===r.rows.length?"ok":"no"}">${n===r.rows.length?"All tests passed. +30 XP":n+" of "+r.rows.length+" passed"}</div>`;
+    o.innerHTML=`<div class="tres">${r.rows.map((x,i)=>i<2?`<div class="tr2 ${x.ok?"ok":"no"}" style="animation-delay:${i*70}ms"><b>${x.ok?"✓":"✗"}</b><code>${esc(pc.f+"("+x.a.map(sh).join(", ")+")")}</code><span>${x.ok?"":"expected "+esc(sh(x.x))+", got "+esc(sh(x.g))}</span></div>`:`<div class="tr2 ${x.ok?"ok":"no"}" style="animation-delay:${i*70}ms"><b>${x.ok?"✓":"✗"}</b><code>Additional test ${i-1}</code><span>${x.ok?"":"failed"}</span></div>`).join("")}</div><div class="tbn ${n===r.rows.length?"ok":"no"}">${n===r.rows.length?"All tests passed. +30 XP":n+" of "+r.rows.length+" passed"}</div>`;
     if(n===r.rows.length&&!prog["c:"+pc.i]){prog["c:"+pc.i]=true;bump();save();toast("All tests passed · +30 XP");const on=document.querySelector(".prg .lt.on");if(on)on.classList.add("done")}}});
 $("prg").addEventListener("keydown",e=>{if(e.target.id==="pcode"&&e.key==="Tab"){e.preventDefault();const t=e.target,a=t.selectionStart;t.value=t.value.slice(0,a)+"  "+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=a+2}if(e.target.id==="pcode"&&(e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();$("prun").click()}});
 function today(){const e=$("today");if(!e)return;const d=new Date().toDateString(),n=S.day&&S.day.d===d?S.day.n:0,g=S.goal||2,due=Object.values(S.srs||{}).filter(x=>x.d<=Date.now()).length,C=2*Math.PI*18,l=L.find(x=>x.id===(S.pl&&S.pl.lang))||L[0];let i=l.l.findIndex((_,k)=>!prog[l.id+k]);if(i<0)i=0;
@@ -1262,7 +1267,7 @@ $("bsearch").onclick=()=>$("kbtn").click();
   (async function loop(){while(true){const code=show();for(let i=1;i<=code.length;i++){box.innerHTML=hl(code.slice(0,i));await new Promise(r=>setTimeout(r,document.hidden?400:22))}await new Promise(r=>setTimeout(r,2600));li++}})()})();
 
 $("thread").addEventListener("click",e=>{const b=e.target.closest(".t-sug button");if(b&&window.tutorAsk)window.tutorAsk(b.textContent)});
-addEventListener("hashchange",go);go();
+addEventListener("hashchange",go);go();loadChallenges();
 </script>
 </body>
 </html>
