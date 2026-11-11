@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+import { AuthProvider } from "@/components/AuthProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><Header />{children}<footer className="site-footer"><span>devoal<span className="brand-dot">.</span></span><span>Learn deeply. Practice deliberately. Build confidently.</span><span>Open source coding education</span></footer></body></html>;
+  return <html lang="en"><body><AuthProvider><Header />{children}<footer className="site-footer"><span>devoal<span className="brand-dot">.</span></span><span>Learn deeply. Practice deliberately. Build confidently.</span><span>Open source coding education</span></footer></AuthProvider></body></html>;
 }

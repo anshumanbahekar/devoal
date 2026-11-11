@@ -13,21 +13,43 @@ export const emptyProgress: Progress = {
   attempts: {}, activity: {}, savedCode: {}, reviews: {},
 };
 const key = "devoal.progress.v1";
+export function normalizeProgress(value: unknown): Progress {
+  const data = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const strings = (item: unknown) => Array.isArray(item) ? item.filter((entry): entry is string => typeof entry === "string") : [];
+  const record = (item: unknown) => item && typeof item === "object" && !Array.isArray(item) ? item as Record<string, unknown> : {};
+  return {
+    name: typeof data.name === "string" ? data.name.slice(0,32) : "Coder",
+    completedLessons: strings(data.completedLessons),
+    solvedProblems: strings(data.solvedProblems),
+    bookmarkedProblems: strings(data.bookmarkedProblems),
+    attempts: Object.fromEntries(Object.entries(record(data.attempts)).filter(([,n]) => typeof n === "number" && Number.isFinite(n))),
+    activity: Object.fromEntries(Object.entries(record(data.activity)).filter(([,n]) => typeof n === "number" && Number.isFinite(n))),
+    savedCode: Object.fromEntries(Object.entries(record(data.savedCode)).filter(([,code]) => typeof code === "string")),
+    reviews: Object.fromEntries(Object.entries(record(data.reviews)).filter(([,review]) => review && typeof review === "object" && typeof (review as {due?:unknown}).due === "string")),
+  } as Progress;
+}
 export function readProgress(): Progress {
   if (typeof window === "undefined") return emptyProgress;
   try {
-    const value = JSON.parse(localStorage.getItem(key) || "{}");
-    return {
-      name: typeof value.name === "string" ? value.name : "Coder",
-      completedLessons: Array.isArray(value.completedLessons) ? value.completedLessons : [],
-      solvedProblems: Array.isArray(value.solvedProblems) ? value.solvedProblems : [],
-      bookmarkedProblems: Array.isArray(value.bookmarkedProblems) ? value.bookmarkedProblems : [],
-      attempts: value.attempts && typeof value.attempts === "object" ? value.attempts : {},
-      activity: value.activity && typeof value.activity === "object" ? value.activity : {},
-      savedCode: value.savedCode && typeof value.savedCode === "object" ? value.savedCode : {},
-      reviews: value.reviews && typeof value.reviews === "object" ? value.reviews : {},
-    };
+    return normalizeProgress(JSON.parse(localStorage.getItem(key) || "{}"));
   } catch { return emptyProgress; }
+}
+export function mergeProgress(local: Progress, remote: Progress): Progress {
+  const maxRecord = (a: Record<string,number>, b: Record<string,number>) => Object.fromEntries([...new Set([...Object.keys(a),...Object.keys(b)])].map(id=>[id,Math.max(a[id]||0,b[id]||0)]));
+  const reviews = { ...remote.reviews, ...local.reviews };
+  for (const [id, review] of Object.entries(remote.reviews)) {
+    if ((review.attempts||0) > (local.reviews[id]?.attempts||0)) reviews[id] = review;
+  }
+  return {
+    name: local.name !== "Coder" ? local.name : remote.name,
+    completedLessons: [...new Set([...remote.completedLessons,...local.completedLessons])],
+    solvedProblems: [...new Set([...remote.solvedProblems,...local.solvedProblems])],
+    bookmarkedProblems: [...new Set([...remote.bookmarkedProblems,...local.bookmarkedProblems])],
+    attempts: maxRecord(local.attempts,remote.attempts),
+    activity: maxRecord(local.activity,remote.activity),
+    savedCode: { ...remote.savedCode, ...local.savedCode },
+    reviews,
+  };
 }
 export function answerReview(current: Progress, id: string, correct: boolean): Progress {
   const previous = current.reviews[id];

@@ -7,6 +7,6 @@ const logos: Record<string, string> = {
 
 export function LanguageLogo({ id, name }: { id: string; name: string }) {
   return <span className={`language-icon ${id === "rust" ? "rust-logo" : ""}`} aria-hidden="true">
-    <Image src={`/icons/${logos[id] || id}.svg`} alt="" width={30} height={30} title={id === "sql" ? "PostgreSQL" : name} />
+    <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/icons/${logos[id] || id}.svg`} alt="" width={30} height={30} title={id === "sql" ? "PostgreSQL" : name} />
   </span>;
 }

@@ -5,6 +5,8 @@ and review that brings back what you forgot. Eight languages, five-stage roadmap
 
 > **Status: early.** The content layer is real and tested. A working web app now covers learning paths, JavaScript practice, resources, and a local progress profile. See [apps/web/README.md](apps/web/README.md) for the current scope.
 
+The [public site](https://anshumanbahekar.github.io/devoal/) is built from `apps/web` on every push to `main`.
+
 ## What's here today
 
 | Area | State |

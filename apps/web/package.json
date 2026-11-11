@@ -5,10 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "node scripts/build-pages.mjs",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@firebase/app": "^0.16.5",
+    "@firebase/auth": "^1.13.9",
+    "@firebase/firestore": "^4.19.1",
     "next": "^16.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

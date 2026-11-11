@@ -12,7 +12,8 @@ Each phase ends with something a learner can use. Checkboxes are the real tasks.
 - [x] Pages: home, course (sidebar of stages and topics), lesson, roadmap, resources
 - [x] Progress in localStorage
 - [ ] Persist progress through a `lib/store` interface for future account sync
-- [ ] Deploy to Vercel with preview deployments
+- [x] Deploy the static learning app to GitHub Pages
+- [ ] Deploy the Grok API on a server host and enable it on the public site
 - [ ] Port the visual design from `apps/prototype`
 - **Done when:** a stranger can open the site and finish a Python lesson with no account.
 
