@@ -3,7 +3,7 @@
 An open-source platform for learning to code properly: short lessons you can run, exercises that are checked, a tutor grounded in the lessons,
 and review that brings back what you forgot. Eight languages, five-stage roadmaps, all free.
 
-> **Status: early.** The content layer is real and tested. The full web app is being built (see [docs/ROADMAP.md](docs/ROADMAP.md)).
+> **Status: early.** The content layer is real and tested. A working web app now covers learning paths, JavaScript practice, resources, and a local progress profile. See [apps/web/README.md](apps/web/README.md) for the current scope.
 
 ## What's here today
 
@@ -12,10 +12,12 @@ and review that brings back what you forgot. Eight languages, five-stage roadmap
 | Lessons | **116** across Python, JavaScript, TypeScript, SQL, Go and Java |
 | Needed | **41** lessons: all of **C++** (20) and **Rust** (21). Great first contributions. |
 | Quick-start lessons | 4 per language, each with a starter-to-solution diff |
-| Practice | 12 JavaScript challenges with hidden tests |
+| Practice | 20 JavaScript challenges with browser-run tests |
 | Quiz | 12 starter questions (more wanted) |
+| Review | Quiz answers scheduled for recall in the web app |
 | Roadmaps | 5 stages per language, with curated official resources |
-| Prototype | `apps/prototype/`, the single-file design prototype |
+| Web app | `apps/web/`, the working Next.js interface |
+| Prototype | `apps/prototype/`, the earlier single-file design reference |
 
 ### How the lessons were made (read this)
 
@@ -44,7 +46,8 @@ content/
   resources/<language>.json         official docs, courses, practice sites
   challenges/ quiz/ schema/         practice tests, quiz bank, JSON schema
 tools/        validate.py, verify.py
-apps/         the web app lives here (prototype for now)
+apps/web/     Next.js learning and practice app
+apps/prototype/  earlier design reference
 docs/         ARCHITECTURE.md, ROADMAP.md
 ```
 

@@ -21,7 +21,7 @@ Goal: a real coding-education platform that anyone can run, fork and improve, wi
 | Python runner | Pyodide (WebAssembly) | Real CPython in the browser |
 | SQL runner | sql.js (SQLite in WebAssembly) | Real SQL engine in the browser |
 | Go, Java, C++, Rust runner | Self-hosted Judge0 CE or Piston in Docker, added later | Compiled languages need a server-side sandbox |
-| Tutor | Server route calling Groq or Anthropic, with retrieval over `content/` | Answers cite saved lessons. Rate-limited per user. No learner code is stored |
+| Tutor | Server route calling Grok through the xAI Responses API | Uses the current lesson or problem context. The API key remains server-side; account-based rate limiting and citation retrieval remain planned |
 
 ## Data model (Firestore, v1)
 
