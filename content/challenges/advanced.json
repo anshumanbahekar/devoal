@@ -1,0 +1,97 @@
+[
+  {
+    "id": "trap-water", "title": "Trapping rain water", "level": "Hard", "topic": "Two pointers",
+    "function": "trapWater",
+    "prompt": "Given non-negative bar heights of width 1, return how many units of rain water can be trapped between the bars.",
+    "starter": "function trapWater(heights) {\n  // Find the water above each position.\n}",
+    "tests": [
+      {"args": [[0,1,0,2,1,0,1,3,2,1,2,1]], "expected": 6},
+      {"args": [[4,2,0,3,2,5]], "expected": 9},
+      {"args": [[1,2,3]], "expected": 0},
+      {"args": [[]], "expected": 0}
+    ]
+  },
+  {
+    "id": "edit-distance", "title": "Edit distance", "level": "Hard", "topic": "Dynamic programming",
+    "function": "editDistance",
+    "prompt": "Return the minimum number of insertions, deletions, and replacements needed to turn word a into word b.",
+    "starter": "function editDistance(a, b) {\n  // Consider the best answer for each pair of prefixes.\n}",
+    "tests": [
+      {"args": ["horse", "ros"], "expected": 3},
+      {"args": ["intention", "execution"], "expected": 5},
+      {"args": ["", "abc"], "expected": 3},
+      {"args": ["same", "same"], "expected": 0}
+    ]
+  },
+  {
+    "id": "longest-valid-parentheses", "title": "Longest valid parentheses", "level": "Hard", "topic": "Stacks",
+    "function": "longestValidParentheses",
+    "prompt": "Given a string containing only '(' and ')', return the length of its longest contiguous valid parentheses substring.",
+    "starter": "function longestValidParentheses(s) {\n  // Track where a valid substring can start.\n}",
+    "tests": [
+      {"args": ["(()"], "expected": 2},
+      {"args": [")()())"], "expected": 4},
+      {"args": [""], "expected": 0},
+      {"args": ["()(())"], "expected": 6}
+    ]
+  },
+  {
+    "id": "median-sorted-arrays", "title": "Median of two sorted arrays", "level": "Hard", "topic": "Binary search",
+    "function": "medianSortedArrays",
+    "prompt": "Given two sorted numeric arrays, return the median of their combined values. At least one array is non-empty. Aim for logarithmic time.",
+    "starter": "function medianSortedArrays(a, b) {\n  // A partition can split the combined values in half.\n}",
+    "tests": [
+      {"args": [[1,3], [2]], "expected": 2},
+      {"args": [[1,2], [3,4]], "expected": 2.5},
+      {"args": [[], [7]], "expected": 7},
+      {"args": [[0,0], [0,0]], "expected": 0}
+    ]
+  },
+  {
+    "id": "minimum-window", "title": "Minimum window substring", "level": "Hard", "topic": "Sliding window",
+    "function": "minimumWindow",
+    "prompt": "Return the shortest substring of s that contains every character of t with the required frequency. Return an empty string if no such substring exists.",
+    "starter": "function minimumWindow(s, t) {\n  // Grow and shrink a window while tracking character counts.\n}",
+    "tests": [
+      {"args": ["ADOBECODEBANC", "ABC"], "expected": "BANC"},
+      {"args": ["a", "a"], "expected": "a"},
+      {"args": ["a", "aa"], "expected": ""},
+      {"args": ["AAABBC", "AABC"], "expected": "AABBC"}
+    ]
+  },
+  {
+    "id": "merge-k-arrays", "title": "Merge K sorted arrays", "level": "Hard", "topic": "Heaps",
+    "function": "mergeKArrays",
+    "prompt": "Merge an array of individually sorted numeric arrays into one sorted array. Handle empty inner arrays and duplicate values.",
+    "starter": "function mergeKArrays(arrays) {\n  // A min-heap can track the next value from each array.\n}",
+    "tests": [
+      {"args": [[[1,4,5],[1,3,4],[2,6]]], "expected": [1,1,2,3,4,4,5,6]},
+      {"args": [[[],[]]], "expected": []},
+      {"args": [[[-3,2],[0,2,9]]], "expected": [-3,0,2,2,9]},
+      {"args": [[]], "expected": []}
+    ]
+  },
+  {
+    "id": "word-ladder", "title": "Word ladder", "level": "Hard", "topic": "Graph search",
+    "function": "wordLadder",
+    "prompt": "Return the number of words in the shortest transformation sequence from begin to end. Change one letter at a time; every new word must be in the word list. Return 0 if impossible.",
+    "starter": "function wordLadder(begin, end, words) {\n  // Search the graph of one-letter transformations.\n}",
+    "tests": [
+      {"args": ["hit", "cog", ["hot","dot","dog","lot","log","cog"]], "expected": 5},
+      {"args": ["hit", "cog", ["hot","dot","dog","lot","log"]], "expected": 0},
+      {"args": ["a", "c", ["a","b","c"]], "expected": 2}
+    ]
+  },
+  {
+    "id": "maximal-rectangle", "title": "Maximal rectangle", "level": "Hard", "topic": "Monotonic stack",
+    "function": "maximalRectangle",
+    "prompt": "Given a grid of '0' and '1' strings, return the area of the largest rectangle containing only '1' cells.",
+    "starter": "function maximalRectangle(grid) {\n  // Each row can extend a histogram of consecutive ones.\n}",
+    "tests": [
+      {"args": [[ ["1","0","1","0","0"], ["1","0","1","1","1"], ["1","1","1","1","1"], ["1","0","0","1","0"] ]], "expected": 6},
+      {"args": [[ ["0"] ]], "expected": 0},
+      {"args": [[ ["1"] ]], "expected": 1},
+      {"args": [[]], "expected": 0}
+    ]
+  }
+]

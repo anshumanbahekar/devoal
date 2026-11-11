@@ -1,0 +1,12 @@
+"use client";
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import type { Challenge } from "@/lib/content";
+import { useProgress } from "./ProgressClient";
+
+export function ProblemList({challenges}:{challenges:Challenge[]}){
+  const [level,setLevel]=useState("All");const [topic,setTopic]=useState("All topics");const [search,setSearch]=useState("");const progress=useProgress();
+  const topics=useMemo(()=>["All topics",...new Set(challenges.map(c=>c.topic||"Fundamentals"))],[challenges]);
+  const filtered=useMemo(()=>challenges.filter(c=>(level==="All"||level===c.level||level==="Solved"&&progress.solvedProblems.includes(c.id)||level==="Saved"&&progress.bookmarkedProblems.includes(c.id))&&(topic==="All topics"||topic===c.topic)&&(c.title.toLowerCase().includes(search.toLowerCase())||c.prompt.toLowerCase().includes(search.toLowerCase()))),[challenges,level,topic,search,progress.solvedProblems,progress.bookmarkedProblems]);
+  return <div style={{paddingBottom:80}}><div className="filter-row" role="group" aria-label="Filter problems">{["All","Easy","Medium","Hard","Solved","Saved"].map(item=><button key={item} className={`filter-pill ${level===item?"active":""}`} onClick={()=>setLevel(item)}>{item}</button>)}<select className="input" aria-label="Filter by topic" value={topic} onChange={e=>setTopic(e.target.value)}>{topics.map(item=><option key={item}>{item}</option>)}</select><input className="input" style={{marginLeft:"auto"}} placeholder="Search problems..." aria-label="Search problems" value={search} onChange={e=>setSearch(e.target.value)}/></div><div className="data-list"><div className="data-head"><span>#</span><span>PROBLEM</span><span>DIFFICULTY</span><span>STATUS</span></div>{filtered.map(c=><Link href={`/practice/${c.id}`} key={c.id} className="data-row"><span className="number">{String(challenges.indexOf(c)+1).padStart(2,"0")}</span><span><strong>{c.title}</strong><small>{c.topic} · {c.prompt}</small></span><span><span className={`tag ${c.level.toLowerCase()}`}>{c.level}</span></span><span className={`status ${progress.solvedProblems.includes(c.id)?"solved":""}`}>{progress.solvedProblems.includes(c.id)?"✓ Solved":progress.attempts[c.id]?"Attempted":progress.bookmarkedProblems.includes(c.id)?"★ Saved":"Not started"}</span></Link>)}{!filtered.length&&<div className="empty-state">No problems match this filter.</div>}</div></div>;
+}
