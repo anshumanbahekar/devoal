@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/modules",
+  "language": "java",
+  "topic": "modules",
+  "title": "Modules",
+  "stage": 4,
+  "order": 4,
+  "explain": "A module is a named group of packages, declared in a `module-info.java` file at the root of its source. `requires` lists the modules you depend on, and `exports` lists the packages other modules may use. Modules make dependencies explicit, though many applications still run fine on the classpath.",
+  "file": "module-info.java",
+  "code": "// src/com.example.app/module-info.java\nmodule com.example.app {\n    requires java.net.http;\n    exports com.example.app.api;\n}\n\n// src/com.example.app/com/example/app/api/Greeter.java\npackage com.example.app.api;\n\npublic class Greeter {\n    public static String hello() { return \"hello from a module\"; }\n    public static void main(String[] args) { System.out.println(hello()); }\n}",
+  "exercise": "Split a small app into two modules, with one module exporting a package that the other requires.",
+  "tip": "Code in a package that is not exported is hidden from other modules, even when its classes are public.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

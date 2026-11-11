@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/testing",
+  "language": "go",
+  "topic": "testing",
+  "title": "Testing",
+  "stage": 3,
+  "order": 3,
+  "explain": "Go has testing built in. Put tests in files ending in `_test.go`, name each one `TestSomething`, and run them all with `go test`. A test fails when it calls `t.Errorf` or `t.Fatal`.",
+  "file": "main_test.go",
+  "code": "// main.go\npackage main\n\nfunc Add(a, b int) int { return a + b }\n\n// main_test.go\npackage main\n\nimport \"testing\"\n\nfunc TestAdd(t *testing.T) {\n\tif got := Add(2, 3); got != 5 {\n\t\tt.Errorf(\"Add(2, 3) = %d, want 5\", got)\n\t}\n}",
+  "exercise": "Write a table-driven test for `Add` with at least four cases, including negative numbers.",
+  "tip": "Table-driven tests keep many cases short. Loop over a slice of inputs and expected results instead of copying the test.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

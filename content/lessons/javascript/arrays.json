@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/arrays",
+  "language": "javascript",
+  "topic": "Arrays",
+  "title": "Arrays",
+  "stage": 2,
+  "order": 1,
+  "explain": "Arrays are lists that store multiple values in a single variable, with each item accessible by its position (called an index, starting at 0). You can create arrays using square brackets like [1, 2, 3], and access items using array[0], array[1], etc. Arrays have useful methods like .push() to add items, .pop() to remove the last item, and .length to find how many items are inside.",
+  "file": "arrays-intro.js",
+  "code": "// Creating arrays\nconst fruits = ['apple', 'banana', 'orange'];\n\n// Accessing items by index\nconsole.log(fruits[0]); // 'apple'\nconsole.log(fruits[2]); // 'orange'\n\n// Adding and removing items\nfruits.push('grape');\nfruits.pop();\n\n// Finding the length\nconsole.log(fruits.length); // 3",
+  "exercise": "Create an array of your 3 favorite colors, print the first color, add a new color to the end, and print the total number of colors.",
+  "tip": "Remember that array indexing starts at 0, not 1—so the first item is always array[0], and the last item is array[array.length - 1].",
+  "verify": "node",
+  "review": "unreviewed"
+}

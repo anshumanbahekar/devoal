@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/mapped-types",
+  "language": "typescript",
+  "topic": "mapped types",
+  "title": "Mapped types",
+  "stage": 4,
+  "order": 2,
+  "explain": "A mapped type creates a new type by looping over the keys of another type. `[K in keyof T]` visits each key, and modifiers like `?`, `readonly` and `-readonly` add or remove flags. This is how `Partial`, `Readonly` and `Record` are built.",
+  "file": "mapped_types.ts",
+  "code": "type Flags<T> = { [K in keyof T]: boolean };\ntype Mutable<T> = { -readonly [K in keyof T]: T[K] };\ntype Getters<T> = { [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K] };\n\ninterface User { readonly id: number; name: string }\nconst flags: Flags<User> = { id: true, name: false };\nconst g: Getters<User> = { getId: () => 1, getName: () => \"Ada\" };\nconst m: Mutable<User> = { id: 1, name: \"Ada\" };\nm.id = 2;\nconsole.log(flags, g.getName(), m);",
+  "exercise": "Write `Nullable<T>` that makes every property of `T` accept `null` as well.",
+  "tip": "Mapped types are powerful but hard to read. Add a short comment with an example of the resulting type.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/sync",
+  "language": "go",
+  "topic": "sync",
+  "title": "Sync",
+  "stage": 4,
+  "order": 4,
+  "explain": "When goroutines share a variable, they need protection or they race each other. `sync.Mutex` lets only one goroutine at a time into the code between `Lock` and `Unlock`. Run your program with `go run -race .` to have Go detect data races for you.",
+  "file": "sync.go",
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"sync\"\n)\n\nfunc main() {\n\tvar mu sync.Mutex\n\tvar wg sync.WaitGroup\n\ttotal := 0\n\tfor i := 0; i < 100; i++ {\n\t\twg.Add(1)\n\t\tgo func() {\n\t\t\tdefer wg.Done()\n\t\t\tmu.Lock()\n\t\t\ttotal++\n\t\t\tmu.Unlock()\n\t\t}()\n\t}\n\twg.Wait()\n\tfmt.Println(total)\n}",
+  "exercise": "Remove the mutex, run the program with `go run -race .`, and read the race report.",
+  "tip": "Share memory by communicating when you can. A channel often removes the need for a mutex altogether.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

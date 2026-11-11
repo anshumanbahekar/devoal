@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/interfaces",
+  "language": "java",
+  "topic": "interfaces",
+  "title": "Interfaces",
+  "stage": 2,
+  "order": 3,
+  "explain": "An interface lists methods a class promises to provide, and a class can implement many interfaces. Code that depends on the interface works with any implementation, which makes it easy to swap or test. Since Java 8, interfaces can also carry `default` methods with a body.",
+  "file": "Interfaces.java",
+  "code": "public class Interfaces {\n    interface Shape {\n        double area();\n        default String describe() { return \"area \" + area(); }\n    }\n    static class Square implements Shape {\n        final double side;\n        Square(double side) { this.side = side; }\n        public double area() { return side * side; }\n    }\n    public static void main(String[] args) {\n        Shape s = new Square(3);\n        System.out.println(s.describe());\n    }\n}",
+  "exercise": "Make a `Circle` that implements `Shape` and print both shapes from a `List<Shape>`.",
+  "tip": "Interface methods are public automatically. When you implement one you must write `public` too, or the code won't compile.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

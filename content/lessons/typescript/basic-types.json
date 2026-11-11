@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/basic-types",
+  "language": "typescript",
+  "topic": "Basic types",
+  "title": "Basic types",
+  "stage": 1,
+  "order": 1,
+  "explain": "TypeScript adds types to JavaScript so many mistakes are caught before the code runs. The basic types are `string`, `number`, `boolean`, arrays like `string[]`, and `any`, which turns checking off. Most of the time you can let TypeScript infer the type and only annotate where it cannot.",
+  "file": "types.ts",
+  "code": "let username: string = \"Ada\";\nlet age = 36;                               // inferred as number\nlet tags: string[] = [\"math\", \"code\"];\nlet pair: [string, number] = [\"Ada\", 36];   // tuple\nlet maybe: string | undefined;\n\nage = age + 1;\nconsole.log(username, age, tags, pair, maybe);\n// @ts-expect-error  a string can't go into a number\nage = \"thirty-seven\";",
+  "exercise": "Declare a variable for a score and another for a list of names, then assign the wrong type to each and read the error messages.",
+  "tip": "`any` switches off type checking for that value. Use `unknown` when you really don't know the type, and check it before you use it.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

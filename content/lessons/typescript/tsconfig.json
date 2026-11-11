@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/tsconfig",
+  "language": "typescript",
+  "topic": "tsconfig",
+  "title": "Tsconfig",
+  "stage": 1,
+  "order": 2,
+  "explain": "`tsconfig.json` tells the compiler which files to include and how strict to be. `target` picks the JavaScript version to output, and `strict` turns on the full set of safety checks. Run `npx tsc --init` to generate one with comments explaining each option.",
+  "file": "tsconfig.json",
+  "code": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2022\",\n    \"module\": \"NodeNext\",\n    \"strict\": true,\n    \"rootDir\": \"src\",\n    \"outDir\": \"dist\",\n    \"skipLibCheck\": true\n  },\n  \"include\": [\"src\"]\n}",
+  "exercise": "Create a project with `npx tsc --init`, set `outDir` to `dist`, add a `src/index.ts`, and build it with `npx tsc`.",
+  "tip": "Turning `strict` off to silence errors hides real bugs. Fix the errors instead, one file at a time if you have to.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

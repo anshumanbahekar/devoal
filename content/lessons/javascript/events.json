@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/events",
+  "language": "javascript",
+  "topic": "events",
+  "title": "Events",
+  "stage": 2,
+  "order": 4,
+  "explain": "Events are actions that happen in the browser, like clicks, key presses, or page loads. You can listen for events using addEventListener() and run code when they occur. This lets your web page respond to what users do.",
+  "file": "event-listener.html",
+  "code": "<!DOCTYPE html>\n<html>\n<body>\n<button id=\"myBtn\">Click me</button>\n<p id=\"message\"></p>\n<script>\nconst button = document.getElementById('myBtn');\nbutton.addEventListener('click', function() {\n  document.getElementById('message').textContent = 'Button was clicked!';\n});\n</script>\n</body>\n</html>",
+  "exercise": "Add a second event listener that listens for 'mouseover' on the button and changes the button's background color to yellow.",
+  "tip": "Don't forget the parentheses when calling addEventListener('eventname', function). A common mistake is writing addEventListener without parentheses, which won't work.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "TypeScript Handbook (official)",
+    "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+    "type": "Docs"
+  },
+  {
+    "title": "TypeScript in 5 minutes",
+    "url": "https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html",
+    "type": "Docs"
+  },
+  {
+    "title": "Type Challenges",
+    "url": "https://github.com/type-challenges/type-challenges",
+    "type": "Practice"
+  },
+  {
+    "title": "Exercism: TypeScript track",
+    "url": "https://exercism.org/tracks/typescript",
+    "type": "Practice"
+  },
+  {
+    "title": "TypeScript Playground",
+    "url": "https://www.typescriptlang.org/play",
+    "type": "Tool"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/deploy",
+  "language": "java",
+  "topic": "deploy",
+  "title": "Deploy",
+  "stage": 5,
+  "order": 4,
+  "explain": "Deploying a Java app usually means packaging it as a jar and running it with `java -jar` on a server or in a container. Configure it through environment variables so the same jar works everywhere. Set `-XX:MaxRAMPercentage` so the JVM respects the memory limit of its container.",
+  "file": "Dockerfile",
+  "code": "FROM eclipse-temurin:21-jdk AS build\nWORKDIR /src\nCOPY . .\nRUN ./mvnw -q package -DskipTests\n\nFROM eclipse-temurin:21-jre\nCOPY --from=build /src/target/app-1.0.0.jar /app.jar\nENV JAVA_OPTS=\"-XX:MaxRAMPercentage=75\"\nENTRYPOINT [\"sh\", \"-c\", \"java $JAVA_OPTS -jar /app.jar\"]",
+  "exercise": "Package a small program into a jar with a manifest and run it with `java -jar`.",
+  "tip": "Don't hard-code ports or passwords. Read them from environment variables so the same jar runs in every environment.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

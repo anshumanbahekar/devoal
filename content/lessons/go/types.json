@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/types",
+  "language": "go",
+  "topic": "types",
+  "title": "Types",
+  "stage": 1,
+  "order": 2,
+  "explain": "Go is statically typed, and `:=` declares a variable and infers its type inside functions. Basic types include `int`, `float64`, `string` and `bool`, and every variable starts at a zero value like `0` or an empty string. Constants declared with `const` cannot change.",
+  "file": "types.go",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar count int // zero value: 0\n\tname := \"Ada\" // inferred string\n\tconst pi = 3.14159\n\tprice := 9.99 // float64\n\tfmt.Println(count, name, pi, price)\n\tfmt.Printf(\"%T %T\\n\", name, price)\n}",
+  "exercise": "Declare an int, a float64, a string and a bool, print them with `%T`, then try adding the int to the float64 and read the error.",
+  "tip": "Go refuses to compile unused variables and imports. Use `_` to discard a value on purpose.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

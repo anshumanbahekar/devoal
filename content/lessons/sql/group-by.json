@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/group-by",
+  "language": "sql",
+  "topic": "GROUP BY",
+  "title": "GROUP BY",
+  "stage": 3,
+  "order": 2,
+  "explain": "GROUP BY collapses rows into groups so you can summarize each one with `COUNT`, `SUM`, `AVG`, `MIN` or `MAX`. `HAVING` filters groups after they are formed, while WHERE filters rows before. Every selected column must be either grouped or aggregated.",
+  "file": "group_by.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nSELECT course_id, COUNT(*) AS n, AVG(score) AS avg\nFROM students GROUP BY course_id;\nSELECT course_id, AVG(score) AS avg\nFROM students GROUP BY course_id HAVING AVG(score) > 75;",
+  "exercise": "Find the highest score in each course, then keep only the courses with at least two students.",
+  "tip": "Use WHERE to filter rows and HAVING to filter groups. Mixing them up is the most common GROUP BY error.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

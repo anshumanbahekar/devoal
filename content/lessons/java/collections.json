@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/collections",
+  "language": "java",
+  "topic": "collections",
+  "title": "Collections",
+  "stage": 2,
+  "order": 4,
+  "explain": "The collections framework gives you ready-made containers: `List` for ordered items, `Set` for unique ones, and `Map` for key-value pairs. Code to the interface, such as `List<String>`, and pick an implementation like `ArrayList` or `HashMap`. `List.of` and `Map.of` create small immutable collections.",
+  "file": "CollectionsDemo.java",
+  "code": "import java.util.*;\n\npublic class CollectionsDemo {\n    public static void main(String[] args) {\n        List<String> names = new ArrayList<>(List.of(\"Ada\", \"Linus\"));\n        names.add(\"Grace\");\n        Set<Integer> unique = new HashSet<>(List.of(1, 2, 2, 3));\n        Map<String, Integer> scores = new TreeMap<>();\n        scores.put(\"Ada\", 91);\n        scores.merge(\"Ada\", 5, Integer::sum);\n        System.out.println(names + \" \" + unique.size() + \" \" + scores);\n    }\n}",
+  "exercise": "Count how often each word appears in a sentence using a `Map<String, Integer>`.",
+  "tip": "`List.of(...)` returns an immutable list, and calling `add` on it throws `UnsupportedOperationException`. Wrap it in `new ArrayList<>(...)` when you need to change it.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

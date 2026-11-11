@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/interfaces",
+  "language": "typescript",
+  "topic": "Interfaces",
+  "title": "Interfaces",
+  "stage": 2,
+  "order": 1,
+  "explain": "An interface describes the shape of an object: which properties it has and their types. Any object with that shape is accepted, whether or not it was declared with the interface. Use `?` for optional properties and `readonly` for ones that must not change.",
+  "file": "interfaces.ts",
+  "code": "interface User {\n  readonly id: number;\n  name: string;\n  email?: string;\n}\n\nconst ada: User = { id: 1, name: \"Ada\" };\nada.name = \"Ada Lovelace\";\n// @ts-expect-error  id is readonly\nada.id = 2;\nconsole.log(ada);",
+  "exercise": "Define a `Product` interface with an optional `discount`, then write a function that prints the final price.",
+  "tip": "`interface` and `type` overlap heavily for object shapes. Pick one style and stay consistent across the project.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

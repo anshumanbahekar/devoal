@@ -1,0 +1,47 @@
+[
+  {
+    "title": "CS50x: Introduction to Computer Science",
+    "url": "https://cs50.harvard.edu/x/",
+    "type": "Course"
+  },
+  {
+    "title": "The Odin Project",
+    "url": "https://www.theodinproject.com/",
+    "type": "Course"
+  },
+  {
+    "title": "roadmap.sh",
+    "url": "https://roadmap.sh/",
+    "type": "Roadmaps"
+  },
+  {
+    "title": "Exercism",
+    "url": "https://exercism.org/",
+    "type": "Practice"
+  },
+  {
+    "title": "LeetCode",
+    "url": "https://leetcode.com/",
+    "type": "Practice"
+  },
+  {
+    "title": "The Missing Semester of Your CS Education",
+    "url": "https://missing.csail.mit.edu/",
+    "type": "Course"
+  },
+  {
+    "title": "Pro Git (free book)",
+    "url": "https://git-scm.com/book",
+    "type": "Book"
+  },
+  {
+    "title": "Teach Yourself Computer Science",
+    "url": "https://teachyourselfcs.com/",
+    "type": "Guide"
+  },
+  {
+    "title": "MIT OCW: Intro to CS and Programming in Python",
+    "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+    "type": "Course"
+  }
+]

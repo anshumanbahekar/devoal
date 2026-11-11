@@ -1,0 +1,42 @@
+{
+  "language": "typescript",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Annotate values and catch mistakes.",
+      "file": "01_types.ts",
+      "explain": "Types are checked before your code runs. Annotate where it helps and let inference do the rest.",
+      "exercise": "Assign a string to a number variable on purpose and read the compiler error.",
+      "code": "let id: number = 7;\nlet tag: string = \"ts\";\nlet ok: boolean = true;",
+      "solutionDiff": "-let n: number = \"seven\";\n+let n: number = 7;\n let ok: boolean = n > 5;"
+    },
+    {
+      "order": 2,
+      "title": "Describe the shape of objects.",
+      "file": "02_interfaces.ts",
+      "explain": "An interface describes the shape of an object. Any value matching the shape is accepted.",
+      "exercise": "Define a Product interface with name and price, then make an array of three.",
+      "code": "interface User {\n  name: string;\n  age: number;\n}\nconst u: User = { name: \"A\", age: 17 };",
+      "solutionDiff": " // TODO: define Product\n-const items = [];\n+interface Product {\n+  name: string;\n+  price: number;\n+}\n+const items: Product[] = [\n+  { name: \"Pen\", price: 2 },\n+  { name: \"Book\", price: 12 },\n+  { name: \"Bag\", price: 30 },\n+];"
+    },
+    {
+      "order": 3,
+      "title": "Write one function for many types.",
+      "file": "03_generics.ts",
+      "explain": "Generics let one function work over many types while staying safe. T is a placeholder filled in at the call.",
+      "exercise": "Write a generic last<T> function that returns the final item.",
+      "code": "function first<T>(xs: T[]): T {\n  return xs[0];\n}\nfirst([1, 2, 3]);",
+      "solutionDiff": "-function last(xs: any[]): any {\n+function last<T>(xs: T[]): T {\n   return xs[xs.length - 1];\n }"
+    },
+    {
+      "order": 4,
+      "title": "Model choices with union types.",
+      "file": "04_unions.ts",
+      "explain": "A union lists the allowed values and TypeScript narrows the type inside each branch.",
+      "exercise": "Define a Shape union of circle and square and compute area with a switch.",
+      "code": "type Status = \"idle\" | \"busy\" | \"done\";\nfunction show(s: Status) {\n  return s.toUpperCase();\n}",
+      "solutionDiff": "-type Shape = any;\n+type Shape =\n+  | { kind: \"circle\"; r: number }\n+  | { kind: \"square\"; side: number };\n function area(s: Shape) {\n-  // TODO\n+  switch (s.kind) {\n+    case \"circle\": return Math.PI * s.r ** 2;\n+    case \"square\": return s.side ** 2;\n+  }\n }"
+    }
+  ],
+  "capstone": "A typed expense tracker with categories and monthly totals."
+}

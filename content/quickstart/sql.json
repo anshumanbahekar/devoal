@@ -1,0 +1,42 @@
+{
+  "language": "sql",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Read rows with SELECT.",
+      "file": "01_select.sql",
+      "explain": "SELECT picks columns, FROM picks the table, WHERE filters rows and ORDER BY sorts the result.",
+      "exercise": "Select every student scoring under 50, lowest first.",
+      "code": "SELECT name, score\nFROM students\nWHERE score > 80\nORDER BY score DESC;",
+      "solutionDiff": " SELECT name, score\n FROM students\n-WHERE score > 80\n+WHERE score < 50\n-ORDER BY name;\n+ORDER BY score ASC;"
+    },
+    {
+      "order": 2,
+      "title": "Add and change rows.",
+      "file": "02_insert.sql",
+      "explain": "INSERT adds rows, UPDATE changes them and DELETE removes them. Always add WHERE to UPDATE and DELETE.",
+      "exercise": "Insert two students, then raise one score by 5.",
+      "code": "INSERT INTO students (name, score)\nVALUES ('Asha', 91);\n\nUPDATE students SET score = 95\nWHERE name = 'Asha';",
+      "solutionDiff": "-INSERT INTO students (name) VALUES ('Asha');\n+INSERT INTO students (name, score)\n+VALUES ('Asha', 91), ('Ravi', 64);\n+UPDATE students SET score = score + 5\n+WHERE name = 'Ravi';"
+    },
+    {
+      "order": 3,
+      "title": "Combine two tables.",
+      "file": "03_join.sql",
+      "explain": "A JOIN lines up rows from two tables using a shared key. INNER keeps matches and LEFT keeps every left row.",
+      "exercise": "List each course with its student count using a LEFT JOIN.",
+      "code": "SELECT s.name, c.title\nFROM students s\nJOIN courses c ON c.id = s.course_id;",
+      "solutionDiff": "-SELECT title FROM courses;\n+SELECT c.title, COUNT(s.id) AS n\n+FROM courses c\n+LEFT JOIN students s ON s.course_id = c.id\n+GROUP BY c.title;"
+    },
+    {
+      "order": 4,
+      "title": "Count and average with GROUP BY.",
+      "file": "04_group.sql",
+      "explain": "GROUP BY collapses rows into groups and aggregates like COUNT and AVG summarize each one. HAVING filters the groups.",
+      "exercise": "Show courses whose average score is above 70.",
+      "code": "SELECT course_id, COUNT(*) AS n, AVG(score)\nFROM students\nGROUP BY course_id;",
+      "solutionDiff": " SELECT course_id, AVG(score) AS avg\n FROM students\n GROUP BY course_id\n+HAVING AVG(score) > 70;"
+    }
+  ],
+  "capstone": "A school database with students, courses and a grades report."
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/testing",
+  "language": "typescript",
+  "topic": "testing",
+  "title": "Testing",
+  "stage": 5,
+  "order": 3,
+  "explain": "A test runs your code with known input and checks the result. Node ships a built-in test runner, and Vitest or Jest are popular alternatives with the same shape. Types make tests safer too, since a wrong argument fails to compile.",
+  "file": "math.test.ts",
+  "code": "import { test } from \"node:test\";\nimport assert from \"node:assert/strict\";\nfunction add(a: number, b: number): number {\n  return a + b;\n}\ntest(\"adds two numbers\", () => {\n  assert.equal(add(2, 3), 5);\n});\ntest(\"handles negatives\", () => {\n  assert.equal(add(-1, 1), 0);\n});",
+  "exercise": "Write a `clamp(n, min, max)` function with three tests, including a value below the range.",
+  "tip": "A test that never fails proves nothing. Break the code on purpose once to make sure the test notices.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

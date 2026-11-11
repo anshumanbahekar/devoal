@@ -1,0 +1,42 @@
+{
+  "language": "rust",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Your first Rust program.",
+      "file": "01_main.rs",
+      "explain": "Cargo builds and runs projects. Variables are immutable by default, which prevents a whole class of bugs.",
+      "exercise": "Run cargo new hello, then print two variables, one of them mutable.",
+      "code": "fn main() {\n    let name = \"coal\";\n    println!(\"hello, {}\", name);\n}",
+      "solutionDiff": " fn main() {\n-    let x = 5;\n+    let mut x = 5;\n+    x += 1;\n+    println!(\"{}\", x);\n }"
+    },
+    {
+      "order": 2,
+      "title": "Who owns a value, and when it dies.",
+      "file": "02_ownership.rs",
+      "explain": "Each value has one owner. Assigning it elsewhere moves it, and borrowing with & lets others read without taking it.",
+      "exercise": "Write a function taking &String that returns its length, then use the string afterwards.",
+      "code": "let a = String::from(\"hi\");\nlet b = a;\n// a is moved, using it now is an error\nprintln!(\"{}\", b);",
+      "solutionDiff": "-fn len_of(s: String) -> usize {\n+fn len_of(s: &String) -> usize {\n     s.len()\n }\n let s = String::from(\"hi\");\n-let n = len_of(s);\n+let n = len_of(&s);\n println!(\"{} {}\", s, n);"
+    },
+    {
+      "order": 3,
+      "title": "Group data and add methods.",
+      "file": "03_structs.rs",
+      "explain": "A struct groups fields and impl blocks attach methods. &self borrows the instance instead of consuming it.",
+      "exercise": "Add a method that returns the distance from the origin.",
+      "code": "struct Pt { x: i32, y: i32 }\nimpl Pt {\n    fn sum(&self) -> i32 {\n        self.x + self.y\n    }\n}",
+      "solutionDiff": " struct Pt { x: f64, y: f64 }\n impl Pt {\n+    fn dist(&self) -> f64 {\n+        (self.x * self.x + self.y * self.y).sqrt()\n+    }\n }"
+    },
+    {
+      "order": 4,
+      "title": "Match on every possible case.",
+      "file": "04_enums.rs",
+      "explain": "An enum is one of several variants and match forces you to handle every one. The compiler checks that you did.",
+      "exercise": "Add a Mul variant and fix the compile error it causes.",
+      "code": "enum Op { Add, Sub }\nlet r = match op {\n    Op::Add => 1 + 1,\n    Op::Sub => 1 - 1,\n};",
+      "solutionDiff": "-enum Op { Add, Sub }\n+enum Op { Add, Sub, Mul }\n let r = match op {\n     Op::Add => a + b,\n     Op::Sub => a - b,\n+    Op::Mul => a * b,\n };"
+    }
+  ],
+  "capstone": "A fast file search tool that prints matching lines with line numbers."
+}

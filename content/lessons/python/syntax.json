@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/syntax",
+  "language": "python",
+  "topic": "Syntax",
+  "title": "Syntax",
+  "stage": 1,
+  "order": 1,
+  "explain": "Python syntax is the set of rules that tell the computer how to read and understand your code. Unlike many languages, Python uses indentation (spaces at the beginning of lines) to show which code belongs together in blocks. Learning proper syntax helps you write code that actually runs without errors.",
+  "file": "hello_python.py",
+  "code": "# This is a comment\nname = \"Alice\"\nage = 25\n\nif age >= 18:\n    print(f\"Hello {name}, you are {age} years old\")\n    print(\"You are an adult\")\nelse:\n    print(\"You are a minor\")",
+  "exercise": "Create a variable called favorite_color, assign it your favorite color as a string, and print a message like 'My favorite color is blue' using that variable.",
+  "tip": "Indentation matters! If you don't indent the code inside an if-block, for-loop, or function, Python will give you an IndentationError. Use consistent spacing (usually 4 spaces per indent level).",
+  "verify": "python",
+  "review": "unreviewed"
+}

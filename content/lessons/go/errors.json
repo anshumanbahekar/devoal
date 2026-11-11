@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/errors",
+  "language": "go",
+  "topic": "Errors",
+  "title": "Errors",
+  "stage": 3,
+  "order": 1,
+  "explain": "Go reports failure by returning an `error` value, and callers check it right away. Wrap an error with `fmt.Errorf` and `%w` to add context, and use `errors.Is` to test for a specific one later. Reserve `panic` for bugs that should never happen.",
+  "file": "errors.go",
+  "code": "package main\n\nimport (\n\t\"errors\"\n\t\"fmt\"\n\t\"os\"\n)\n\nfunc main() {\n\t_, err := os.ReadFile(\"missing.txt\")\n\twrapped := fmt.Errorf(\"loading config: %w\", err)\n\tfmt.Println(wrapped)\n\tfmt.Println(errors.Is(wrapped, os.ErrNotExist))\n}",
+  "exercise": "Write a function that opens a file and returns a wrapped error, then handle it in `main` with `errors.Is(err, os.ErrNotExist)`.",
+  "tip": "Don't compare error text with `==`. Use `errors.Is` or `errors.As`, which still work after wrapping.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

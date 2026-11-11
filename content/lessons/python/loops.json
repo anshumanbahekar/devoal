@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/loops",
+  "language": "python",
+  "topic": "Loops",
+  "title": "Loops",
+  "stage": 2,
+  "order": 1,
+  "explain": "Loops let you repeat code multiple times without writing it over and over. Python has two main types: for loops (when you know how many times to repeat) and while loops (when you repeat until a condition is false). Loops are essential for processing lists, counting, and automating repetitive tasks.",
+  "file": "loops_intro.py",
+  "code": "# For loop: repeat a fixed number of times\nfor i in range(5):\n    print(f\"Count: {i}\")\n\n# While loop: repeat until condition is false\ncount = 0\nwhile count < 3:\n    print(f\"Hello {count}\")\n    count = count + 1",
+  "exercise": "Write a for loop that prints the numbers 1 through 10, then write a while loop that prints every number from 10 down to 1.",
+  "tip": "Forgetting to update the loop variable in a while loop (like count = count + 1) causes an infinite loop that never stops—always include an update that moves toward your exit condition.",
+  "verify": "python",
+  "review": "unreviewed"
+}

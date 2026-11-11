@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/joins",
+  "language": "sql",
+  "topic": "JOINs",
+  "title": "JOINs",
+  "stage": 3,
+  "order": 1,
+  "explain": "A JOIN combines rows from two tables using a matching column. INNER JOIN keeps only the matches, while LEFT JOIN keeps every row from the left table and fills gaps with NULL. Joins let you store each fact once and still combine it later.",
+  "file": "joins.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nCREATE TABLE courses (id INTEGER PRIMARY KEY, title TEXT);\nINSERT INTO courses VALUES (1,'Python'),(2,'SQL'),(3,'Rust');\nSELECT s.name, c.title FROM students s JOIN courses c ON c.id = s.course_id;\nSELECT c.title, s.name FROM courses c LEFT JOIN students s ON s.course_id = c.id;",
+  "exercise": "List each course with the number of students in it, including courses that have none.",
+  "tip": "Forgetting the ON condition gives a cross join, where every row pairs with every other row. Row counts explode fast.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

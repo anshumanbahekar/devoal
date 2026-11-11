@@ -1,0 +1,27 @@
+[
+  {
+    "title": "SQLBolt",
+    "url": "https://sqlbolt.com/",
+    "type": "Course"
+  },
+  {
+    "title": "SQLZoo",
+    "url": "https://sqlzoo.net/",
+    "type": "Practice"
+  },
+  {
+    "title": "PostgreSQL Tutorial (official)",
+    "url": "https://www.postgresql.org/docs/current/tutorial.html",
+    "type": "Docs"
+  },
+  {
+    "title": "SQL Murder Mystery",
+    "url": "https://mystery.knightlab.com/",
+    "type": "Practice"
+  },
+  {
+    "title": "Mode SQL Tutorial",
+    "url": "https://mode.com/sql-tutorial/",
+    "type": "Course"
+  }
+]

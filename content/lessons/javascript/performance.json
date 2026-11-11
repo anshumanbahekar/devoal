@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/performance",
+  "language": "javascript",
+  "topic": "performance",
+  "title": "Performance",
+  "stage": 4,
+  "order": 3,
+  "explain": "Performance in JavaScript means writing code that runs fast and uses minimal resources. One key technique is avoiding unnecessary work—for example, caching values instead of recalculating them repeatedly. Profiling tools like the browser's DevTools can help you identify slow code before optimizing.",
+  "file": "performance-caching.js",
+  "code": "// Bad: Recalculates every time\nfunction expensiveSum(arr) {\n  return arr.reduce((a, b) => a + b, 0);\n}\nconsole.log(expensiveSum([1, 2, 3])); // recalculated\nconsole.log(expensiveSum([1, 2, 3])); // recalculated again\n\n// Good: Cache the result\nlet cachedResult = null;\nfunction efficientSum(arr) {\n  if (!cachedResult) cachedResult = arr.reduce((a, b) => a + b, 0);\n  return cachedResult;\n}\nconsole.log(efficientSum([1, 2, 3])); // calculated once\nconsole.log(efficientSum([1, 2, 3])); // uses cache",
+  "exercise": "Write a function that calculates the factorial of a number, then modify it to cache results so repeated calls are instant.",
+  "tip": "A common mistake is over-optimizing early. Always measure actual performance bottlenecks with DevTools before spending time optimizing—premature optimization wastes effort.",
+  "verify": "node",
+  "review": "unreviewed"
+}

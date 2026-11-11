@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/input",
+  "language": "python",
+  "topic": "input",
+  "title": "Input",
+  "stage": 1,
+  "order": 3,
+  "explain": "The input() function pauses your program and waits for the user to type something on the keyboard. It returns what the user typed as a string (text). You can store this value in a variable to use it later in your program.",
+  "file": "user_input.py",
+  "code": "name = input(\"What is your name? \")\nage = input(\"How old are you? \")\nprint(\"Hello, \" + name + \"!\")\nprint(\"You are \" + age + \" years old.\")",
+  "exercise": "Ask the user for their favorite color and their favorite animal, then print a sentence combining both: 'Your favorite color is [color] and your favorite animal is [animal].'",
+  "tip": "Remember that input() always returns a string, even if the user types a number. If you need to do math, convert it to an integer first using int(input(...)).",
+  "verify": "manual",
+  "review": "unreviewed"
+}

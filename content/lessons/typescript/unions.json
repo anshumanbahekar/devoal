@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/unions",
+  "language": "typescript",
+  "topic": "unions",
+  "title": "Unions",
+  "stage": 2,
+  "order": 2,
+  "explain": "A union type, written with `|`, says a value can be one of several types. Literal types like `\"red\" | \"green\"` limit a value to exact strings. Together they replace many loose strings and flags with checked choices.",
+  "file": "unions.ts",
+  "code": "type Id = string | number;\ntype Status = \"idle\" | \"loading\" | \"done\";\n\nfunction show(id: Id, status: Status): string {\n  return `${id} is ${status}`;\n}\n\nconsole.log(show(7, \"done\"));\nconsole.log(show(\"abc\", \"idle\"));\n// @ts-expect-error  \"finished\" is not a valid Status\nshow(1, \"finished\");",
+  "exercise": "Create a `Direction` type for north, south, east and west, and a function that returns the opposite direction.",
+  "tip": "A union only lets you use what every member has in common. To use anything more specific, narrow it first.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

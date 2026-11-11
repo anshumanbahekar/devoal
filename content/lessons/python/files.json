@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/files",
+  "language": "python",
+  "topic": "files",
+  "title": "Files",
+  "stage": 2,
+  "order": 5,
+  "explain": "Use `open()` inside a `with` block so the file is closed for you even if an error happens. Mode `\"w\"` writes, `\"r\"` reads and `\"a\"` appends. Looping with `for line in f` reads the file one line at a time.",
+  "file": "files.py",
+  "code": "with open(\"notes.txt\", \"w\") as f:\n    f.write(\"first line\\n\")\n    f.write(\"second line\\n\")\n\nwith open(\"notes.txt\") as f:\n    for line in f:\n        print(line.strip())\n\nwith open(\"notes.txt\", \"a\") as f:\n    f.write(\"third line\\n\")\nwith open(\"notes.txt\") as f:\n    print(len(f.readlines()))",
+  "exercise": "Write three names to `names.txt`, then read the file back and print them in uppercase.",
+  "tip": "Opening a file with `\"w\"` erases what was in it. Use `\"a\"` when you want to add to the end.",
+  "verify": "python",
+  "review": "unreviewed"
+}

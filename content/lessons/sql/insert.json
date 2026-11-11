@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/insert",
+  "language": "sql",
+  "topic": "INSERT",
+  "title": "INSERT",
+  "stage": 2,
+  "order": 1,
+  "explain": "INSERT adds new rows to a table. List the columns you are filling and give matching values, and add several rows in one statement. Columns you leave out take their default value or NULL.",
+  "file": "insert.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nINSERT INTO students (id, name, score, course_id) VALUES (5, 'Dennis', 70, 1);\nINSERT INTO students (id, name, score) VALUES (6, 'Ken', 88), (7, 'Bjarne', 66);\nSELECT COUNT(*) FROM students;",
+  "exercise": "Insert two new students in one statement, then count the rows.",
+  "tip": "Always name the columns in an INSERT. Without them, adding a column later silently breaks your statement.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

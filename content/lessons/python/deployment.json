@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/deployment",
+  "language": "python",
+  "topic": "deployment",
+  "title": "Deployment",
+  "stage": 5,
+  "order": 4,
+  "explain": "Deploying means putting your app on a server so other people can use it. Keep secrets like API keys in environment variables, never in your code. Hosts such as Render, Railway or Fly.io can run a Python web app straight from a GitHub repository.",
+  "file": "config.py",
+  "code": "import os\n\nAPI_KEY = os.environ.get(\"API_KEY\")\nPORT = int(os.environ.get(\"PORT\", 8000))\n\nif not API_KEY:\n    raise SystemExit(\"Set API_KEY before starting the app\")\n\nprint(f\"Starting on port {PORT}\")",
+  "exercise": "Move a hard-coded password from your code into an environment variable and read it with `os.environ`. Add the variable name to a `.env.example` file.",
+  "tip": "Never commit secrets to Git. Once a key is in the history, treat it as leaked and create a new one.",
+  "verify": "python",
+  "review": "unreviewed"
+}

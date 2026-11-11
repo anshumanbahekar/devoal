@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/maps",
+  "language": "go",
+  "topic": "Maps",
+  "title": "Maps",
+  "stage": 2,
+  "order": 1,
+  "explain": "A map holds key-value pairs and is created with `make` or a literal. Reading a missing key gives the zero value, so use the two-value form `v, ok := m[k]` to tell the difference. Ranging over a map visits keys in random order, but `fmt` prints maps sorted by key.",
+  "file": "maps.go",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tstock := map[string]int{\"apple\": 3, \"pear\": 0}\n\tstock[\"kiwi\"] = 7\n\tif _, ok := stock[\"mango\"]; !ok {\n\t\tfmt.Println(\"no mango\")\n\t}\n\tdelete(stock, \"pear\")\n\tfmt.Println(stock, len(stock))\n}",
+  "exercise": "Count how many times each word appears in a sentence using a map.",
+  "tip": "Writing to a nil map panics. Create it with `make(map[K]V)` or a literal before you assign to it.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

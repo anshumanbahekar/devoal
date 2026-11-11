@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/json",
+  "language": "go",
+  "topic": "JSON",
+  "title": "JSON",
+  "stage": 3,
+  "order": 4,
+  "explain": "The `encoding/json` package turns structs into JSON with `Marshal` and back with `Unmarshal`. Struct tags like `json:\"name\"` control the key names, and `omitempty` skips empty fields. Only exported fields, the ones with a capital letter, are included.",
+  "file": "json.go",
+  "code": "package main\n\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n)\n\ntype User struct {\n\tName  string `json:\"name\"`\n\tEmail string `json:\"email,omitempty\"`\n}\n\nfunc main() {\n\tout, _ := json.Marshal(User{Name: \"Ada\"})\n\tfmt.Println(string(out))\n\tvar u User\n\tjson.Unmarshal([]byte(`{\"name\":\"Linus\",\"email\":\"l@x.org\"}`), &u)\n\tfmt.Println(u.Email)\n}",
+  "exercise": "Decode a JSON array of users into a slice of structs and print each name.",
+  "tip": "Unexported (lowercase) fields are silently skipped by `encoding/json`. If a field is missing from the output, check its capitalization.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

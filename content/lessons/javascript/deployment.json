@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/deployment",
+  "language": "javascript",
+  "topic": "deployment",
+  "title": "Deployment",
+  "stage": 5,
+  "order": 4,
+  "explain": "Deployment means putting your application on a server so others can access it online. Popular free platforms like Vercel and Netlify make deploying JavaScript apps simple by connecting to your GitHub repository. They automatically rebuild and redeploy your site whenever you push code changes.",
+  "file": "package.json",
+  "code": "{\n  \"name\": \"my-app\",\n  \"version\": \"1.0.0\",\n  \"scripts\": {\n    \"build\": \"echo 'Building app...'\"]\n  },\n  \"main\": \"index.js\",\n  \"dependencies\": {\n    \"express\": \"^4.18.0\"\n  }\n}",
+  "exercise": "Create a GitHub repository, push a simple Node.js 'Hello World' app to it, then connect it to Vercel by signing in with GitHub and selecting your repo to deploy.",
+  "tip": "Don't commit sensitive information like API keys or database passwords to GitHub. Use environment variables instead—Vercel and Netlify let you set these securely in their dashboard.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

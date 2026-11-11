@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/monorepos",
+  "language": "typescript",
+  "topic": "monorepos",
+  "title": "Monorepos",
+  "stage": 5,
+  "order": 2,
+  "explain": "A monorepo keeps several packages in one repository so they can share code and be changed together. npm, pnpm and Yarn support this with `workspaces`, and TypeScript project references let packages build in order. Tools such as Turborepo or Nx add caching on top.",
+  "file": "package.json",
+  "code": "// package.json (root)\n{\n  \"private\": true,\n  \"workspaces\": [\"packages/*\"]\n}\n\n// packages/app/tsconfig.json\n{\n  \"compilerOptions\": { \"composite\": true, \"outDir\": \"dist\" },\n  \"references\": [{ \"path\": \"../shared\" }]\n}",
+  "exercise": "Create `packages/shared` and `packages/app`, import a function from shared in app, and build both with `tsc -b`.",
+  "tip": "Every referenced project needs `composite: true`. Without it, `tsc -b` refuses to build the reference.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

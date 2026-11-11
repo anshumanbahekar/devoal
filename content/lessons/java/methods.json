@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/methods",
+  "language": "java",
+  "topic": "methods",
+  "title": "Methods",
+  "stage": 1,
+  "order": 4,
+  "explain": "A method has a return type, a name and typed parameters, and `void` means it returns nothing. Java passes arguments by value, so changing a parameter inside a method does not change the caller's variable. Methods with the same name but different parameters are overloaded.",
+  "file": "Methods.java",
+  "code": "public class Methods {\n    static int add(int a, int b) { return a + b; }\n    static double add(double a, double b) { return a + b; }   // overload\n    static void bump(int n) { n++; }                          // changes only the copy\n\n    public static void main(String[] args) {\n        int x = 5;\n        bump(x);\n        System.out.println(add(2, 3) + \" \" + add(1.5, 2.5) + \" \" + x);\n    }\n}",
+  "exercise": "Write `max(int a, int b, int c)` and test it with the three numbers in different orders.",
+  "tip": "Reassigning a parameter never changes the caller's variable. To change an object, call a method on the object instead.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

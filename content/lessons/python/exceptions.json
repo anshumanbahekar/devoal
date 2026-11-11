@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/exceptions",
+  "language": "python",
+  "topic": "exceptions",
+  "title": "Exceptions",
+  "stage": 3,
+  "order": 3,
+  "explain": "An exception is Python's way of reporting an error while the program runs. Wrap risky code in `try`, handle the problem in `except`, and use `finally` for cleanup that must always run. Catch specific exceptions so you don't hide real bugs.",
+  "file": "exceptions.py",
+  "code": "def parse_age(text):\n    try:\n        age = int(text)\n    except ValueError:\n        print(\"not a number:\", text)\n        return None\n    finally:\n        print(\"checked\", text)\n    return age\n\nprint(parse_age(\"17\"))\nprint(parse_age(\"abc\"))",
+  "exercise": "Write a function that divides two numbers and returns `None` with a message when the divisor is zero.",
+  "tip": "A bare `except:` catches everything, even typos and Ctrl+C. Name the exception you expect.",
+  "verify": "python",
+  "review": "unreviewed"
+}

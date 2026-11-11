@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/i-o",
+  "language": "java",
+  "topic": "I/O",
+  "title": "I/O",
+  "stage": 3,
+  "order": 4,
+  "explain": "The `java.nio.file` classes read and write files with a few calls. `Files.writeString` and `Files.readAllLines` handle small files, and `try`-with-resources is for streams you open yourself. Paths are built with `Path.of`, which works on every operating system.",
+  "file": "FileIO.java",
+  "code": "import java.io.IOException;\nimport java.nio.file.*;\nimport java.util.List;\n\npublic class FileIO {\n    public static void main(String[] args) throws IOException {\n        Path file = Path.of(\"notes.txt\");\n        Files.writeString(file, \"first\\nsecond\\n\");\n        Files.writeString(file, \"third\\n\", StandardOpenOption.APPEND);\n        List<String> lines = Files.readAllLines(file);\n        System.out.println(lines.size() + \" \" + lines.get(2));\n    }\n}",
+  "exercise": "Write three names to a file, read them back, and print them in uppercase.",
+  "tip": "`Files.readAllLines` loads the whole file into memory. For big files use `Files.lines` in a try-with-resources block and process one line at a time.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

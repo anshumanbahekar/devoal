@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/order-by",
+  "language": "sql",
+  "topic": "ORDER BY",
+  "title": "ORDER BY",
+  "stage": 1,
+  "order": 3,
+  "explain": "ORDER BY sorts the result and goes ascending by default. Add `DESC` for the reverse, and list several columns to break ties. Without ORDER BY the row order is not guaranteed.",
+  "file": "order_by.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nSELECT name, score FROM students ORDER BY score DESC;\nSELECT name, course_id, score FROM students ORDER BY course_id, score DESC;",
+  "exercise": "List students by name from Z to A, then by course with the highest score first inside each course.",
+  "tip": "Never rely on the order rows happen to come back in. Add `ORDER BY` whenever the order matters.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

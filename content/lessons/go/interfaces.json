@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/interfaces",
+  "language": "go",
+  "topic": "interfaces",
+  "title": "Interfaces",
+  "stage": 2,
+  "order": 4,
+  "explain": "An interface lists methods, and any type that has those methods satisfies it automatically, with no `implements` keyword. Functions that accept an interface work with every type that fits. Keep interfaces small, often just one method.",
+  "file": "interfaces.go",
+  "code": "package main\n\nimport \"fmt\"\n\ntype Shape interface{ Area() float64 }\ntype Circle struct{ R float64 }\ntype Square struct{ S float64 }\n\nfunc (c Circle) Area() float64 { return 3.14 * c.R * c.R }\nfunc (s Square) Area() float64 { return s.S * s.S }\n\nfunc main() {\n\tfor _, s := range []Shape{Circle{1}, Square{2}} {\n\t\tfmt.Printf(\"%.2f\\n\", s.Area())\n\t}\n}",
+  "exercise": "Add a `Triangle` type with an `Area` method and include it in the slice without changing the `Shape` interface.",
+  "tip": "Define interfaces where they are used, not where the types live. A small interface next to the function that needs it is easiest to satisfy.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

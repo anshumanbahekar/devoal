@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/fetch",
+  "language": "javascript",
+  "topic": "fetch",
+  "title": "Fetch",
+  "stage": 3,
+  "order": 4,
+  "explain": "The `fetch()` function lets you request data from the internet (like getting information from a web server). It returns a Promise, which means you need to use `.then()` or `async/await` to handle the response. The response needs to be converted to usable data using methods like `.json()` for JSON data.",
+  "file": "fetch-basics.js",
+  "code": "fetch('https://jsonplaceholder.typicode.com/posts/1')\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.log('Error:', error));",
+  "exercise": "Modify the code to fetch from 'https://jsonplaceholder.typicode.com/users/1' instead and log only the `name` property of the user.",
+  "tip": "Don't forget to call `.json()` on the response—many beginners try to use the response object directly without converting it to actual data.",
+  "verify": "node",
+  "review": "unreviewed"
+}

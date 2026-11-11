@@ -1,0 +1,119 @@
+{
+  "language": "rust",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "cargo",
+          "title": "Cargo"
+        },
+        {
+          "slug": "variables",
+          "title": "Variables"
+        },
+        {
+          "slug": "types",
+          "title": "Types"
+        },
+        {
+          "slug": "control-flow",
+          "title": "Control flow"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "ownership",
+          "title": "Ownership"
+        },
+        {
+          "slug": "borrowing",
+          "title": "Borrowing"
+        },
+        {
+          "slug": "structs",
+          "title": "Structs"
+        },
+        {
+          "slug": "enums",
+          "title": "Enums"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "traits",
+          "title": "Traits"
+        },
+        {
+          "slug": "generics",
+          "title": "Generics"
+        },
+        {
+          "slug": "lifetimes",
+          "title": "Lifetimes"
+        },
+        {
+          "slug": "errors",
+          "title": "Errors"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "iterators",
+          "title": "Iterators"
+        },
+        {
+          "slug": "smart-pointers",
+          "title": "Smart pointers"
+        },
+        {
+          "slug": "async",
+          "title": "Async"
+        },
+        {
+          "slug": "macros",
+          "title": "Macros"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "testing",
+          "title": "Testing"
+        },
+        {
+          "slug": "crates",
+          "title": "Crates"
+        },
+        {
+          "slug": "unsafe",
+          "title": "Unsafe"
+        },
+        {
+          "slug": "ffi",
+          "title": "FFI"
+        },
+        {
+          "slug": "release",
+          "title": "Release"
+        }
+      ]
+    }
+  ]
+}

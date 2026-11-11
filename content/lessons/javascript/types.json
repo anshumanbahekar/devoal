@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/types",
+  "language": "javascript",
+  "topic": "types",
+  "title": "Types",
+  "stage": 1,
+  "order": 2,
+  "explain": "JavaScript has different data types like numbers, strings, booleans, and objects. You can check a value's type using the typeof operator. Understanding types helps you write code that works correctly and prevents bugs.",
+  "file": "types.js",
+  "code": "// Check types with typeof\nconsole.log(typeof 42);           // \"number\"\nconsole.log(typeof \"hello\");      // \"string\"\nconsole.log(typeof true);         // \"boolean\"\nconsole.log(typeof {name: \"Jo\"}); // \"object\"\nconsole.log(typeof undefined);    // \"undefined\"\n\nlet age = 25;\nlet message = \"You are \" + age + \" years old\";\nconsole.log(message);",
+  "exercise": "Create three variables: one holding a number (your age), one holding a string (your name), and one holding a boolean (true or false). Use console.log with typeof to print each variable's type.",
+  "tip": "typeof null returns \"object\" (a quirk in JavaScript), and arrays are objects too. So use Array.isArray() to specifically check for arrays instead of relying on typeof alone.",
+  "verify": "node",
+  "review": "unreviewed"
+}

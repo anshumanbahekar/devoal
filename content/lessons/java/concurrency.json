@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/concurrency",
+  "language": "java",
+  "topic": "Concurrency",
+  "title": "Concurrency",
+  "stage": 4,
+  "order": 1,
+  "explain": "Java can run work on many threads at once, and an `ExecutorService` manages them for you. Submit tasks and read the results through `Future` objects, which wait until each task is done. Java 21 adds virtual threads, which are cheap enough to start one per task.",
+  "file": "Concurrency.java",
+  "code": "import java.util.concurrent.*;\n\npublic class Concurrency {\n    public static void main(String[] args) throws Exception {\n        try (ExecutorService pool = Executors.newVirtualThreadPerTaskExecutor()) {\n            Future<Integer> a = pool.submit(() -> { Thread.sleep(100); return 20; });\n            Future<Integer> b = pool.submit(() -> { Thread.sleep(100); return 22; });\n            System.out.println(a.get() + b.get());   // about 100 ms, not 200 ms\n        }\n    }\n}",
+  "exercise": "Run five tasks that each sleep for 100 ms and time the whole run. Is it close to 100 ms or to 500 ms?",
+  "tip": "Shared mutable variables need protection. Use `AtomicInteger`, `synchronized` or a concurrent collection instead of a plain `int` counter.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/promises",
+  "language": "javascript",
+  "topic": "promises",
+  "title": "Promises",
+  "stage": 3,
+  "order": 2,
+  "explain": "A Promise is a JavaScript object that represents a value that may not be available yet but will be resolved in the future. Promises have three states: pending (waiting), fulfilled (completed successfully), or rejected (failed). You can use .then() to handle the result when a Promise settles.",
+  "file": "promise-basics.js",
+  "code": "// Creating a simple Promise\nconst myPromise = new Promise((resolve, reject) => {\n  setTimeout(() => {\n    resolve('Success!');\n  }, 1000);\n});\n\n// Handling the Promise result\nmyPromise.then((result) => {\n  console.log(result); // Logs 'Success!' after 1 second\n}).catch((error) => {\n  console.log(error);\n});",
+  "exercise": "Create a Promise that rejects after 500ms with the message 'Operation failed', then add a .catch() handler to log the error message.",
+  "tip": "Don't forget that .then() and .catch() return new Promises—this is what allows method chaining. Also, a Promise can only settle once, so calling resolve() or reject() multiple times has no effect.",
+  "verify": "node",
+  "review": "unreviewed"
+}

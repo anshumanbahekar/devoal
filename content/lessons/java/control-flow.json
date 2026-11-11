@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/control-flow",
+  "language": "java",
+  "topic": "control flow",
+  "title": "Control flow",
+  "stage": 1,
+  "order": 3,
+  "explain": "`if` and `else` choose a path, `for` and `while` repeat work, and `switch` picks between many cases. Modern `switch` expressions with `->` return a value and don't fall through. Use `break` and `continue` to leave a loop early or skip an iteration.",
+  "file": "ControlFlow.java",
+  "code": "public class ControlFlow {\n    public static void main(String[] args) {\n        for (int i = 1; i <= 5; i++) {\n            if (i == 4) continue;\n            String kind = switch (i % 3) {\n                case 0 -> \"fizz\";\n                default -> \"num\";\n            };\n            System.out.println(i + \" \" + kind);\n        }\n    }\n}",
+  "exercise": "Print the numbers 1 to 20 and write `even` or `odd` next to each one, using a switch expression.",
+  "tip": "The old `switch` statement falls through to the next case unless you write `break`. Prefer the arrow form, which doesn't.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/workers",
+  "language": "javascript",
+  "topic": "workers",
+  "title": "Workers",
+  "stage": 4,
+  "order": 4,
+  "explain": "Web Workers let you run JavaScript code in the background without blocking the main thread, keeping your app responsive. Think of them as separate \"workers\" that can do heavy calculations while your page stays interactive. You communicate with workers by sending messages back and forth.",
+  "file": "worker_example.js",
+  "code": "// main.js\nconst worker = new Worker('task.js');\nworker.postMessage({num: 10});\nworker.onmessage = (e) => console.log('Result:', e.data);\n\n// task.js (in separate file)\nself.onmessage = (e) => {\n  const result = e.data.num * 2;\n  self.postMessage(result);\n};",
+  "exercise": "Create a worker that receives two numbers and sends back their sum. Test it by sending different number pairs from the main thread.",
+  "tip": "Remember that workers run in a separate scope—they don't have access to the DOM or global variables from your main script. Only pass data that can be serialized (like numbers, strings, and objects).",
+  "verify": "manual",
+  "review": "unreviewed"
+}

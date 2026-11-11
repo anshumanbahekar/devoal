@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/methods",
+  "language": "go",
+  "topic": "methods",
+  "title": "Methods",
+  "stage": 2,
+  "order": 3,
+  "explain": "A method is a function with a receiver, written between `func` and the name. Use a value receiver to read data and a pointer receiver when the method must change it. Go lets you call both kinds on a variable without extra syntax.",
+  "file": "methods.go",
+  "code": "package main\n\nimport \"fmt\"\n\ntype Counter struct{ n int }\n\nfunc (c *Counter) Inc()      { c.n++ }\nfunc (c Counter) Value() int { return c.n }\n\nfunc main() {\n\tc := Counter{}\n\tc.Inc()\n\tc.Inc()\n\tfmt.Println(c.Value())\n}",
+  "exercise": "Add a `Reset` method to Counter and a `String` method so `fmt.Println(c)` prints `Counter(2)`.",
+  "tip": "Mixing value and pointer receivers on one type is confusing. If any method needs a pointer receiver, use pointer receivers for all of them.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

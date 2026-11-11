@@ -1,0 +1,119 @@
+{
+  "language": "python",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "syntax",
+          "title": "Syntax"
+        },
+        {
+          "slug": "variables",
+          "title": "Variables"
+        },
+        {
+          "slug": "input",
+          "title": "Input"
+        },
+        {
+          "slug": "if-else",
+          "title": "If/else"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "loops",
+          "title": "Loops"
+        },
+        {
+          "slug": "functions",
+          "title": "Functions"
+        },
+        {
+          "slug": "lists",
+          "title": "Lists"
+        },
+        {
+          "slug": "dicts",
+          "title": "Dicts"
+        },
+        {
+          "slug": "files",
+          "title": "Files"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "classes",
+          "title": "Classes"
+        },
+        {
+          "slug": "modules",
+          "title": "Modules"
+        },
+        {
+          "slug": "exceptions",
+          "title": "Exceptions"
+        },
+        {
+          "slug": "comprehensions",
+          "title": "Comprehensions"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "generators",
+          "title": "Generators"
+        },
+        {
+          "slug": "decorators",
+          "title": "Decorators"
+        },
+        {
+          "slug": "asyncio",
+          "title": "Asyncio"
+        },
+        {
+          "slug": "typing",
+          "title": "Typing"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "testing",
+          "title": "Testing"
+        },
+        {
+          "slug": "packaging",
+          "title": "Packaging"
+        },
+        {
+          "slug": "fastapi",
+          "title": "FastAPI"
+        },
+        {
+          "slug": "deployment",
+          "title": "Deployment"
+        }
+      ]
+    }
+  ]
+}

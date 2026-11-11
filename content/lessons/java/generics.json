@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/generics",
+  "language": "java",
+  "topic": "Generics",
+  "title": "Generics",
+  "stage": 3,
+  "order": 1,
+  "explain": "Generics let a class or method work with many types while the compiler still checks them. A `List<String>` can hold only strings, so you don't need casts when you read from it. A bounded type like `<T extends Comparable<T>>` limits which types are allowed.",
+  "file": "Generics.java",
+  "code": "import java.util.List;\n\npublic class Generics {\n    static <T extends Comparable<T>> T max(List<T> items) {\n        T best = items.get(0);\n        for (T item : items) if (item.compareTo(best) > 0) best = item;\n        return best;\n    }\n    static class Box<T> {\n        final T value;\n        Box(T value) { this.value = value; }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(max(List.of(3, 9, 4)) + \" \" + max(List.of(\"pear\", \"apple\")));\n        System.out.println(new Box<>(\"hi\").value);\n    }\n}",
+  "exercise": "Write a generic `swap` method that exchanges two elements of a `List<T>`.",
+  "tip": "Generics are erased at runtime, so you can't write `new T()` or `instanceof List<String>`. Pass a `Class<T>` or a supplier when you need that.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

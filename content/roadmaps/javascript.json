@@ -1,0 +1,115 @@
+{
+  "language": "javascript",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "variables",
+          "title": "Variables"
+        },
+        {
+          "slug": "types",
+          "title": "Types"
+        },
+        {
+          "slug": "functions",
+          "title": "Functions"
+        },
+        {
+          "slug": "scope",
+          "title": "Scope"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "arrays",
+          "title": "Arrays"
+        },
+        {
+          "slug": "objects",
+          "title": "Objects"
+        },
+        {
+          "slug": "dom",
+          "title": "DOM"
+        },
+        {
+          "slug": "events",
+          "title": "Events"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "closures",
+          "title": "Closures"
+        },
+        {
+          "slug": "promises",
+          "title": "Promises"
+        },
+        {
+          "slug": "modules",
+          "title": "Modules"
+        },
+        {
+          "slug": "fetch",
+          "title": "Fetch"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "event-loop",
+          "title": "Event loop"
+        },
+        {
+          "slug": "prototypes",
+          "title": "Prototypes"
+        },
+        {
+          "slug": "performance",
+          "title": "Performance"
+        },
+        {
+          "slug": "workers",
+          "title": "Workers"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "bundlers",
+          "title": "Bundlers"
+        },
+        {
+          "slug": "testing",
+          "title": "Testing"
+        },
+        {
+          "slug": "node",
+          "title": "Node"
+        },
+        {
+          "slug": "deployment",
+          "title": "Deployment"
+        }
+      ]
+    }
+  ]
+}

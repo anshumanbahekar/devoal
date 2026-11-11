@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/variables",
+  "language": "javascript",
+  "topic": "Variables",
+  "title": "Variables",
+  "stage": 1,
+  "order": 1,
+  "explain": "Variables are containers that store values like numbers, text, or true/false. You create a variable using `let`, `const`, or `var`, give it a name, and assign a value with the equals sign. Once created, you can use the variable's name anywhere in your code to access or change its value.",
+  "file": "variables.js",
+  "code": "let name = \"Alice\";\nlet age = 25;\nconst pi = 3.14159;\n\nconsole.log(name);\nconsole.log(age);\n\nage = 26;\nconsole.log(age);\n\nlet result = age + 5;\nconsole.log(result);",
+  "exercise": "Create a variable for your favorite color, another for your birth year, and a third that calculates how many years ago you were born (using the current year 2024). Print all three variables.",
+  "tip": "Use `const` by default because it prevents accidental changes. Use `let` only when you need to reassign the variable. Avoid `var` in modern JavaScript—it has confusing scoping rules.",
+  "verify": "node",
+  "review": "unreviewed"
+}

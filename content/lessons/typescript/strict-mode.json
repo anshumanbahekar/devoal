@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/strict-mode",
+  "language": "typescript",
+  "topic": "Strict mode",
+  "title": "Strict mode",
+  "stage": 5,
+  "order": 1,
+  "explain": "`strict` is a single switch that turns on a group of checks, including `strictNullChecks` and `noImplicitAny`. With it, `null` and `undefined` are separate types you must handle, and every value needs a known type. New projects should start with it on, because it is much harder to add later.",
+  "file": "strict.ts",
+  "code": "function textLength(text: string | null): number {\n  // @ts-expect-error  'text' is possibly 'null'\n  const bad = text.length;\n  return text?.length ?? 0;\n}\n// @ts-expect-error  parameter 'n' implicitly has an 'any' type\nfunction double(n) {\n  return n * 2;\n}\nconsole.log(textLength(\"hi\"), double(4));",
+  "exercise": "Turn on `strict` in a small project and fix the errors it reports, one file at a time.",
+  "tip": "Don't silence errors with the non-null assertion `!` everywhere. Each one is a promise to the compiler that you may not be able to keep.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

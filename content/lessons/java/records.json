@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/records",
+  "language": "java",
+  "topic": "records",
+  "title": "Records",
+  "stage": 4,
+  "order": 3,
+  "explain": "A record is a short way to declare an immutable data class. The compiler generates the constructor, accessors, `equals`, `hashCode` and `toString` from the component list. You can add validation in a compact constructor and extra methods in the body.",
+  "file": "Records.java",
+  "code": "public class Records {\n    record Point(int x, int y) {\n        Point {\n            if (x < 0 || y < 0) throw new IllegalArgumentException(\"negative\");\n        }\n        double distance() { return Math.sqrt(x * x + y * y); }\n    }\n    public static void main(String[] args) {\n        Point p = new Point(3, 4);\n        System.out.println(p + \" \" + p.distance() + \" \" + p.equals(new Point(3, 4)));\n    }\n}",
+  "exercise": "Define a `Person` record with a name and an age, and reject negative ages in the compact constructor.",
+  "tip": "Record fields are final, so you can't set them later. To change a value, create a new record with the updated component.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

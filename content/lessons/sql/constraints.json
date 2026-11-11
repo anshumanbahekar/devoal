@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/constraints",
+  "language": "sql",
+  "topic": "constraints",
+  "title": "Constraints",
+  "stage": 2,
+  "order": 4,
+  "explain": "Constraints let the database reject bad data for you. `PRIMARY KEY`, `NOT NULL`, `UNIQUE`, `CHECK` and `FOREIGN KEY` each guard a different rule. Rules in the schema protect your data from every app that touches it.",
+  "file": "constraints.sql",
+  "code": "CREATE TABLE users (\n  id INTEGER PRIMARY KEY,\n  email TEXT NOT NULL UNIQUE,\n  age INT CHECK (age >= 13)\n);\nINSERT INTO users (email, age) VALUES ('ada@example.com', 36);\nINSERT INTO users (email, age) VALUES ('ada@example.com', 40);  -- fails: duplicate email",
+  "exercise": "Create a `products` table where `price` must be positive and `sku` must be unique, then try to break each rule.",
+  "tip": "A foreign key only protects you when enforcement is on. SQLite needs `PRAGMA foreign_keys = ON`, while PostgreSQL enforces it by default.",
+  "verify": "sqlite-expect-fail",
+  "review": "unreviewed"
+}

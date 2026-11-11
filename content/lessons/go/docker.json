@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/docker",
+  "language": "go",
+  "topic": "Docker",
+  "title": "Docker",
+  "stage": 5,
+  "order": 3,
+  "explain": "A multi-stage Dockerfile compiles your program in a full Go image, then copies only the binary into a tiny final image. Setting `CGO_ENABLED=0` produces a static binary that runs without system libraries. The result is a small image with very little inside it to attack.",
+  "file": "Dockerfile",
+  "code": "FROM golang:1.22 AS build\nWORKDIR /src\nCOPY . .\nRUN CGO_ENABLED=0 go build -o /app .\n\nFROM gcr.io/distroless/static\nCOPY --from=build /app /app\nENTRYPOINT [\"/app\"]",
+  "exercise": "Build an image of your server with `docker build -t myapp .` and run it with `docker run -p 8080:8080 myapp`.",
+  "tip": "Add a `.dockerignore` so `.git` and local build files don't get copied into the build. It speeds builds up and avoids leaking files.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

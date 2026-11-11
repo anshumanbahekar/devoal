@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/channels",
+  "language": "go",
+  "topic": "channels",
+  "title": "Channels",
+  "stage": 4,
+  "order": 2,
+  "explain": "A channel is a typed pipe for sending values between goroutines. `ch <- v` sends and `<-ch` receives, and each waits until the other side is ready. Call `close` when no more values are coming, so a `range` loop over the channel can end.",
+  "file": "channels.go",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tjobs := make(chan int)\n\tdone := make(chan bool)\n\tgo func() {\n\t\tfor n := range jobs {\n\t\t\tfmt.Println(\"got\", n)\n\t\t}\n\t\tdone <- true\n\t}()\n\tfor i := 1; i <= 3; i++ {\n\t\tjobs <- i\n\t}\n\tclose(jobs)\n\t<-done\n}",
+  "exercise": "Make a worker that squares numbers received on one channel and sends the results on another.",
+  "tip": "Only the sender should close a channel. Sending on a closed channel panics.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/bundlers",
+  "language": "javascript",
+  "topic": "Bundlers",
+  "title": "Bundlers",
+  "stage": 5,
+  "order": 1,
+  "explain": "A bundler is a tool that combines your JavaScript files and dependencies into fewer files (usually one) for the browser. Bundlers like Webpack and Parcel also help you use modern JavaScript features and manage assets. They transform your code so it runs efficiently in production.",
+  "file": "package.json",
+  "code": "{\n  \"name\": \"my-app\",\n  \"version\": \"1.0.0\",\n  \"scripts\": {\n    \"build\": \"parcel build src/index.js\"\n  },\n  \"devDependencies\": {\n    \"parcel\": \"^2.0.0\"\n  }\n}",
+  "exercise": "Install Parcel, create a src/index.js file with console.log('Hello'), and run npm run build. Check the dist folder to see the bundled output.",
+  "tip": "Don't forget to add node_modules to .gitignore before committing—bundlers create large folders that shouldn't be in version control.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

@@ -1,0 +1,42 @@
+{
+  "language": "cpp",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Compile and run a program.",
+      "file": "01_main.cpp",
+      "explain": "Every program starts at main. You compile first and run the binary after, so many errors show up before execution.",
+      "exercise": "Compile with g++ and change the message to print your name.",
+      "code": "#include <iostream>\nint main() {\n    std::cout << \"hello\" << std::endl;\n    return 0;\n}",
+      "solutionDiff": " #include <iostream>\n int main() {\n-    std::cout << \"hello\" << std::endl;\n+    std::cout << \"I am Anshu\" << std::endl;\n     return 0;\n }"
+    },
+    {
+      "order": 2,
+      "title": "Store lists with std::vector.",
+      "file": "02_vectors.cpp",
+      "explain": "std::vector is a resizable array and the default container. Algorithms like sort work on iterator ranges.",
+      "exercise": "Read five numbers into a vector and print them in descending order.",
+      "code": "std::vector<int> v = {3, 1, 2};\nstd::sort(v.begin(), v.end());\nfor (int x : v) std::cout << x;",
+      "solutionDiff": " std::vector<int> v;\n-// TODO: read five numbers and sort\n+for (int i = 0; i < 5; i++) {\n+    int x; std::cin >> x; v.push_back(x);\n+}\n+std::sort(v.begin(), v.end(), std::greater<int>());\n for (int x : v) std::cout << x << \" \";"
+    },
+    {
+      "order": 3,
+      "title": "Addresses, references and memory.",
+      "file": "03_pointers.cpp",
+      "explain": "A pointer stores an address and a reference is an alias. Dereferencing with * reads or writes the original value.",
+      "exercise": "Write a function that swaps two ints using references.",
+      "code": "int a = 10;\nint* p = &a;\n*p = 20;\nstd::cout << a;",
+      "solutionDiff": "-void swap(int a, int b) {\n+void swap(int& a, int& b) {\n     int t = a;\n     a = b;\n     b = t;\n }"
+    },
+    {
+      "order": 4,
+      "title": "Objects, constructors and RAII.",
+      "file": "04_classes.cpp",
+      "explain": "A class keeps data and behavior together. The constructor sets the object up and the destructor cleans it up automatically.",
+      "exercise": "Add a perimeter method to Box and print both values.",
+      "code": "class Box {\npublic:\n    int w;\n    Box(int w) : w(w) {}\n    int area() { return w * w; }\n};",
+      "solutionDiff": " class Box {\n public:\n     int w;\n     Box(int w) : w(w) {}\n     int area() { return w * w; }\n+    int perimeter() { return 4 * w; }\n };"
+    }
+  ],
+  "capstone": "A text-based inventory manager that saves and loads from disk."
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/delete",
+  "language": "sql",
+  "topic": "DELETE",
+  "title": "DELETE",
+  "stage": 2,
+  "order": 3,
+  "explain": "DELETE removes the rows that match a condition. As with UPDATE, a missing WHERE affects the whole table. Deleted rows are gone for good unless you are inside a transaction you can roll back.",
+  "file": "delete.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nDELETE FROM students WHERE score < 70;\nSELECT name FROM students;",
+  "exercise": "Delete the lowest scoring student, then show who remains.",
+  "tip": "Test your WHERE with a SELECT before running DELETE. Better still, run it inside a transaction.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

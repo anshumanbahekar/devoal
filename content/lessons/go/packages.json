@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/packages",
+  "language": "go",
+  "topic": "packages",
+  "title": "Packages",
+  "stage": 3,
+  "order": 2,
+  "explain": "A package is a folder of `.go` files that share a package name. Names that start with a capital letter are exported, which means other packages can use them. You import a package by its module path, like `example.com/app/mathx`.",
+  "file": "mathx.go",
+  "code": "// mathx/mathx.go\npackage mathx\n\n// Double is exported because it starts with a capital letter.\nfunc Double(n int) int { return n * 2 }\n\n// main.go\npackage main\n\nimport (\n\t\"fmt\"\n\n\t\"example.com/app/mathx\"\n)\n\nfunc main() { fmt.Println(mathx.Double(21)) }",
+  "exercise": "Move a helper function into its own package folder and call it from `main`.",
+  "tip": "A lowercase name is private to its package. If `mathx.double` won't compile from outside, capitalize it.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

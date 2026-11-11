@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/dom",
+  "language": "javascript",
+  "topic": "DOM",
+  "title": "DOM",
+  "stage": 2,
+  "order": 3,
+  "explain": "The DOM (Document Object Model) is a tree structure that represents your HTML page in JavaScript. You can select HTML elements using methods like `document.getElementById()` or `document.querySelector()`, then modify their content, attributes, or styles. This allows you to make web pages interactive and dynamic.",
+  "file": "dom-intro.html",
+  "code": "<!DOCTYPE html>\n<html>\n<body>\n  <h1 id=\"title\">Hello</h1>\n  <button onclick=\"changeTitle()\">Click me</button>\n  <script>\n    function changeTitle() {\n      let element = document.getElementById('title');\n      element.textContent = 'Hello, JavaScript!';\n    }\n  </script>\n</body>\n</html>",
+  "exercise": "Add a second button that changes the title text back to 'Hello' when clicked.",
+  "tip": "A common mistake is trying to select an element before it's loaded in the HTML. Always place your `<script>` tags at the bottom of the `<body>` or use the `DOMContentLoaded` event to wait for the page to fully load.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

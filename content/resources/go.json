@@ -1,0 +1,27 @@
+[
+  {
+    "title": "A Tour of Go",
+    "url": "https://go.dev/tour/",
+    "type": "Course"
+  },
+  {
+    "title": "Go by Example",
+    "url": "https://gobyexample.com/",
+    "type": "Docs"
+  },
+  {
+    "title": "Effective Go",
+    "url": "https://go.dev/doc/effective_go",
+    "type": "Guide"
+  },
+  {
+    "title": "Exercism: Go track",
+    "url": "https://exercism.org/tracks/go",
+    "type": "Practice"
+  },
+  {
+    "title": "Go Playground",
+    "url": "https://go.dev/play/",
+    "type": "Tool"
+  }
+]

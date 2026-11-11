@@ -1,0 +1,27 @@
+[
+  {
+    "title": "MDN: Learn web development",
+    "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development",
+    "type": "Docs"
+  },
+  {
+    "title": "The Modern JavaScript Tutorial",
+    "url": "https://javascript.info/",
+    "type": "Course"
+  },
+  {
+    "title": "Eloquent JavaScript",
+    "url": "https://eloquentjavascript.net/",
+    "type": "Book"
+  },
+  {
+    "title": "freeCodeCamp",
+    "url": "https://www.freecodecamp.org/",
+    "type": "Course"
+  },
+  {
+    "title": "Exercism: JavaScript track",
+    "url": "https://exercism.org/tracks/javascript",
+    "type": "Practice"
+  }
+]

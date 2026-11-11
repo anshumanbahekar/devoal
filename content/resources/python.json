@@ -1,0 +1,27 @@
+[
+  {
+    "title": "The Python Tutorial (official)",
+    "url": "https://docs.python.org/3/tutorial/",
+    "type": "Docs"
+  },
+  {
+    "title": "Automate the Boring Stuff with Python",
+    "url": "https://automatetheboringstuff.com/",
+    "type": "Book"
+  },
+  {
+    "title": "CS50's Introduction to Programming with Python",
+    "url": "https://cs50.harvard.edu/python/",
+    "type": "Course"
+  },
+  {
+    "title": "Real Python",
+    "url": "https://realpython.com/",
+    "type": "Tutorials"
+  },
+  {
+    "title": "Exercism: Python track",
+    "url": "https://exercism.org/tracks/python",
+    "type": "Practice"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/context",
+  "language": "go",
+  "topic": "context",
+  "title": "Context",
+  "stage": 4,
+  "order": 3,
+  "explain": "A `context.Context` carries a deadline or cancellation signal through your call chain. Create one with `WithTimeout` or `WithCancel`, and always `defer cancel()` to release its resources. Functions that do slow work should take a context as their first parameter and stop when `ctx.Done()` fires.",
+  "file": "context.go",
+  "code": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"time\"\n)\n\nfunc main() {\n\tctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)\n\tdefer cancel()\n\tselect {\n\tcase <-time.After(time.Second):\n\t\tfmt.Println(\"finished\")\n\tcase <-ctx.Done():\n\t\tfmt.Println(\"stopped:\", ctx.Err())\n\t}\n}",
+  "exercise": "Make a goroutine count upward every 10 milliseconds and stop it with `WithCancel` after 100 milliseconds.",
+  "tip": "Don't store a context inside a struct. Pass it as the first argument of each function that needs it.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

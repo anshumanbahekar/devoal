@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/goroutines",
+  "language": "go",
+  "topic": "Goroutines",
+  "title": "Goroutines",
+  "stage": 4,
+  "order": 1,
+  "explain": "A goroutine is a function running concurrently, started by putting `go` in front of a call. Goroutines are very cheap, so Go programs often start thousands. `sync.WaitGroup` lets `main` wait until they all finish.",
+  "file": "goroutines.go",
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"sync\"\n)\n\nfunc main() {\n\tvar wg sync.WaitGroup\n\tfor i := 1; i <= 3; i++ {\n\t\twg.Add(1)\n\t\tgo func(n int) {\n\t\t\tdefer wg.Done()\n\t\t\tfmt.Println(\"worker\", n)\n\t\t}(i)\n\t}\n\twg.Wait()\n}",
+  "exercise": "Start five goroutines that each print their number, and run the program several times to see the order change.",
+  "tip": "When `main` returns, the program exits even if goroutines are still running. Always wait for them.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

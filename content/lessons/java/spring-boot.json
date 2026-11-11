@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/spring-boot",
+  "language": "java",
+  "topic": "Spring Boot",
+  "title": "Spring Boot",
+  "stage": 5,
+  "order": 2,
+  "explain": "Spring Boot starts a production-ready web application with very little setup. `@SpringBootApplication` turns on auto-configuration, and `@RestController` with `@GetMapping` maps a URL to a method that returns the response body. Add the `spring-boot-starter-web` dependency and run the `main` method to get a server on port 8080.",
+  "file": "Application.java",
+  "code": "package com.example.app;\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.web.bind.annotation.*;\n\n@SpringBootApplication\n@RestController\npublic class Application {\n    @GetMapping(\"/hello\")\n    String hello(@RequestParam(defaultValue = \"world\") String name) { return \"Hello, \" + name; }\n    public static void main(String[] args) { SpringApplication.run(Application.class, args); }\n}",
+  "exercise": "Generate a project at start.spring.io with the Web dependency, paste this in, run it, and open `/hello?name=Ada`.",
+  "tip": "Keep your main class in the top-level package. Spring scans only that package and the ones below it, so classes outside it are not picked up.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

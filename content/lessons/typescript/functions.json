@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/functions",
+  "language": "typescript",
+  "topic": "functions",
+  "title": "Functions",
+  "stage": 1,
+  "order": 3,
+  "explain": "You annotate each parameter and the return type, and TypeScript checks every call against them. Add `?` to make a parameter optional, or give it a default value. Return types are usually inferred, but writing them on exported functions makes the contract clear.",
+  "file": "functions.ts",
+  "code": "function greet(name: string, greeting = \"Hello\"): string {\n  return `${greeting}, ${name}!`;\n}\nfunction area(w: number, h?: number): number {\n  return w * (h ?? w);\n}\nconst double = (n: number): number => n * 2;\n\nconsole.log(greet(\"Ada\"));          // Hello, Ada!\nconsole.log(area(4), area(4, 5));   // 16 20\nconsole.log(double(21));            // 42",
+  "exercise": "Write a typed function `average(nums: number[])` that returns 0 for an empty list.",
+  "tip": "Don't leave parameters untyped under `strict`. An implicit `any` is an error, and for good reason.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

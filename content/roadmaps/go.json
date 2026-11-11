@@ -1,0 +1,115 @@
+{
+  "language": "go",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "modules",
+          "title": "Modules"
+        },
+        {
+          "slug": "types",
+          "title": "Types"
+        },
+        {
+          "slug": "functions",
+          "title": "Functions"
+        },
+        {
+          "slug": "slices",
+          "title": "Slices"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "maps",
+          "title": "Maps"
+        },
+        {
+          "slug": "structs",
+          "title": "Structs"
+        },
+        {
+          "slug": "methods",
+          "title": "Methods"
+        },
+        {
+          "slug": "interfaces",
+          "title": "Interfaces"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "errors",
+          "title": "Errors"
+        },
+        {
+          "slug": "packages",
+          "title": "Packages"
+        },
+        {
+          "slug": "testing",
+          "title": "Testing"
+        },
+        {
+          "slug": "json",
+          "title": "JSON"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "goroutines",
+          "title": "Goroutines"
+        },
+        {
+          "slug": "channels",
+          "title": "Channels"
+        },
+        {
+          "slug": "context",
+          "title": "Context"
+        },
+        {
+          "slug": "sync",
+          "title": "Sync"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "http-servers",
+          "title": "HTTP servers"
+        },
+        {
+          "slug": "profiling",
+          "title": "Profiling"
+        },
+        {
+          "slug": "docker",
+          "title": "Docker"
+        },
+        {
+          "slug": "deploy",
+          "title": "Deploy"
+        }
+      ]
+    }
+  ]
+}

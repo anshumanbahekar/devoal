@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/testing",
+  "language": "javascript",
+  "topic": "testing",
+  "title": "Testing",
+  "stage": 5,
+  "order": 2,
+  "explain": "Testing is checking that your code works as expected by running it with known inputs and verifying the outputs. JavaScript has popular testing frameworks like Jest that let you write test cases to catch bugs early. A basic test compares an actual result to an expected result using assertions.",
+  "file": "test.js",
+  "code": "function add(a, b) {\n  return a + b;\n}\n\ntest('add function works', () => {\n  expect(add(2, 3)).toBe(5);\n  expect(add(-1, 1)).toBe(0);\n});\n\nfunction subtract(a, b) {\n  return a - b;\n}\ntest('subtract works', () => {\n  expect(subtract(5, 2)).toBe(3);\n});",
+  "exercise": "Write a simple multiply(a, b) function and create two test cases: one testing 3 * 4 equals 12, and another testing -2 * 5 equals -10.",
+  "tip": "A common mistake is testing only the happy path (when things go right). Remember to also test edge cases like zero, negative numbers, and boundary values to catch real bugs.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

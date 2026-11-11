@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/event-loop",
+  "language": "javascript",
+  "topic": "Event loop",
+  "title": "Event loop",
+  "stage": 4,
+  "order": 1,
+  "explain": "The JavaScript event loop continuously checks if there's code to execute: first it runs synchronous code in the call stack, then it checks the callback queue for asynchronous operations (like setTimeout or fetch) that are ready. Understanding this helps explain why setTimeout(..., 0) doesn't run immediately—it goes to the queue and waits for the stack to clear.",
+  "file": "event_loop_intro.js",
+  "code": "console.log('Start');\n\nsetTimeout(() => {\n  console.log('Timeout callback');\n}, 0);\n\nconsole.log('End');\n\n// Output: Start, End, Timeout callback\n// (not Start, Timeout callback, End)",
+  "exercise": "Modify the code above: add a third console.log() inside the setTimeout, and predict the output order before running it. Then test your prediction.",
+  "tip": "A common mistake is thinking setTimeout(..., 0) executes immediately. It doesn't—0ms is the minimum delay before the callback enters the queue, but it still waits for the call stack to empty first.",
+  "verify": "node",
+  "review": "unreviewed"
+}

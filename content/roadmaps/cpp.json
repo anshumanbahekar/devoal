@@ -1,0 +1,115 @@
+{
+  "language": "cpp",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "compiling",
+          "title": "Compiling"
+        },
+        {
+          "slug": "types",
+          "title": "Types"
+        },
+        {
+          "slug": "control-flow",
+          "title": "Control flow"
+        },
+        {
+          "slug": "i-o",
+          "title": "I/O"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "functions",
+          "title": "Functions"
+        },
+        {
+          "slug": "arrays",
+          "title": "Arrays"
+        },
+        {
+          "slug": "strings",
+          "title": "Strings"
+        },
+        {
+          "slug": "vectors",
+          "title": "Vectors"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "pointers",
+          "title": "Pointers"
+        },
+        {
+          "slug": "references",
+          "title": "References"
+        },
+        {
+          "slug": "classes",
+          "title": "Classes"
+        },
+        {
+          "slug": "raii",
+          "title": "RAII"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "templates",
+          "title": "Templates"
+        },
+        {
+          "slug": "stl",
+          "title": "STL"
+        },
+        {
+          "slug": "smart-pointers",
+          "title": "Smart pointers"
+        },
+        {
+          "slug": "move-semantics",
+          "title": "Move semantics"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "concurrency",
+          "title": "Concurrency"
+        },
+        {
+          "slug": "cmake",
+          "title": "CMake"
+        },
+        {
+          "slug": "profiling",
+          "title": "Profiling"
+        },
+        {
+          "slug": "sanitizers",
+          "title": "Sanitizers"
+        }
+      ]
+    }
+  ]
+}

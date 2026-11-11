@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/limit",
+  "language": "sql",
+  "topic": "LIMIT",
+  "title": "LIMIT",
+  "stage": 1,
+  "order": 4,
+  "explain": "LIMIT caps how many rows come back, and `OFFSET` skips some first. Together with ORDER BY they give you top-N lists and pages. Without ORDER BY you only get an arbitrary few rows.",
+  "file": "limit.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nSELECT name, score FROM students ORDER BY score DESC LIMIT 2;\nSELECT name, score FROM students ORDER BY score DESC LIMIT 2 OFFSET 2;",
+  "exercise": "Show the single lowest score, then show page 2 of the list with 2 students per page.",
+  "tip": "Large OFFSET values get slow on big tables. For deep pages, filter on the last value you saw instead.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

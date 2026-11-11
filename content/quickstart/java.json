@@ -1,0 +1,42 @@
+{
+  "language": "java",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Class, main method and output.",
+      "file": "01_Main.java",
+      "explain": "Everything lives in a class and execution starts at main. The compiler turns source into bytecode for the JVM.",
+      "exercise": "Compile with javac, run with java, and print your name and age.",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"hello\");\n    }\n}",
+      "solutionDiff": " public class Main {\n     public static void main(String[] args) {\n-        System.out.println(\"hello\");\n+        System.out.println(\"Anshu, 17\");\n     }\n }"
+    },
+    {
+      "order": 2,
+      "title": "for and enhanced for.",
+      "file": "02_Loops.java",
+      "explain": "The enhanced for loop walks an array or collection. Types are explicit, so mistakes surface at compile time.",
+      "exercise": "Sum an int array and print the average.",
+      "code": "int[] a = {1, 2, 3};\nfor (int x : a) {\n    System.out.println(x * 2);\n}",
+      "solutionDiff": " int[] a = {4, 8, 15};\n-// TODO: sum and average\n+int sum = 0;\n+for (int x : a) sum += x;\n+System.out.println((double) sum / a.length);"
+    },
+    {
+      "order": 3,
+      "title": "Fields, constructors, methods.",
+      "file": "03_Objects.java",
+      "explain": "A class defines fields and methods and a constructor builds an instance. this refers to the current object.",
+      "exercise": "Add a speed field to Car and a method that increases it.",
+      "code": "class Car {\n    String name;\n    Car(String name) { this.name = name; }\n    void go() { System.out.println(name); }\n}",
+      "solutionDiff": " class Car {\n     String name;\n+    int speed = 0;\n     Car(String name) { this.name = name; }\n+    void faster() { speed += 10; }\n }"
+    },
+    {
+      "order": 4,
+      "title": "Collections with ArrayList.",
+      "file": "04_Lists.java",
+      "explain": "ArrayList is a resizable list of objects. The type in angle brackets says what it can hold.",
+      "exercise": "Add five names to an ArrayList and print them in uppercase.",
+      "code": "List<String> xs = new ArrayList<>();\nxs.add(\"a\");\nxs.add(\"b\");\nSystem.out.println(xs.size());",
+      "solutionDiff": " List<String> xs = new ArrayList<>();\n-// TODO: add five names\n+xs.add(\"ada\"); xs.add(\"linus\"); xs.add(\"grace\");\n+xs.add(\"alan\"); xs.add(\"dennis\");\n+for (String s : xs) System.out.println(s.toUpperCase());"
+    }
+  ],
+  "capstone": "A library program with books, members and loans."
+}

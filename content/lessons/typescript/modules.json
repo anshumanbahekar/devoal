@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/modules",
+  "language": "typescript",
+  "topic": "modules",
+  "title": "Modules",
+  "stage": 3,
+  "order": 3,
+  "explain": "Every file with an `import` or `export` is a module with its own scope. Export what other files may use, then import it by name from a relative path. `import type` brings in only a type, and it disappears when the code is compiled.",
+  "file": "modules.ts",
+  "code": "// math.ts\nexport const PI = 3.14159;\nexport function circle(r: number): number { return PI * r * r; }\nexport type Point = { x: number; y: number };\n\n// main.ts\nimport { circle, type Point } from \"./math\";\nconst p: Point = { x: 1, y: 2 };\nconsole.log(circle(2), p);",
+  "exercise": "Split a small program into two files, export a function from one and import it in the other.",
+  "tip": "In an ES module project (`\"type\": \"module\"`) using `NodeNext`, relative imports must end in `.js` even though the source file is `.ts`.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

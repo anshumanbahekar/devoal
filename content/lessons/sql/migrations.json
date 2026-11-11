@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/migrations",
+  "language": "sql",
+  "topic": "migrations",
+  "title": "Migrations",
+  "stage": 5,
+  "order": 3,
+  "explain": "A migration is a small, versioned script that changes your database schema. Keeping them in files, in order, lets every developer and server reach the same structure. Tools such as Alembic, Flyway or Prisma Migrate run them for you and record which ones were applied.",
+  "file": "migrations.sql",
+  "code": "-- 001_create_users.sql\nCREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT NOT NULL);\n\n-- 002_add_username.sql\nALTER TABLE users ADD COLUMN username TEXT;\n\n-- 003_index_email.sql\nCREATE UNIQUE INDEX idx_users_email ON users (email);",
+  "exercise": "Write a migration that adds a `created_at` column to `users`, and a second one that undoes it.",
+  "tip": "Never edit a migration that has already run in production. Add a new one so every environment stays in sync.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

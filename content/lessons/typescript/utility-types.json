@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/utility-types",
+  "language": "typescript",
+  "topic": "utility types",
+  "title": "Utility types",
+  "stage": 3,
+  "order": 2,
+  "explain": "Utility types build new types from existing ones so you don't repeat yourself. `Partial` makes every property optional, `Pick` and `Omit` select or drop properties, and `Record` builds an object type from keys and a value type. `Readonly` and `Required` flip those flags across a whole type.",
+  "file": "utility_types.ts",
+  "code": "interface User { id: number; name: string; email: string }\ntype Draft = Partial<User>;\ntype PublicUser = Omit<User, \"email\">;\ntype NameOnly = Pick<User, \"name\">;\ntype Scores = Record<string, number>;\n\nconst draft: Draft = { name: \"Ada\" };\nconst pub: PublicUser = { id: 1, name: \"Ada\" };\nconst only: NameOnly = { name: \"Ada\" };\nconst scores: Scores = { math: 95, art: 88 };\nconsole.log(draft, pub, only, scores);",
+  "exercise": "Given a `Todo` interface, create a type for updating a todo where every field is optional except `id`.",
+  "tip": "`Partial` is shallow. Nested objects inside stay exactly as they were, so deep updates may need your own recursive type.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

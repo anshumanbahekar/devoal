@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Learn C++",
+    "url": "https://www.learncpp.com/",
+    "type": "Course"
+  },
+  {
+    "title": "cppreference",
+    "url": "https://en.cppreference.com/",
+    "type": "Docs"
+  },
+  {
+    "title": "C++ Core Guidelines",
+    "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines",
+    "type": "Guide"
+  },
+  {
+    "title": "Compiler Explorer",
+    "url": "https://godbolt.org/",
+    "type": "Tool"
+  },
+  {
+    "title": "Exercism: C++ track",
+    "url": "https://exercism.org/tracks/cpp",
+    "type": "Practice"
+  }
+]

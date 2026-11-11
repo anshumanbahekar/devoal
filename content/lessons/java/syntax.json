@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/syntax",
+  "language": "java",
+  "topic": "Syntax",
+  "title": "Syntax",
+  "stage": 1,
+  "order": 1,
+  "explain": "A Java program is made of classes, and execution starts in `public static void main`. Statements end with a semicolon, blocks use curly braces, and the file name must match the public class. From Java 11 you can run a single file directly with `java Main.java`.",
+  "file": "Main.java",
+  "code": "public class Main {\n    public static void main(String[] args) {\n        String name = \"Ada\";\n        System.out.println(\"Hello, \" + name + \"!\");\n        System.out.printf(\"%s is %d%n\", name, 36);\n    }\n}",
+  "exercise": "Print your name and age on separate lines using `println`, then print both again with one `printf`.",
+  "tip": "When you compile with `javac`, the file name must match the public class name exactly, including capital letters.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/query-plans",
+  "language": "sql",
+  "topic": "query plans",
+  "title": "Query plans",
+  "stage": 4,
+  "order": 3,
+  "explain": "A query plan shows how the database intends to run your query, including whether it uses an index or scans the whole table. In PostgreSQL you read it with `EXPLAIN`, and `EXPLAIN ANALYZE` also runs the query and reports real timings. Reading plans is how you find out why something is slow.",
+  "file": "query_plans.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nCREATE INDEX idx_course ON students (course_id);\nEXPLAIN QUERY PLAN SELECT * FROM students WHERE course_id = 2;  -- SQLite\n-- PostgreSQL:  EXPLAIN ANALYZE SELECT * FROM students WHERE course_id = 2;",
+  "exercise": "Run EXPLAIN on a query before and after adding an index, and compare the two plans.",
+  "tip": "`EXPLAIN ANALYZE` actually executes the statement. Wrap an `UPDATE` or `DELETE` in a transaction and roll back when you test it.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

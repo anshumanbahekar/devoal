@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/dicts",
+  "language": "python",
+  "topic": "dicts",
+  "title": "Dicts",
+  "stage": 2,
+  "order": 4,
+  "explain": "A dictionary maps keys to values and looks them up quickly. You read with `d[key]`, or `d.get(key, default)` when the key might be missing. Loop over `d.items()` to get keys and values together.",
+  "file": "dicts.py",
+  "code": "scores = {\"Ada\": 91, \"Linus\": 78}\nscores[\"Grace\"] = 85\nprint(scores[\"Ada\"])\nprint(scores.get(\"Alan\", 0))      # 0, no error\nfor name, score in scores.items():\n    print(name, score)\nprint(\"Linus\" in scores)          # True\ndel scores[\"Linus\"]\nprint(len(scores))",
+  "exercise": "Count how many times each letter appears in a word and print the result as a dictionary.",
+  "tip": "Reading a missing key with `d[key]` raises `KeyError`. Use `d.get(key)` or check `key in d` first.",
+  "verify": "python",
+  "review": "unreviewed"
+}

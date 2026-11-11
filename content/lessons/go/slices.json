@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/slices",
+  "language": "go",
+  "topic": "slices",
+  "title": "Slices",
+  "stage": 1,
+  "order": 4,
+  "explain": "A slice is a flexible view over an array that grows with `append`. `len` is how many items it holds and `cap` is how many fit before Go must allocate a bigger array. Slicing with `s[1:3]` shares the same memory instead of copying it.",
+  "file": "slices.go",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnums := []int{1, 2, 3}\n\tnums = append(nums, 4, 5)\n\tpart := nums[1:3] // shares memory with nums\n\tpart[0] = 99\n\tfmt.Println(nums, part, len(nums), cap(nums) >= 5)\n\tcopyOf := append([]int(nil), nums...)\n\tcopyOf[0] = -1\n\tfmt.Println(nums[0], copyOf[0])\n}",
+  "exercise": "Remove the middle element of a slice without leaving a gap, using `append`.",
+  "tip": "Always assign the result of `append` back, as in `s = append(s, x)`. It may return a new slice.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

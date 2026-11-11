@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/scope",
+  "language": "javascript",
+  "topic": "scope",
+  "title": "Scope",
+  "stage": 1,
+  "order": 4,
+  "explain": "Scope in JavaScript determines where variables can be accessed. Variables declared with `let` and `const` are block-scoped (available only within curly braces), while `var` is function-scoped (available throughout the entire function). Understanding scope prevents unexpected errors and helps you write cleaner code.",
+  "file": "scope-lesson.js",
+  "code": "function greet() {\n  let name = 'Alice';\n  if (true) {\n    let city = 'NYC';\n    console.log(name); // 'Alice' - accessible here\n  }\n  console.log(city); // ReferenceError - not accessible outside the block\n}\n\ngreet();",
+  "exercise": "Create a function that declares a variable with `let` inside an if-block, then try to access it outside the block. What error do you get? Now declare it outside the if-block instead—does the code work?",
+  "tip": "Don't use `var` in modern JavaScript; always prefer `let` and `const` because they respect block scope, making your code more predictable and less bug-prone.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

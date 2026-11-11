@@ -1,0 +1,42 @@
+{
+  "language": "go",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Packages, imports and main.",
+      "file": "01_main.go",
+      "explain": "Code lives in packages and execution starts at main. Imports are explicit and unused ones are errors.",
+      "exercise": "Run go mod init demo, then print your name with fmt.Printf.",
+      "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"hello\")\n}",
+      "solutionDiff": " package main\n import \"fmt\"\n func main() {\n-    fmt.Println(\"hello\")\n+    fmt.Println(\"I am Anshu\")\n }"
+    },
+    {
+      "order": 2,
+      "title": "Dynamic lists with slices.",
+      "file": "02_slices.go",
+      "explain": "A slice is a view over an array that grows with append. range gives you the index and the value.",
+      "exercise": "Append five numbers to a slice and print their sum.",
+      "code": "xs := []int{1, 2, 3}\nxs = append(xs, 4)\nfor i, x := range xs {\n    fmt.Println(i, x)\n}",
+      "solutionDiff": " xs := []int{}\n-// TODO: append five numbers and sum\n+for i := 1; i <= 5; i++ {\n+    xs = append(xs, i)\n+}\n+sum := 0\n+for _, x := range xs {\n+    sum += x\n+}\n+fmt.Println(sum)"
+    },
+    {
+      "order": 3,
+      "title": "Structs and methods.",
+      "file": "03_structs.go",
+      "explain": "Structs hold data and methods attach to types through a receiver. There are no classes and no inheritance.",
+      "exercise": "Add a Cat type with its own Meow method.",
+      "code": "type Dog struct{ Name string }\n\nfunc (d Dog) Bark() string {\n    return d.Name + \" says woof\"\n}",
+      "solutionDiff": "-// TODO: add a Cat type\n+type Cat struct{ Name string }\n+\n+func (c Cat) Meow() string {\n+    return c.Name + \" says meow\"\n+}"
+    },
+    {
+      "order": 4,
+      "title": "Run work at the same time.",
+      "file": "04_goroutines.go",
+      "explain": "The go keyword runs a function concurrently. Goroutines are cheap, so you can start thousands.",
+      "exercise": "Start three goroutines that print their number and wait with sync.WaitGroup.",
+      "code": "go func() {\n    fmt.Println(\"in parallel\")\n}()\ntime.Sleep(time.Second)",
+      "solutionDiff": "+var wg sync.WaitGroup\n for i := 1; i <= 3; i++ {\n-    fmt.Println(i)\n+    wg.Add(1)\n+    go func(n int) {\n+        defer wg.Done()\n+        fmt.Println(n)\n+    }(i)\n }\n+wg.Wait()"
+    }
+  ],
+  "capstone": "A small REST API for notes with an in-memory store."
+}

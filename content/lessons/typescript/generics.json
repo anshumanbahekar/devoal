@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/generics",
+  "language": "typescript",
+  "topic": "Generics",
+  "title": "Generics",
+  "stage": 3,
+  "order": 1,
+  "explain": "Generics let one function or type work with many types while keeping them connected. The `<T>` is a placeholder that is filled in from how you call the function. Use them when the output type depends on the input type, such as `first<T>(items: T[]): T`.",
+  "file": "generics.ts",
+  "code": "function first<T>(items: T[]): T | undefined {\n  return items[0];\n}\ninterface Box<T> { value: T }\nconst n = first([10, 20]);          // number | undefined\nconst s = first([\"a\", \"b\"]);        // string | undefined\nconst box: Box<boolean> = { value: true };\n\nfunction pick<T, K extends keyof T>(obj: T, key: K): T[K] {\n  return obj[key];\n}\nconsole.log(n, s, box, pick({ id: 1, name: \"Ada\" }, \"name\"));",
+  "exercise": "Write a generic `last<T>` function and a generic `Pair<A, B>` type, then use both.",
+  "tip": "Don't add a generic when a plain type works. If `T` appears only once in the signature, it usually isn't doing anything.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

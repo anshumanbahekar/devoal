@@ -1,0 +1,115 @@
+{
+  "language": "java",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "syntax",
+          "title": "Syntax"
+        },
+        {
+          "slug": "types",
+          "title": "Types"
+        },
+        {
+          "slug": "control-flow",
+          "title": "Control flow"
+        },
+        {
+          "slug": "methods",
+          "title": "Methods"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "classes",
+          "title": "Classes"
+        },
+        {
+          "slug": "inheritance",
+          "title": "Inheritance"
+        },
+        {
+          "slug": "interfaces",
+          "title": "Interfaces"
+        },
+        {
+          "slug": "collections",
+          "title": "Collections"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "generics",
+          "title": "Generics"
+        },
+        {
+          "slug": "streams",
+          "title": "Streams"
+        },
+        {
+          "slug": "exceptions",
+          "title": "Exceptions"
+        },
+        {
+          "slug": "i-o",
+          "title": "I/O"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "concurrency",
+          "title": "Concurrency"
+        },
+        {
+          "slug": "jvm-memory",
+          "title": "JVM memory"
+        },
+        {
+          "slug": "records",
+          "title": "Records"
+        },
+        {
+          "slug": "modules",
+          "title": "Modules"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "maven",
+          "title": "Maven"
+        },
+        {
+          "slug": "spring-boot",
+          "title": "Spring Boot"
+        },
+        {
+          "slug": "testing",
+          "title": "Testing"
+        },
+        {
+          "slug": "deploy",
+          "title": "Deploy"
+        }
+      ]
+    }
+  ]
+}

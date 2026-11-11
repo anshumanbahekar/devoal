@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/indexes",
+  "language": "sql",
+  "topic": "indexes",
+  "title": "Indexes",
+  "stage": 4,
+  "order": 2,
+  "explain": "An index is a sorted lookup structure that lets the database find rows without scanning the whole table. It speeds up WHERE, JOIN and ORDER BY on the indexed columns, but it slows writes slightly and takes space. Add indexes for queries you actually run often.",
+  "file": "indexes.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nCREATE INDEX idx_students_course ON students (course_id);\nCREATE UNIQUE INDEX idx_students_name ON students (name);\nSELECT * FROM students WHERE course_id = 2;",
+  "exercise": "Create an index on `score` and explain which queries it helps and which it does not.",
+  "tip": "Indexing every column is not free. Each index slows INSERT and UPDATE and uses disk, so index what your queries filter and join on.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

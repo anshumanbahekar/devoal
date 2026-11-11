@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/if-else",
+  "language": "python",
+  "topic": "if/else",
+  "title": "If/else",
+  "stage": 1,
+  "order": 4,
+  "explain": "An if/else statement lets your program make decisions based on conditions. If a condition is true, the code in the if block runs; otherwise, the code in the else block runs. You can check conditions using comparison operators like ==, >, <, and !=.",
+  "file": "decisions.py",
+  "code": "age = 15\n\nif age >= 13:\n    print(\"You are a teenager!\")\nelse:\n    print(\"You are younger than a teenager.\")\n\nscore = 85\nif score >= 90:\n    print(\"Grade: A\")\nelse:\n    print(\"Grade: B or lower\")",
+  "exercise": "Write a program that asks the user for their favorite color, then prints a different message based on whether it's 'blue' or not.",
+  "tip": "Remember to use == (double equals) to compare values, not = (single equals) which assigns values. For example, use if x == 5: not if x = 5:",
+  "verify": "python",
+  "review": "unreviewed"
+}

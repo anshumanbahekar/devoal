@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/functions",
+  "language": "go",
+  "topic": "functions",
+  "title": "Functions",
+  "stage": 1,
+  "order": 3,
+  "explain": "Functions list parameter types after the names and the return type after the parentheses. A function can return several values, which Go uses for results and errors. Functions are also values, so you can store them in variables and pass them around.",
+  "file": "functions.go",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc divide(a, b float64) (float64, error) {\n\tif b == 0 {\n\t\treturn 0, fmt.Errorf(\"cannot divide %v by zero\", a)\n\t}\n\treturn a / b, nil\n}\n\nfunc main() {\n\tfmt.Println(divide(10, 4))\n\tfmt.Println(divide(1, 0))\n}",
+  "exercise": "Write `minMax(nums []int) (int, int)` that returns the smallest and largest values in a slice.",
+  "tip": "Ignoring the `error` return value is the most common beginner bug. Check `err != nil` right after the call.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

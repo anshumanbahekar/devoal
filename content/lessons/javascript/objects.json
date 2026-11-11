@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/objects",
+  "language": "javascript",
+  "topic": "objects",
+  "title": "Objects",
+  "stage": 2,
+  "order": 2,
+  "explain": "Objects in JavaScript are collections of key-value pairs that store related data and functions together. You create objects using curly braces {} and access their properties using dot notation (object.property) or bracket notation (object['property']). Objects help organize code by grouping related information, like storing a person's name, age, and email in one place.",
+  "file": "person.js",
+  "code": "const person = {\n  name: 'Alice',\n  age: 25,\n  email: 'alice@example.com',\n  greet: function() {\n    console.log('Hello, I am ' + this.name);\n  }\n};\n\nconsole.log(person.name);\nconsole.log(person['age']);\nperson.greet();",
+  "exercise": "Create an object called 'book' with properties: title, author, and pages. Then log the book's title to the console.",
+  "tip": "Remember that object property names are case-sensitive—person.Name is different from person.name. Use consistent naming conventions to avoid bugs.",
+  "verify": "node",
+  "review": "unreviewed"
+}

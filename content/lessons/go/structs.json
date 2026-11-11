@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/structs",
+  "language": "go",
+  "topic": "structs",
+  "title": "Structs",
+  "stage": 2,
+  "order": 2,
+  "explain": "A struct groups named fields into one type. Create values with a literal, read fields with a dot, and pass a pointer when a function needs to change the original. Go has no classes, so structs plus methods are how you model data.",
+  "file": "structs.go",
+  "code": "package main\n\nimport \"fmt\"\n\ntype User struct {\n\tName string\n\tAge  int\n}\n\nfunc birthday(u *User) { u.Age++ }\n\nfunc main() {\n\tada := User{Name: \"Ada\", Age: 36}\n\tbirthday(&ada)\n\tfmt.Printf(\"%+v\\n\", ada)\n}",
+  "exercise": "Define a `Rectangle` struct with width and height, and write a function that returns its area.",
+  "tip": "Passing a struct by value copies it. Use a pointer like `*User` when the function must change the caller's struct.",
+  "verify": "go-run",
+  "review": "unreviewed"
+}

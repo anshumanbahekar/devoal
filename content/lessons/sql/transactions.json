@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/transactions",
+  "language": "sql",
+  "topic": "Transactions",
+  "title": "Transactions",
+  "stage": 5,
+  "order": 1,
+  "explain": "A transaction groups several statements so they all succeed or none do. `BEGIN` starts one, `COMMIT` saves it and `ROLLBACK` undoes it. This is what keeps a money transfer from taking from one account without adding to the other.",
+  "file": "transactions.sql",
+  "code": "CREATE TABLE accounts (id INTEGER PRIMARY KEY, balance INT);\nINSERT INTO accounts VALUES (1, 100), (2, 50);\nBEGIN;\nUPDATE accounts SET balance = balance - 30 WHERE id = 1;\nUPDATE accounts SET balance = balance + 30 WHERE id = 2;\nCOMMIT;\nSELECT * FROM accounts;",
+  "exercise": "Run a transfer that you `ROLLBACK` halfway through and confirm the balances did not change.",
+  "tip": "Keep transactions short. A long open transaction holds locks and blocks other users.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

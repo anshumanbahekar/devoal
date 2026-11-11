@@ -1,0 +1,42 @@
+{
+  "language": "javascript",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "let, const and template strings.",
+      "file": "01_variables.js",
+      "explain": "const is the default and let is for values that change. Strings join with + or template literals.",
+      "exercise": "Make a variable for your name and log a greeting built with a template literal.",
+      "code": "const site = \"coal\";\nlet visits = 0;\nvisits++;\nconsole.log(site + \" \" + visits);",
+      "solutionDiff": " const name = \"Anshu\";\n-// TODO: log a greeting\n+console.log(`Hello, ${name}!`);"
+    },
+    {
+      "order": 2,
+      "title": "map, filter and reduce.",
+      "file": "02_arrays.js",
+      "explain": "map transforms every item, filter keeps some, and reduce folds a list into one value. None of them change the original array.",
+      "exercise": "Use reduce to add up the numbers in an array.",
+      "code": "const nums = [1, 2, 3, 4];\nconst sq = nums.map(n => n * n);\nconst big = sq.filter(n => n > 4);\nconsole.log(big);",
+      "solutionDiff": " const nums = [1, 2, 3, 4];\n-// TODO: sum the numbers\n+const total = nums.reduce((a, n) => a + n, 0);\n+console.log(total);"
+    },
+    {
+      "order": 3,
+      "title": "Change a page from code.",
+      "file": "03_dom.js",
+      "explain": "The DOM is the live tree of your page. Find an element, then react when the user acts on it.",
+      "exercise": "Make a button that counts clicks and shows the number on itself.",
+      "code": "const btn = document.querySelector(\"button\");\nbtn.addEventListener(\"click\", () => {\n  btn.textContent = \"clicked\";\n});",
+      "solutionDiff": " const btn = document.querySelector(\"button\");\n+let n = 0;\n btn.addEventListener(\"click\", () => {\n-  // TODO\n+  n++;\n+  btn.textContent = \"Clicked \" + n;\n });"
+    },
+    {
+      "order": 4,
+      "title": "Fetch data with async and await.",
+      "file": "04_async.js",
+      "explain": "fetch returns a promise and await pauses the function until it resolves, which keeps async code readable.",
+      "exercise": "Load JSON from a URL, log one field, and wrap it in try/catch.",
+      "code": "async function load(url) {\n  const res = await fetch(url);\n  return res.json();\n}",
+      "solutionDiff": " async function load(url) {\n-  // TODO\n+  try {\n+    const res = await fetch(url);\n+    const data = await res.json();\n+    console.log(data.title);\n+  } catch (err) {\n+    console.error(err);\n+  }\n }"
+    }
+  ],
+  "capstone": "A to-do app with filters that remembers items between visits."
+}

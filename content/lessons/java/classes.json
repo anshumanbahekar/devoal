@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/classes",
+  "language": "java",
+  "topic": "Classes",
+  "title": "Classes",
+  "stage": 2,
+  "order": 1,
+  "explain": "A class bundles fields and methods, and `new` creates an object from it. Make fields `private` and expose behavior through methods so the object controls its own state. A constructor runs when the object is created and sets up its fields.",
+  "file": "Account.java",
+  "code": "public class Account {\n    private double balance;\n    private final String owner;\n\n    Account(String owner) { this.owner = owner; }\n    void deposit(double amount) { if (amount > 0) balance += amount; }\n    double balance() { return balance; }\n\n    public static void main(String[] args) {\n        Account acc = new Account(\"Ada\");\n        acc.deposit(50);\n        System.out.println(acc.owner + \" has \" + acc.balance());\n    }\n}",
+  "exercise": "Add a `withdraw` method that refuses to go below zero and returns whether it worked.",
+  "tip": "Public fields let any code put an object into an invalid state. Keep fields private and validate inside methods.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

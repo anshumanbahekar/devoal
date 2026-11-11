@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/closures",
+  "language": "javascript",
+  "topic": "Closures",
+  "title": "Closures",
+  "stage": 3,
+  "order": 1,
+  "explain": "A closure is a function that 'remembers' variables from the scope where it was created, even after that scope has finished executing. Closures are created every time a function is created in JavaScript. They're useful for creating private variables and callbacks that need access to outer function data.",
+  "file": "closures.js",
+  "code": "function makeCounter() {\n  let count = 0;\n  return function() {\n    count++;\n    return count;\n  };\n}\n\nconst counter = makeCounter();\nconsole.log(counter());\nconsole.log(counter());\nconsole.log(counter());",
+  "exercise": "Create a function called `makeGreeter` that takes a name as a parameter and returns a function that logs 'Hello, [name]!' each time it's called. Test it with at least two different names.",
+  "tip": "Don't confuse closure scope with global scope—the inner function only 'remembers' variables from its parent function, not all global variables. Each call to the outer function creates a new closure with its own independent variables.",
+  "verify": "node",
+  "review": "unreviewed"
+}

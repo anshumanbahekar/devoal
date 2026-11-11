@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/ci",
+  "language": "typescript",
+  "topic": "CI",
+  "title": "CI",
+  "stage": 5,
+  "order": 4,
+  "explain": "Continuous integration runs your checks automatically on every push, so broken code is caught before it merges. For TypeScript that usually means installing dependencies, type-checking, and running the tests. GitHub Actions reads workflow files from `.github/workflows/`.",
+  "file": "ci.yml",
+  "code": "name: ci\non: [push, pull_request]\njobs:\n  check:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with: { node-version: 22 }\n      - run: npm ci\n      - run: npx tsc --noEmit\n      - run: npm test",
+  "exercise": "Add this workflow to a repository, push a change that breaks a type, and watch the check fail.",
+  "tip": "Pin your Node version in CI to match the one you develop on, or a green build on your machine can fail there.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

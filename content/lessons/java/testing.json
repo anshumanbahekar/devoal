@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/testing",
+  "language": "java",
+  "topic": "testing",
+  "title": "Testing",
+  "stage": 5,
+  "order": 3,
+  "explain": "JUnit 5 is the standard Java test framework. Methods marked `@Test` run independently, and assertions such as `assertEquals` fail the test when the result is wrong. `@ParameterizedTest` runs one test with many inputs.",
+  "file": "CalcTest.java",
+  "code": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\n\nclass CalcTest {\n    static int add(int a, int b) { return a + b; }\n\n    @Test\n    void addsTwoNumbers() { assertEquals(5, add(2, 3)); }\n\n    @Test\n    void overflowIsDetected() {\n        assertThrows(ArithmeticException.class, () -> Math.addExact(Integer.MAX_VALUE, 1));\n    }\n}",
+  "exercise": "Write a `clamp(n, min, max)` method with three tests, including a value below the range.",
+  "tip": "Put the expected value first: `assertEquals(expected, actual)`. Swapping them makes failure messages misleading.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

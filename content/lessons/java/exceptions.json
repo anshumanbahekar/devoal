@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/exceptions",
+  "language": "java",
+  "topic": "exceptions",
+  "title": "Exceptions",
+  "stage": 3,
+  "order": 3,
+  "explain": "An exception reports a problem while the program runs, and `try` and `catch` handle it. Checked exceptions must be caught or declared with `throws`, while runtime exceptions like `NumberFormatException` need not be. `try`-with-resources closes things such as files automatically.",
+  "file": "Exceptions.java",
+  "code": "public class Exceptions {\n    static int parse(String text) {\n        try {\n            return Integer.parseInt(text);\n        } catch (NumberFormatException e) {\n            System.out.println(\"not a number: \" + text);\n            return -1;\n        } finally {\n            System.out.println(\"checked \" + text);\n        }\n    }\n    public static void main(String[] args) {\n        System.out.println(parse(\"17\") + \" \" + parse(\"abc\"));\n    }\n}",
+  "exercise": "Write a method that divides two ints and catches `ArithmeticException`, returning 0 with a message when the divisor is zero.",
+  "tip": "An empty `catch` block hides real bugs. At least log the error or rethrow it.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

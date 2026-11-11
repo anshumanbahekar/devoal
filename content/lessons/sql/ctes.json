@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/ctes",
+  "language": "sql",
+  "topic": "CTEs",
+  "title": "CTEs",
+  "stage": 3,
+  "order": 4,
+  "explain": "A CTE, written with `WITH`, gives a name to a query so you can use it like a temporary table. It breaks a long query into readable steps and can be referenced more than once. Think of it as naming an intermediate result.",
+  "file": "ctes.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nWITH course_avg AS (\n  SELECT course_id, AVG(score) AS avg FROM students GROUP BY course_id\n)\nSELECT s.name, s.score, c.avg FROM students s\nJOIN course_avg c ON c.course_id = s.course_id WHERE s.score > c.avg;",
+  "exercise": "Rewrite the subquery from the last lesson using a CTE that holds the course averages.",
+  "tip": "In some databases a CTE is recomputed each time you reference it. If a step is slow, check the query plan.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

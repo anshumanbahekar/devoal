@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/prototypes",
+  "language": "javascript",
+  "topic": "prototypes",
+  "title": "Prototypes",
+  "stage": 4,
+  "order": 2,
+  "explain": "In JavaScript, every object has a prototype, which is like a blueprint containing shared properties and methods. When you access a property on an object, JavaScript looks for it on the object itself first, then on its prototype, then up the prototype chain. This allows objects to inherit functionality without copying code.",
+  "file": "prototypes.js",
+  "code": "function Animal(name) {\n  this.name = name;\n}\n\nAnimal.prototype.speak = function() {\n  console.log(this.name + ' makes a sound');\n};\n\nconst dog = new Animal('Dog');\nconst cat = new Animal('Cat');\ndog.speak();\ncat.speak();",
+  "exercise": "Add a method called `sleep` to the Animal prototype that logs the animal's name followed by \" is sleeping\". Test it on both the dog and cat objects.",
+  "tip": "Don't confuse `prototype` with `__proto__`. Use `.prototype` on constructor functions to add shared methods, not on individual instances.",
+  "verify": "node",
+  "review": "unreviewed"
+}

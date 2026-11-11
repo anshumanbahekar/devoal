@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/functions",
+  "language": "python",
+  "topic": "functions",
+  "title": "Functions",
+  "stage": 2,
+  "order": 2,
+  "explain": "Functions are reusable blocks of code that perform a specific task. You define a function using the `def` keyword, give it a name, and optionally pass inputs called parameters. Call the function by typing its name followed by parentheses, passing any required arguments.",
+  "file": "greeting_function.py",
+  "code": "def greet(name):\n    return f\"Hello, {name}!\"\n\nresult = greet(\"Alice\")\nprint(result)\n\nresult2 = greet(\"Bob\")\nprint(result2)",
+  "exercise": "Create a function called `add_numbers` that takes two parameters and returns their sum. Test it by calling the function with different numbers.",
+  "tip": "A common mistake is forgetting the colon (:) at the end of the `def` line. Python requires it to mark the start of the function's code block.",
+  "verify": "python",
+  "review": "unreviewed"
+}

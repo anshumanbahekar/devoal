@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/where",
+  "language": "sql",
+  "topic": "WHERE",
+  "title": "WHERE",
+  "stage": 1,
+  "order": 2,
+  "explain": "WHERE keeps only the rows that match a condition. Combine conditions with `AND` and `OR`, and use `IN`, `BETWEEN` and `LIKE` for lists, ranges and patterns. Text values go in single quotes.",
+  "file": "where.sql",
+  "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, score INT, course_id INT);\nINSERT INTO students VALUES (1,'Ada',91,1),(2,'Linus',78,1),(3,'Grace',85,2),(4,'Alan',62,2);\nSELECT * FROM students WHERE score >= 80;\nSELECT * FROM students WHERE course_id = 2 AND score < 80;\nSELECT * FROM students WHERE name LIKE 'A%';\nSELECT * FROM students WHERE score BETWEEN 70 AND 90;",
+  "exercise": "Find students in course 1 who scored under 85, then find the names that start with G.",
+  "tip": "To test for missing values use `IS NULL`. Writing `= NULL` never matches anything.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

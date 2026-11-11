@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/decorators",
+  "language": "python",
+  "topic": "decorators",
+  "title": "Decorators",
+  "stage": 4,
+  "order": 2,
+  "explain": "A decorator wraps a function to add behavior without changing its code. The `@name` line above a function is shorthand for `func = name(func)`. Decorators are common for logging, timing and access checks.",
+  "file": "decorators.py",
+  "code": "import time\ndef timed(func):\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        result = func(*args, **kwargs)\n        print(func.__name__, round(time.perf_counter() - start, 4), \"s\")\n        return result\n    return wrapper\n@timed\ndef total(n):\n    return sum(range(n))\nprint(total(10**6))",
+  "exercise": "Write a decorator `shout` that makes a function's returned text uppercase.",
+  "tip": "Add `functools.wraps(func)` to your wrapper so the decorated function keeps its original name and docstring.",
+  "verify": "python",
+  "review": "unreviewed"
+}

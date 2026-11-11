@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "sql/normalization",
+  "language": "sql",
+  "topic": "normalization",
+  "title": "Normalization",
+  "stage": 5,
+  "order": 2,
+  "explain": "Normalization means storing each fact in exactly one place. Split repeated data into separate tables and link them with keys, so a change only has to be made once. The usual target is third normal form, where every column depends on the key and nothing else.",
+  "file": "normalization.sql",
+  "code": "-- Before: course title and teacher repeated on every row\n-- enrollments(student, course_title, course_teacher)\n\nCREATE TABLE courses (id INTEGER PRIMARY KEY, title TEXT, teacher TEXT);\nCREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT);\nCREATE TABLE enrollments (\n  student_id INT REFERENCES students(id),\n  course_id INT REFERENCES courses(id),\n  PRIMARY KEY (student_id, course_id)\n);",
+  "exercise": "Take a spreadsheet of orders where the customer's name and address repeat on every row, and split it into tables.",
+  "tip": "Normalizing more is not always better. Reporting tables are often denormalized on purpose for speed, as long as you know why.",
+  "verify": "sqlite",
+  "review": "unreviewed"
+}

@@ -1,0 +1,42 @@
+{
+  "language": "python",
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Print your first line and use variables.",
+      "file": "01_hello.py",
+      "explain": "Variables hold values and print shows them. Python infers types, so there is no declaration step.",
+      "exercise": "Store your age and favorite language in variables and print one sentence using both.",
+      "code": "# your first program\nname = \"coal\"\nprint(\"hello,\", name)\nage = 17\nprint(age + 1)",
+      "solutionDiff": " age = 17\n lang = \"Python\"\n-# TODO: print one sentence using both\n+print(\"I am\", age, \"and I love\", lang)"
+    },
+    {
+      "order": 2,
+      "title": "Repeat work with for and while.",
+      "file": "02_loops.py",
+      "explain": "A for loop walks over a sequence and while repeats until a condition fails. Indentation marks the loop body.",
+      "exercise": "Print the multiplication table of 7, from 1 to 10.",
+      "code": "for i in range(5):\n    print(i * i)\n\ntotal = 0\nwhile total < 10:\n    total += 3",
+      "solutionDiff": "-# TODO: print 7 x 1 up to 7 x 10\n+for i in range(1, 11):\n+    print(\"7 x\", i, \"=\", 7 * i)"
+    },
+    {
+      "order": 3,
+      "title": "Wrap logic in reusable functions.",
+      "file": "03_functions.py",
+      "explain": "A function names a block of logic so you can reuse it. Parameters go in and return sends a value out.",
+      "exercise": "Write a function that returns the largest number in a list without using max.",
+      "code": "def area(w, h):\n    return w * h\n\nprint(area(4, 5))",
+      "solutionDiff": " def largest(nums):\n-    # TODO\n+    best = nums[0]\n+    for n in nums:\n+        if n > best:\n+            best = n\n+    return best"
+    },
+    {
+      "order": 4,
+      "title": "Model things with classes.",
+      "file": "04_classes.py",
+      "explain": "A class bundles data with the functions that use it. __init__ runs when you create an object and self is that object.",
+      "exercise": "Add a method to Bot that counts how many times hi() has been called.",
+      "code": "class Bot:\n    def __init__(self, name):\n        self.name = name\n\n    def hi(self):\n        return \"I am \" + self.name",
+      "solutionDiff": " class Bot:\n     def __init__(self, name):\n         self.name = name\n+        self.count = 0\n \n     def hi(self):\n+        self.count += 1\n         return \"I am \" + self.name"
+    }
+  ],
+  "capstone": "A command-line habit tracker that stores streaks in a JSON file."
+}

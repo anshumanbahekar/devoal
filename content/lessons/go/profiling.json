@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/profiling",
+  "language": "go",
+  "topic": "profiling",
+  "title": "Profiling",
+  "stage": 5,
+  "order": 2,
+  "explain": "Profiling shows where your program actually spends its time, so you fix the slow part and not a guess. Write a benchmark with `BenchmarkXxx(b *testing.B)`, run it with `go test -bench . -cpuprofile cpu.out`, then open the result with `go tool pprof`. Measure before and after every change.",
+  "file": "fib_test.go",
+  "code": "// fib_test.go\npackage main\n\nimport \"testing\"\n\nfunc fib(n int) int {\n\tif n < 2 {\n\t\treturn n\n\t}\n\treturn fib(n-1) + fib(n-2)\n}\n\nfunc BenchmarkFib(b *testing.B) {\n\tfor i := 0; i < b.N; i++ {\n\t\tfib(20)\n\t}\n}\n\n// run:  go test -bench . -cpuprofile cpu.out\n// then: go tool pprof cpu.out",
+  "exercise": "Benchmark a recursive and an iterative Fibonacci, then compare the timings.",
+  "tip": "Don't optimize by guessing. Profile first, because the slow part is rarely where you expect.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

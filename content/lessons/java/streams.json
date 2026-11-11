@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/streams",
+  "language": "java",
+  "topic": "streams",
+  "title": "Streams",
+  "stage": 3,
+  "order": 2,
+  "explain": "A stream processes a collection as a pipeline: filter, transform, then collect a result. Operations like `filter` and `map` are lazy and only run when a terminal operation such as `toList` or `sum` is called. Streams don't change the original collection.",
+  "file": "Streams.java",
+  "code": "import java.util.List;\n\npublic class Streams {\n    public static void main(String[] args) {\n        List<String> words = List.of(\"sun\", \"moon\", \"star\", \"sky\");\n        List<String> shout = words.stream()\n            .filter(w -> w.length() > 3)\n            .map(String::toUpperCase)\n            .toList();\n        int total = words.stream().mapToInt(String::length).sum();\n        System.out.println(shout + \" \" + total);\n    }\n}",
+  "exercise": "From a list of numbers, keep the even ones, square them, and add up the result with a stream.",
+  "tip": "A stream can be used only once. Reusing it throws `IllegalStateException`, so create a fresh stream from the collection.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

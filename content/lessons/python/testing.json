@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/testing",
+  "language": "python",
+  "topic": "Testing",
+  "title": "Testing",
+  "stage": 5,
+  "order": 1,
+  "explain": "A test runs your code with known input and checks the result, so you find bugs before users do. `pytest` finds functions named `test_*` and uses plain `assert` statements. Run `pytest` after every change to be sure nothing broke.",
+  "file": "test_math_tools.py",
+  "code": "# test_math_tools.py\ndef add(a, b):\n    return a + b\n\ndef test_add():\n    assert add(2, 3) == 5\n\ndef test_add_negative():\n    assert add(-1, 1) == 0\n\n# run in the terminal:  pytest",
+  "exercise": "Write `is_even` and three tests for it: an even number, an odd number and zero.",
+  "tip": "Test the edge cases too: empty input, zero and negative numbers. Bugs usually live there.",
+  "verify": "python",
+  "review": "unreviewed"
+}

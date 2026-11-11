@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/functions",
+  "language": "javascript",
+  "topic": "functions",
+  "title": "Functions",
+  "stage": 1,
+  "order": 3,
+  "explain": "A function is a reusable block of code that performs a specific task. You define a function using the `function` keyword, then call it by name with parentheses. Functions help you organize code and avoid repetition.",
+  "file": "greeting.js",
+  "code": "function greet(name) {\n  return \"Hello, \" + name + \"!\";\n}\n\nconst message = greet(\"Alice\");\nconsole.log(message);\n\nconst message2 = greet(\"Bob\");\nconsole.log(message2);",
+  "exercise": "Create a function called `add` that takes two numbers as parameters and returns their sum. Test it by calling `add(5, 3)` and printing the result.",
+  "tip": "A common mistake is forgetting the parentheses when calling a function—write `greet()` not `greet` alone, or you'll get the function itself instead of running it.",
+  "verify": "node",
+  "review": "unreviewed"
+}

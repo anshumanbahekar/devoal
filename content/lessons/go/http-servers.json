@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/http-servers",
+  "language": "go",
+  "topic": "HTTP servers",
+  "title": "HTTP servers",
+  "stage": 5,
+  "order": 1,
+  "explain": "The standard library can run a web server with no framework. `http.HandleFunc` connects a path to a function that writes the response, and `ListenAndServe` starts listening on a port. Go 1.22 also lets patterns include a method and wildcards, like `GET /users/{id}`.",
+  "file": "server.go",
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"log\"\n\t\"net/http\"\n)\n\nfunc main() {\n\thttp.HandleFunc(\"/hello\", func(w http.ResponseWriter, r *http.Request) {\n\t\tfmt.Fprintf(w, \"hello, %s\", r.URL.Query().Get(\"name\"))\n\t})\n\tlog.Fatal(http.ListenAndServe(\":8080\", nil))\n}",
+  "exercise": "Add a `/health` route that returns `ok`, then test it with `curl localhost:8080/health`.",
+  "tip": "`ListenAndServe` returns an error, for example when the port is already in use. Wrap it in `log.Fatal` so you can see why the server stopped.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

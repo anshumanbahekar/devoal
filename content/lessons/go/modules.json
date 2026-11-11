@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/modules",
+  "language": "go",
+  "topic": "Modules",
+  "title": "Modules",
+  "stage": 1,
+  "order": 1,
+  "explain": "A Go module is a folder with a `go.mod` file that names it and records its dependencies. Create one with `go mod init`, then run the package in the current folder with `go run .`. `go mod tidy` adds what you import and removes what you don't.",
+  "file": "commands.sh",
+  "code": "mkdir hello && cd hello\ngo mod init example.com/hello     # creates go.mod\ncat > main.go <<'EOF'\npackage main\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(\"hello, module\") }\nEOF\ngo run .          # build and run\ngo mod tidy       # sync dependencies",
+  "exercise": "Create a new module, make it print your name, and run it with `go run .`.",
+  "tip": "Run Go commands from the folder that contains `go.mod`. Elsewhere you get a \"go.mod file not found\" error.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

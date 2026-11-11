@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "go/deploy",
+  "language": "go",
+  "topic": "deploy",
+  "title": "Deploy",
+  "stage": 5,
+  "order": 4,
+  "explain": "Deploying means running your binary on a server that other people can reach. Many hosts, such as Google Cloud Run and Render, tell your app which port to use through the `PORT` environment variable. Keep configuration like that in the environment, not in your code.",
+  "file": "main.go",
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"log\"\n\t\"net/http\"\n\t\"os\"\n)\n\nfunc main() {\n\tport := os.Getenv(\"PORT\")\n\tif port == \"\" {\n\t\tport = \"8080\"\n\t}\n\thttp.HandleFunc(\"/\", func(w http.ResponseWriter, r *http.Request) { fmt.Fprint(w, \"ok\") })\n\tlog.Fatal(http.ListenAndServe(\":\"+port, nil))\n}",
+  "exercise": "Run your server with `PORT=9000 go run .` and confirm it answers on port 9000.",
+  "tip": "Listen on `:PORT`, not `localhost:PORT`. A server bound to localhost inside a container can't be reached from outside.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

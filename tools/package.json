@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "description": "Toolchain used by tools/verify.py to type-check TypeScript lessons",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "@types/node": "^22.0.0"
+  }
+}

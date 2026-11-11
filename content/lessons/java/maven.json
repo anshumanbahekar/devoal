@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/maven",
+  "language": "java",
+  "topic": "Maven",
+  "title": "Maven",
+  "stage": 5,
+  "order": 1,
+  "explain": "Maven builds a Java project from a `pom.xml` that lists its dependencies and settings. `mvn package` compiles, tests and packs your code into a jar, and dependencies download from Maven Central automatically. The standard folders are `src/main/java` for code and `src/test/java` for tests.",
+  "file": "pom.xml",
+  "code": "<project xmlns=\"http://maven.apache.org/POM/4.0.0\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.example</groupId>\n  <artifactId>app</artifactId>\n  <version>1.0.0</version>\n  <properties>\n    <maven.compiler.release>21</maven.compiler.release>\n  </properties>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <version>5.10.2</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n</project>",
+  "exercise": "Create the standard folder layout, add one class and one test, and run `mvn package`.",
+  "tip": "Older Maven versions need `maven-surefire-plugin` 2.22 or newer declared before JUnit 5 tests will run. Check your version with `mvn -v`.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/types",
+  "language": "java",
+  "topic": "types",
+  "title": "Types",
+  "stage": 1,
+  "order": 2,
+  "explain": "Java has primitive types such as `int`, `double`, `boolean` and `char`, plus objects like `String`. `var` lets the compiler infer a local variable's type, but the variable is still strongly typed. Converting a larger type to a smaller one needs an explicit cast.",
+  "file": "Types.java",
+  "code": "public class Types {\n    public static void main(String[] args) {\n        int count = 7;\n        double price = 9.99;\n        boolean ready = true;\n        var title = \"Java\";          // inferred String\n        int rounded = (int) price;   // explicit cast drops the .99\n        System.out.println(count + \" \" + price + \" \" + ready + \" \" + title + \" \" + rounded);\n        System.out.println(7 / 2 + \" \" + 7 / 2.0);\n    }\n}",
+  "exercise": "Declare one variable of each primitive type you know and print them, then divide two ints and two doubles and compare the results.",
+  "tip": "Dividing two `int` values throws away the remainder. Make one operand a `double` when you want decimals.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/declaration-files",
+  "language": "typescript",
+  "topic": "declaration files",
+  "title": "Declaration files",
+  "stage": 4,
+  "order": 3,
+  "explain": "A `.d.ts` file describes the types of JavaScript code without containing any logic. It lets TypeScript check a plain JavaScript library or your own old files. Most popular packages ship their own types or have them in `@types/<name>`.",
+  "file": "legacy.d.ts",
+  "code": "// legacy.d.ts  (types for a plain JavaScript module)\ndeclare module \"legacy-lib\" {\n  export function greet(name: string): string;\n  export const version: string;\n  export interface Options { loud?: boolean }\n}\n\n// usage elsewhere\nimport { greet } from \"legacy-lib\";\nconsole.log(greet(\"Ada\"));",
+  "exercise": "Write a `.d.ts` for a small JavaScript file with two exported functions, then import it from a `.ts` file.",
+  "tip": "Don't reach for `any` to silence a missing-types error. Install `@types/<package>` first, and write a small `declare module` only if none exists.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

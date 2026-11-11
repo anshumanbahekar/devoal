@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/typing",
+  "language": "python",
+  "topic": "typing",
+  "title": "Typing",
+  "stage": 4,
+  "order": 4,
+  "explain": "Type hints say what types a function expects and returns, but Python does not enforce them at runtime. Tools like `mypy` and your editor read them to catch mistakes before you run the code. They also work as documentation for whoever reads the code next.",
+  "file": "typing_demo.py",
+  "code": "def total(prices: list[float], tax: float = 0.18) -> float:\n    return round(sum(prices) * (1 + tax), 2)\n\ndef first_word(text: str) -> str | None:\n    words = text.split()\n    return words[0] if words else None\n\nprint(total([100.0, 50.0]))      # 177.0\nprint(first_word(\"\"))            # None",
+  "exercise": "Add type hints to a function that takes a name and a list of scores and returns the average.",
+  "tip": "Hints are not checks. Passing the wrong type still runs until something breaks, so run `mypy` to find those problems.",
+  "verify": "python",
+  "review": "unreviewed"
+}

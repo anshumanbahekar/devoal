@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/modules",
+  "language": "python",
+  "topic": "modules",
+  "title": "Modules",
+  "stage": 3,
+  "order": 2,
+  "explain": "A module is just a `.py` file you can import from another file. `import math` gives you its tools under the `math.` prefix, while `from math import sqrt` brings in one name directly. The standard library has hundreds of modules ready to use.",
+  "file": "modules.py",
+  "code": "import math\nfrom random import choice\nfrom datetime import date\n\nprint(math.sqrt(16))                 # 4.0\nprint(math.pi)\nprint(choice([\"rock\", \"paper\", \"scissors\"]))\nprint(date.today().year >= 2024)     # True",
+  "exercise": "Use `random.randint` to roll two dice and print their sum.",
+  "tip": "Never name your own file the same as a module you import, like `random.py`, or Python will import your file instead.",
+  "verify": "python",
+  "review": "unreviewed"
+}

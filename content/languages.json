@@ -1,0 +1,82 @@
+[
+  {
+    "id": "python",
+    "name": "Python",
+    "extension": ".py",
+    "color": "#5ea8ff",
+    "level": "Beginner",
+    "hours": 14,
+    "description": "Readable, fast to learn, runs everything from scripts to AI.",
+    "docsDomain": "docs.python.org"
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "extension": ".js",
+    "color": "#f4d03f",
+    "level": "Beginner",
+    "hours": 16,
+    "description": "The language of the browser. Build anything you can click.",
+    "docsDomain": "developer.mozilla.org"
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "extension": ".ts",
+    "color": "#4a90e2",
+    "level": "Intermediate",
+    "hours": 12,
+    "description": "JavaScript with types, so bugs show up before you run.",
+    "docsDomain": "typescriptlang.org"
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "extension": ".cpp",
+    "color": "#c78bff",
+    "level": "Advanced",
+    "hours": 24,
+    "description": "Close to the metal. Speed, memory and how computers really work.",
+    "docsDomain": "en.cppreference.com"
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "extension": ".rs",
+    "color": "#ff7a45",
+    "level": "Advanced",
+    "hours": 22,
+    "description": "Memory safe without a garbage collector. Strict, then fast.",
+    "docsDomain": "doc.rust-lang.org"
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "extension": ".go",
+    "color": "#35d6c4",
+    "level": "Intermediate",
+    "hours": 13,
+    "description": "Simple, quick to compile, built for servers and concurrency.",
+    "docsDomain": "go.dev"
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "extension": ".java",
+    "color": "#ff5c7a",
+    "level": "Intermediate",
+    "hours": 20,
+    "description": "Strongly typed and everywhere: Android, banks, big backends.",
+    "docsDomain": "dev.java"
+  },
+  {
+    "id": "sql",
+    "name": "SQL",
+    "extension": ".sql",
+    "color": "#9be564",
+    "level": "Beginner",
+    "hours": 10,
+    "description": "Ask a database questions and get exact answers back.",
+    "docsDomain": "postgresql.org"
+  }
+]

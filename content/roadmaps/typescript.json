@@ -1,0 +1,103 @@
+{
+  "language": "typescript",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "basic-types",
+          "title": "Basic types"
+        },
+        {
+          "slug": "tsconfig",
+          "title": "Tsconfig"
+        },
+        {
+          "slug": "functions",
+          "title": "Functions"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "interfaces",
+          "title": "Interfaces"
+        },
+        {
+          "slug": "unions",
+          "title": "Unions"
+        },
+        {
+          "slug": "enums",
+          "title": "Enums"
+        },
+        {
+          "slug": "narrowing",
+          "title": "Narrowing"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "generics",
+          "title": "Generics"
+        },
+        {
+          "slug": "utility-types",
+          "title": "Utility types"
+        },
+        {
+          "slug": "modules",
+          "title": "Modules"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "conditional-types",
+          "title": "Conditional types"
+        },
+        {
+          "slug": "mapped-types",
+          "title": "Mapped types"
+        },
+        {
+          "slug": "declaration-files",
+          "title": "Declaration files"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "strict-mode",
+          "title": "Strict mode"
+        },
+        {
+          "slug": "monorepos",
+          "title": "Monorepos"
+        },
+        {
+          "slug": "testing",
+          "title": "Testing"
+        },
+        {
+          "slug": "ci",
+          "title": "CI"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/generators",
+  "language": "python",
+  "topic": "Generators",
+  "title": "Generators",
+  "stage": 4,
+  "order": 1,
+  "explain": "A generator produces values one at a time instead of building the whole list in memory. A function with `yield` becomes a generator, and it pauses at each `yield` until the next value is asked for. This makes huge or endless sequences cheap.",
+  "file": "generators.py",
+  "code": "def countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nfor x in countdown(3):\n    print(x)             # 3, 2, 1\n\nsquares = (n * n for n in range(5))\nprint(next(squares))     # 0\nprint(sum(squares))      # 1+4+9+16 = 30",
+  "exercise": "Write a generator that yields the first n Fibonacci numbers and print them with a loop.",
+  "tip": "A generator can be used only once. After it is exhausted, looping over it again gives nothing, so call the function again for a fresh one.",
+  "verify": "python",
+  "review": "unreviewed"
+}

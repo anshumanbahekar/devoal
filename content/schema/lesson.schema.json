@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Devoal lesson",
+  "type": "object",
+  "required": [
+    "id",
+    "language",
+    "topic",
+    "title",
+    "stage",
+    "order",
+    "explain",
+    "file",
+    "code",
+    "exercise",
+    "tip",
+    "verify",
+    "review"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z+#-]+/[a-z0-9-]+$"
+    },
+    "language": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "explain": {
+      "type": "string",
+      "minLength": 40
+    },
+    "file": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exercise": {
+      "type": "string",
+      "minLength": 10
+    },
+    "tip": {
+      "type": "string",
+      "minLength": 10
+    },
+    "verify": {
+      "enum": [
+        "python",
+        "python-compile",
+        "sqlite",
+        "sqlite-expect-fail",
+        "node",
+        "tsc-run",
+        "go-run",
+        "java-run",
+        "manual"
+      ]
+    },
+    "review": {
+      "enum": [
+        "unreviewed",
+        "reviewed"
+      ]
+    },
+    "reviewedBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

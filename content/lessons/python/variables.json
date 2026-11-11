@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/variables",
+  "language": "python",
+  "topic": "variables",
+  "title": "Variables",
+  "stage": 1,
+  "order": 2,
+  "explain": "Variables are containers that store data values in Python. You create a variable by choosing a name and using the equals sign (=) to assign a value to it. Variable names should be descriptive and can contain letters, numbers, and underscores (but cannot start with a number).",
+  "file": "variables_intro.py",
+  "code": "# Create variables\nname = \"Alice\"\nage = 25\nheight = 5.8\nis_student = True\n\n# Use variables\nprint(\"Name:\", name)\nprint(\"Age:\", age)\nprint(\"Height:\", height)\nprint(\"Is student:\", is_student)",
+  "exercise": "Create three variables: one storing your favorite color (text), one storing your lucky number (whole number), and one storing your height in meters (decimal). Then print all three.",
+  "tip": "A common mistake is forgetting that variable names are case-sensitive: 'age' and 'Age' are two different variables. Also, don't use Python keywords (like 'for', 'if', 'class') as variable names.",
+  "verify": "python",
+  "review": "unreviewed"
+}

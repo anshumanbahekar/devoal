@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/classes",
+  "language": "python",
+  "topic": "Classes",
+  "title": "Classes",
+  "stage": 3,
+  "order": 1,
+  "explain": "A class is a blueprint, and each object made from it keeps its own data. `__init__` sets up a new object and `self` refers to that object. Methods are functions defined inside the class that work on `self`.",
+  "file": "classes.py",
+  "code": "class Account:\n    def __init__(self, owner, balance=0):\n        self.owner = owner\n        self.balance = balance\n\n    def deposit(self, amount):\n        self.balance += amount\n        return self.balance\n\nacc = Account(\"Ada\")\nacc.deposit(50)\nprint(acc.owner, acc.balance)   # Ada 50",
+  "exercise": "Add a `withdraw` method that refuses to take out more than the balance and prints a message instead.",
+  "tip": "Forgetting `self` as the first parameter of a method gives a confusing `TypeError` about too many arguments.",
+  "verify": "python",
+  "review": "unreviewed"
+}

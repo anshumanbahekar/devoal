@@ -1,0 +1,146 @@
+[
+  {
+    "language": "python",
+    "question": "What does len([1,2,3]) return?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "Error"
+    ],
+    "answer": 1,
+    "explanation": "len counts items in the list: three."
+  },
+  {
+    "language": "python",
+    "question": "Which keyword defines a function?",
+    "options": [
+      "func",
+      "function",
+      "def",
+      "fn"
+    ],
+    "answer": 2,
+    "explanation": "Python uses def."
+  },
+  {
+    "language": "javascript",
+    "question": "What does const guarantee?",
+    "options": [
+      "Value never changes",
+      "Binding cannot be reassigned",
+      "Variable is global",
+      "Type is fixed"
+    ],
+    "answer": 1,
+    "explanation": "const locks the binding, but objects can still be mutated."
+  },
+  {
+    "language": "javascript",
+    "question": "What is typeof null?",
+    "options": [
+      "null",
+      "undefined",
+      "object",
+      "number"
+    ],
+    "answer": 2,
+    "explanation": "A historical quirk: typeof null is \"object\"."
+  },
+  {
+    "language": "typescript",
+    "question": "What does string | number mean?",
+    "options": [
+      "Both at once",
+      "Either one",
+      "Neither",
+      "Only strings"
+    ],
+    "answer": 1,
+    "explanation": "A union value is any one of the listed types."
+  },
+  {
+    "language": "cpp",
+    "question": "What does & mean in int& r = x;?",
+    "options": [
+      "Pointer",
+      "Reference",
+      "Bitwise and",
+      "Copy"
+    ],
+    "answer": 1,
+    "explanation": "Here & declares a reference, an alias of x."
+  },
+  {
+    "language": "rust",
+    "question": "What happens to a after let b = a; (String)?",
+    "options": [
+      "Copied",
+      "Moved",
+      "Borrowed",
+      "Nothing"
+    ],
+    "answer": 1,
+    "explanation": "String is not Copy, so ownership moves to b."
+  },
+  {
+    "language": "rust",
+    "question": "Which keyword makes a binding mutable?",
+    "options": [
+      "var",
+      "mut",
+      "mutable",
+      "change"
+    ],
+    "answer": 1,
+    "explanation": "Use mut: let mut x = 5;"
+  },
+  {
+    "language": "go",
+    "question": "How do you start a goroutine?",
+    "options": [
+      "async f()",
+      "go f()",
+      "thread f()",
+      "spawn f()"
+    ],
+    "answer": 1,
+    "explanation": "Prefix the call with go."
+  },
+  {
+    "language": "java",
+    "question": "Which is the program entry point?",
+    "options": [
+      "start()",
+      "public static void main(String[] args)",
+      "void run()",
+      "init()"
+    ],
+    "answer": 1,
+    "explanation": "The JVM looks for that exact signature."
+  },
+  {
+    "language": "sql",
+    "question": "Which clause filters groups after GROUP BY?",
+    "options": [
+      "WHERE",
+      "HAVING",
+      "FILTER",
+      "LIMIT"
+    ],
+    "answer": 1,
+    "explanation": "WHERE filters rows, HAVING filters groups."
+  },
+  {
+    "language": "sql",
+    "question": "Which join keeps every row of the left table?",
+    "options": [
+      "INNER",
+      "LEFT",
+      "CROSS",
+      "SELF"
+    ],
+    "answer": 1,
+    "explanation": "LEFT JOIN keeps all left rows, with NULLs where nothing matches."
+  }
+]

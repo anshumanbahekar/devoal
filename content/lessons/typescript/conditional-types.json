@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/conditional-types",
+  "language": "typescript",
+  "topic": "Conditional types",
+  "title": "Conditional types",
+  "stage": 4,
+  "order": 1,
+  "explain": "A conditional type picks one type or another with the shape `T extends U ? X : Y`. With `infer` it can also capture part of a type, such as a function's return type. These are the building blocks behind built-in helpers like `ReturnType` and `Awaited`.",
+  "file": "conditional_types.ts",
+  "code": "type IsString<T> = T extends string ? \"yes\" : \"no\";\ntype A = IsString<\"hi\">;      // \"yes\"\ntype B = IsString<42>;        // \"no\"\n\ntype ElementOf<T> = T extends (infer U)[] ? U : never;\ntype N = ElementOf<number[]>; // number\n\ntype Result = ReturnType<() => Promise<string>>;  // Promise<string>\nconst a: A = \"yes\";\nconst n: N = 5;\nconst r: Result = Promise.resolve(\"ok\");\nconsole.log(a, n, r instanceof Promise);",
+  "exercise": "Write `Unwrap<T>` that turns `Promise<string>` into `string` and leaves other types alone.",
+  "tip": "A conditional type spreads over unions, so `IsString<string | number>` gives `\"yes\" | \"no\"`. Wrap `T` in a tuple like `[T]` to stop that.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

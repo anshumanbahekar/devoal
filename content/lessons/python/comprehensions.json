@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/comprehensions",
+  "language": "python",
+  "topic": "comprehensions",
+  "title": "Comprehensions",
+  "stage": 3,
+  "order": 4,
+  "explain": "A comprehension builds a list, set or dictionary in one readable line. The shape is `[expression for item in items if condition]`. Use it for simple transforms and keep a normal loop when the logic gets long.",
+  "file": "comprehensions.py",
+  "code": "nums = [1, 2, 3, 4, 5, 6]\nsquares = [n * n for n in nums]\nevens = [n for n in nums if n % 2 == 0]\nlengths = {w: len(w) for w in [\"sun\", \"moon\"]}\nunique = {n % 3 for n in nums}\n\nprint(squares)     # [1, 4, 9, 16, 25, 36]\nprint(evens)       # [2, 4, 6]\nprint(lengths)     # {'sun': 3, 'moon': 4}\nprint(unique)      # {0, 1, 2}",
+  "exercise": "From a list of words, build a new list holding only the words longer than three letters, in uppercase.",
+  "tip": "Don't cram several conditions and nested loops into one comprehension. If it needs a second look to read, use a plain loop.",
+  "verify": "python",
+  "review": "unreviewed"
+}

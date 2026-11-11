@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/narrowing",
+  "language": "typescript",
+  "topic": "narrowing",
+  "title": "Narrowing",
+  "stage": 2,
+  "order": 4,
+  "explain": "Narrowing is how TypeScript works out a more specific type inside a branch of your code. Checks like `typeof`, `in`, `instanceof` and equality all narrow the type automatically. A common pattern is a `kind` field that lets a `switch` tell union members apart.",
+  "file": "narrowing.ts",
+  "code": "type Shape =\n  | { kind: \"circle\"; radius: number }\n  | { kind: \"square\"; side: number };\n\nfunction area(s: Shape): number {\n  switch (s.kind) {\n    case \"circle\": return Math.PI * s.radius ** 2;\n    case \"square\": return s.side ** 2;\n  }\n}\nconst pad = (x: string | number) => typeof x === \"number\" ? x.toFixed(1) : x.trim();\nconsole.log(area({ kind: \"square\", side: 3 }), pad(4), pad(\" hi \"));",
+  "exercise": "Add a `triangle` to the Shape union and watch the compiler point at the switch that needs updating.",
+  "tip": "Add a `default` branch that assigns the value to a variable of type `never`. The compiler then flags any union member you forget to handle.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

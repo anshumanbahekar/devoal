@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/asyncio",
+  "language": "python",
+  "topic": "asyncio",
+  "title": "Asyncio",
+  "stage": 4,
+  "order": 3,
+  "explain": "`asyncio` lets one program wait for many slow things, like network calls, at the same time. Functions defined with `async def` are coroutines, and `await` pauses one while others run. It speeds up waiting, not heavy calculation.",
+  "file": "async_demo.py",
+  "code": "import asyncio\n\nasync def fetch(name, delay):\n    await asyncio.sleep(delay)\n    return f\"{name} done\"\n\nasync def main():\n    results = await asyncio.gather(fetch(\"a\", 1), fetch(\"b\", 1))\n    print(results)       # finishes in about 1s, not 2s\n\nasyncio.run(main())",
+  "exercise": "Run three fetches with delays of 1, 2 and 3 seconds using `gather` and time the whole run. Is it about 3 seconds or 6?",
+  "tip": "Calling `time.sleep()` inside async code blocks everything. Use `await asyncio.sleep()` instead.",
+  "verify": "python",
+  "review": "unreviewed"
+}

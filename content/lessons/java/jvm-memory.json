@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/jvm-memory",
+  "language": "java",
+  "topic": "JVM memory",
+  "title": "JVM memory",
+  "stage": 4,
+  "order": 2,
+  "explain": "Local variables and method calls live on the stack, while objects live on the heap. The garbage collector frees heap objects once nothing refers to them, so you rarely free memory yourself. `Runtime` lets you inspect memory, and the `-Xmx` flag sets the maximum heap size.",
+  "file": "JvmMemory.java",
+  "code": "public class JvmMemory {\n    public static void main(String[] args) {\n        Runtime rt = Runtime.getRuntime();\n        long before = rt.totalMemory() - rt.freeMemory();\n        byte[] big = new byte[10_000_000];       // lives on the heap\n        long after = rt.totalMemory() - rt.freeMemory();\n        System.out.println(big.length + \" bytes, heap grew: \" + (after > before));\n        System.out.println(\"max heap MB: \" + rt.maxMemory() / (1024 * 1024));\n    }\n}",
+  "exercise": "Run the program with `java -Xmx64m JvmMemory.java` and again with `-Xmx512m`, and compare the maximum heap it reports.",
+  "tip": "A memory leak in Java usually means something still holds a reference, such as a static list that keeps growing. The garbage collector can only free what nothing refers to.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

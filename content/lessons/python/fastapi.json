@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/fastapi",
+  "language": "python",
+  "topic": "FastAPI",
+  "title": "FastAPI",
+  "stage": 5,
+  "order": 3,
+  "explain": "FastAPI turns Python functions into web endpoints with very little code. A decorator like `@app.get` connects a URL to a function, and type hints become automatic input validation. It also generates interactive docs at `/docs`.",
+  "file": "main.py",
+  "code": "from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef home():\n    return {\"message\": \"hello\"}\n\n@app.get(\"/square/{n}\")\ndef square(n: int):\n    return {\"n\": n, \"square\": n * n}",
+  "exercise": "Install `fastapi` and `uvicorn`, run `uvicorn main:app --reload`, then open `/square/7` and `/docs`. Add a `/greet/{name}` route.",
+  "tip": "Forgetting the type hint on a path parameter makes FastAPI treat it as a string. Add `n: int` to get validation for free.",
+  "verify": "python-compile",
+  "review": "unreviewed"
+}

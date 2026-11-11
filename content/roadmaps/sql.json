@@ -1,0 +1,107 @@
+{
+  "language": "sql",
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Foundations",
+      "topics": [
+        {
+          "slug": "select",
+          "title": "SELECT"
+        },
+        {
+          "slug": "where",
+          "title": "WHERE"
+        },
+        {
+          "slug": "order-by",
+          "title": "ORDER BY"
+        },
+        {
+          "slug": "limit",
+          "title": "LIMIT"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "title": "Core skills",
+      "topics": [
+        {
+          "slug": "insert",
+          "title": "INSERT"
+        },
+        {
+          "slug": "update",
+          "title": "UPDATE"
+        },
+        {
+          "slug": "delete",
+          "title": "DELETE"
+        },
+        {
+          "slug": "constraints",
+          "title": "Constraints"
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "title": "Intermediate",
+      "topics": [
+        {
+          "slug": "joins",
+          "title": "JOINs"
+        },
+        {
+          "slug": "group-by",
+          "title": "GROUP BY"
+        },
+        {
+          "slug": "subqueries",
+          "title": "Subqueries"
+        },
+        {
+          "slug": "ctes",
+          "title": "CTEs"
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "title": "Advanced",
+      "topics": [
+        {
+          "slug": "window-functions",
+          "title": "Window functions"
+        },
+        {
+          "slug": "indexes",
+          "title": "Indexes"
+        },
+        {
+          "slug": "query-plans",
+          "title": "Query plans"
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "title": "Ship it",
+      "topics": [
+        {
+          "slug": "transactions",
+          "title": "Transactions"
+        },
+        {
+          "slug": "normalization",
+          "title": "Normalization"
+        },
+        {
+          "slug": "migrations",
+          "title": "Migrations"
+        }
+      ]
+    }
+  ]
+}

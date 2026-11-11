@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "javascript/modules",
+  "language": "javascript",
+  "topic": "modules",
+  "title": "Modules",
+  "stage": 3,
+  "order": 3,
+  "explain": "Modules are reusable blocks of code that you can save in separate files and use in other files. JavaScript modules help organize code, prevent naming conflicts, and make projects easier to maintain. You export code from one file and import it into another using `export` and `import` statements.",
+  "file": "math.js",
+  "code": "// math.js\nexport function add(a, b) {\n  return a + b;\n}\nexport function subtract(a, b) {\n  return a - b;\n}\n\n// main.js\nimport { add, subtract } from './math.js';\nconsole.log(add(5, 3));      // 8\nconsole.log(subtract(5, 3));  // 2",
+  "exercise": "Create a file called `greet.js` that exports a function called `sayHello` which takes a name and returns 'Hello, [name]!'. Then import and use it in another file.",
+  "tip": "A common mistake is forgetting the `./` before the filename when importing from a local file—write `import { func } from './math.js'` not `import { func } from 'math.js'`.",
+  "verify": "manual",
+  "review": "unreviewed"
+}

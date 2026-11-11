@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "java/inheritance",
+  "language": "java",
+  "topic": "inheritance",
+  "title": "Inheritance",
+  "stage": 2,
+  "order": 2,
+  "explain": "A subclass `extends` another class and inherits its fields and methods. It can replace a method with `@Override`, and `super` calls the parent's version. Prefer composition when the relationship is \"has a\" instead of \"is a\".",
+  "file": "Inheritance.java",
+  "code": "public class Inheritance {\n    static class Animal {\n        String sound() { return \"...\"; }\n    }\n    static class Dog extends Animal {\n        @Override String sound() { return \"Woof\"; }\n    }\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        System.out.println(a.sound() + \" \" + new Animal().sound());\n    }\n}",
+  "exercise": "Add a `Cat` subclass and a loop that prints the sound of every `Animal` in a list.",
+  "tip": "Always add `@Override`. If you misspell the method name, the compiler tells you instead of silently creating a new method.",
+  "verify": "java-run",
+  "review": "unreviewed"
+}

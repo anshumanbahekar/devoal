@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "typescript/enums",
+  "language": "typescript",
+  "topic": "enums",
+  "title": "Enums",
+  "stage": 2,
+  "order": 3,
+  "explain": "An enum gives names to a fixed set of values, such as `Role.Admin`. Numeric enums count up from 0, while string enums keep readable values in your output. Many teams prefer a union of string literals because it adds no runtime code.",
+  "file": "enums.ts",
+  "code": "enum Role {\n  Viewer,          // 0\n  Editor,          // 1\n  Admin = \"ADMIN\", // string member\n}\nconst Level = { Low: 1, High: 3 } as const;\ntype LevelValue = (typeof Level)[keyof typeof Level];  // 1 | 3\n\nconsole.log(Role.Editor, Role.Admin);\nconsole.log(Level.High);\nconst v: LevelValue = 3;\nconsole.log(v);",
+  "exercise": "Replace an enum in a small program with a string-literal union and see which code you can delete.",
+  "tip": "Numeric enum values show up as bare numbers in logs and JSON, which are hard to read. Prefer string members or literal unions for anything you serialize.",
+  "verify": "tsc-run",
+  "review": "unreviewed"
+}

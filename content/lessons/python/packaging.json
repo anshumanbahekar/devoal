@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema/lesson.schema.json",
+  "id": "python/packaging",
+  "language": "python",
+  "topic": "packaging",
+  "title": "Packaging",
+  "stage": 5,
+  "order": 2,
+  "explain": "A virtual environment keeps each project's libraries separate so versions never clash. Create one with `python -m venv .venv`, activate it, then install with `pip install`. Save your dependencies in `requirements.txt` so anyone can recreate the setup.",
+  "file": "setup.sh",
+  "code": "python -m venv .venv\nsource .venv/bin/activate        # Windows: .venv\\Scripts\\activate\npip install requests\npip freeze > requirements.txt\npip install -r requirements.txt  # on another machine",
+  "exercise": "Create a virtual environment in a new folder, install `rich`, and write the dependency list to `requirements.txt`.",
+  "tip": "Don't install packages globally for every project. Without a virtual environment, one project's upgrade can break another.",
+  "verify": "manual",
+  "review": "unreviewed"
+}
