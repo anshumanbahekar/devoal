@@ -1,7 +1,5 @@
 # Prototype
 
-`index.html` is the single-file design prototype of Devoal. It is a **design reference**, not the product.
+`index.html` is the original Devoal interface and the GitHub Pages entry point. The Pages build packages it with real language logos and the prepared lessons in `content/`. The browser keeps progress locally.
 
-It was built to run inside claude.ai, where it gets a small database and AI helper from the host. Opened anywhere else,
-those features are unavailable and lessons are not loaded (the real app reads them from `content/`).
-Use it to see the intended layout, motion and tone while building `apps/web`.
+Some older AI controls in this interface expect a host service and are not available on GitHub Pages. The Next.js implementation in `apps/web` contains Firebase account setup and a server based Grok route; those need Firebase configuration and a server deployment before they can be enabled on this interface.

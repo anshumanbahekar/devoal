@@ -5,7 +5,7 @@ and review that brings back what you forgot. Eight languages, five-stage roadmap
 
 > **Status: early.** The content layer is real and tested. A working web app now covers learning paths, JavaScript practice, resources, and a local progress profile. See [apps/web/README.md](apps/web/README.md) for the current scope.
 
-The [public site](https://anshumanbahekar.github.io/devoal/) is built from `apps/web` on every push to `main`.
+The [public site](https://anshumanbahekar.github.io/devoal/) uses the original folder and workspace interface from `apps/prototype`. Every push to `main` packages that interface with the real language logos and prepared lessons.
 
 ## What's here today
 
@@ -19,7 +19,7 @@ The [public site](https://anshumanbahekar.github.io/devoal/) is built from `apps
 | Review | Quiz answers scheduled for recall in the web app |
 | Roadmaps | 5 stages per language, with curated official resources |
 | Web app | `apps/web/`, the working Next.js interface |
-| Prototype | `apps/prototype/`, the earlier single-file design reference |
+| Public interface | `apps/prototype/`, the original folder and workspace design |
 
 ### How the lessons were made (read this)
 
@@ -49,7 +49,7 @@ content/
   challenges/ quiz/ schema/         practice tests, quiz bank, JSON schema
 tools/        validate.py, verify.py
 apps/web/     Next.js learning and practice app
-apps/prototype/  earlier design reference
+apps/prototype/  public folder and workspace interface
 docs/         ARCHITECTURE.md, ROADMAP.md
 ```
 

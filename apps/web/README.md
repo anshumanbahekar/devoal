@@ -34,6 +34,6 @@ Copy `.env.example` to `.env.local`, set `XAI_API_KEY`, and restart the dev serv
 
 ## GitHub Pages deployment
 
-The `main` branch builds the real web app as a static export and publishes `apps/web/out`, including the language logos. GitHub Pages cannot run the Grok API route, so the static site labels that feature as requiring a server deployment. The standard `npm run build` keeps the API route for a Node.js deployment.
+The `main` branch publishes the original interface from `apps/prototype` to preserve its design. This Next.js app can still produce a static export with `npm run build:pages`, but that export is not the public Pages artifact. GitHub Pages cannot run the Grok API route; `npm run build` keeps it for a Node.js deployment.
 
 Run `npm run build` to validate the app and `python ../../tools/validate.py` to validate lesson files.
