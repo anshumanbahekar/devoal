@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "apps" / "prototype" / "dist"
 DEST.mkdir(parents=True, exist_ok=True)
 shutil.copy2(ROOT / "apps" / "prototype" / "index.html", DEST / "index.html")
+shutil.copy2(ROOT / "apps" / "web" / "public" / "devoal-logo.png", DEST / "favicon.png")
 
 icons = DEST / "icons"
 icons.mkdir(exist_ok=True)

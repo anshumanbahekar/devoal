@@ -11,6 +11,9 @@ Measured on the original folder interface packaged for GitHub Pages.
 | Medium | Restore full practice set | 20 challenges load from repository content, including 8 Hard problems. |
 | Medium | Contain user code | Practice tests run in a sandboxed frame with network blocked and a three second execution limit. |
 | Medium | Make feedback honest | Lessons offer self review guidance; automatic grading is not claimed without a grader. |
+| Medium | Improve practice discovery | Search, difficulty filters and saved problems work across all 20 challenges; drafts save while typing. |
+| Medium | Correct activity tracking | A streak advances on completed work, not on opening the site. Empty history shows zero days. |
+| Medium | Protect local progress | Export and import a versioned JSON backup from the progress page. |
 | Large | Accounts and live Grok | Firebase and server route code exist in `apps/web`; the public static site still needs Firebase project configuration and a server deployment for these services. |
 
-Validation: content validator reports 116 lessons and 20 challenges with zero errors or warnings. The browser smoke check loads a Python lesson and logo, passes a correct challenge solution, and stops an infinite loop. Client-side challenge tests are inspectable; a secure competition judge requires a server.
+Validation: content validator reports 116 lessons and 20 challenges with zero errors or warnings. Browser checks load a Python lesson and logo, pass a correct challenge solution, stop an infinite loop, filter the 20 challenges, save a draft and bookmark, show a zero day streak for empty activity, and export a backup. Client-side challenge tests are inspectable; a secure competition judge requires a server.
