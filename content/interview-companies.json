@@ -1,0 +1,6 @@
+[
+  {"id":"google","name":"Google","focus":"Search, graphs, and precise edge cases","problems":["anagram-check","sorted-insert-position","longest-distinct-span","rotated-array-search","island-count","minimum-coins","word-ladder","median-sorted-arrays"]},
+  {"id":"meta","name":"Meta","focus":"Arrays, windows, and fast reasoning","problems":["contains-duplicate","balanced-brackets","sorted-pair-sum","widest-container","product-except-index","merge-overlapping-intervals","minimum-window","longest-valid-parentheses"]},
+  {"id":"amazon","name":"Amazon","focus":"Data structures and practical tradeoffs","problems":["best-stock-trade","staircase-count","subarray-target-count","warmer-day-wait","course-order-possible","nonadjacent-loot","merge-k-arrays","trap-water"]},
+  {"id":"netflix","name":"Netflix","focus":"State, search, and implementation","problems":["palindrome","anagram-check","spiral-matrix","longest-one-run","minimum-coins","course-order-possible","edit-distance","maximal-rectangle"]}
+]

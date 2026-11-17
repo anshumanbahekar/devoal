@@ -17,4 +17,8 @@ jobs:
         with: { distribution: temurin, java-version: 21 }
       - run: npm install --prefix tools
       - run: python tools/validate.py
+      - run: python tools/validate_interview.py
+      - run: node --check apps/prototype/app.js
+      - run: node --check apps/prototype/interview.js
+      - run: node tools/verify_interview_core.mjs
       - run: python tools/verify.py --strict

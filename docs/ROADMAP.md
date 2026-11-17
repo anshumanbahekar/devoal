@@ -13,8 +13,10 @@ Each phase ends with something a learner can use. Checkboxes are the real tasks.
 - [x] Progress in localStorage
 - [ ] Persist progress through a `lib/store` interface for future account sync
 - [x] Deploy the static learning app to GitHub Pages
+- [x] Original visual design is the live public frontend; split markup, style, and behavior into separate files
+- [x] 40 original JavaScript challenges, eight interview pattern guides, four company prep paths, timed two problem rounds, and local practice coins
 - [ ] Deploy the Grok API on a server host and enable it on the public site
-- [ ] Port the visual design from `apps/prototype`
+- [ ] Integrate the public frontend and server features into one deployed app
 - **Done when:** a stranger can open the site and finish a Python lesson with no account.
 
 ## Phase 2: run code for real

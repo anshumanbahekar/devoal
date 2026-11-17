@@ -1,9 +1,9 @@
 # Devoal
 
-An open-source platform for learning to code properly: short lessons you can run, exercises that are checked, a tutor grounded in the lessons,
+An open-source platform for learning to code properly: short lessons, JavaScript challenges with browser tests, a tutor grounded in the lessons,
 and review that brings back what you forgot. Eight languages, five-stage roadmaps, all free.
 
-> **Status: early.** The content layer is real and tested. A working web app now covers learning paths, JavaScript practice, resources, and a local progress profile. See [apps/web/README.md](apps/web/README.md) for the current scope.
+> **Status: early.** The public interface covers learning paths, JavaScript practice, timed interview rounds, resources, and local progress. See [apps/prototype/README.md](apps/prototype/README.md) for its current scope.
 
 The [public site](https://anshumanbahekar.github.io/devoal/) uses the original folder and workspace interface from `apps/prototype`. Every push to `main` packages that interface with the real language logos and prepared lessons.
 
@@ -14,11 +14,12 @@ The [public site](https://anshumanbahekar.github.io/devoal/) uses the original f
 | Lessons | **116** across Python, JavaScript, TypeScript, SQL, Go and Java |
 | Needed | **41** lessons: all of **C++** (20) and **Rust** (21). Great first contributions. |
 | Quick-start lessons | 4 per language, each with a starter-to-solution diff |
-| Practice | 20 JavaScript challenges with browser-run tests |
+| Practice | 40 original JavaScript challenges with browser-run tests |
+| Interview prep | 8 pattern guides, 4 independently curated company prep paths, timed two problem rounds, and browser-local coins |
 | Quiz | 12 starter questions (more wanted) |
 | Review | Quiz answers scheduled for recall in the web app |
 | Roadmaps | 5 stages per language, with curated official resources |
-| Web app | `apps/web/`, the working Next.js interface |
+| Service candidate | `apps/web/`, a separate Next.js implementation with Firebase and Grok wiring |
 | Public interface | `apps/prototype/`, the original folder and workspace design |
 
 ### How the lessons were made (read this)
