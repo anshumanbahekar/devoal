@@ -15,11 +15,14 @@ The [public site](https://anshumanbahekar.github.io/devoal/) uses the original f
 | Needed | **41** lessons: all of **C++** (20) and **Rust** (21). Great first contributions. |
 | Quick-start lessons | 4 per language, each with a starter-to-solution diff |
 | Practice | 40 original JavaScript challenges with browser-run tests |
-| Interview prep | 8 pattern guides, 4 independently curated company prep paths, timed two problem rounds, and browser-local coins |
+| Interview prep | 8 pattern guides, 4 independently curated company prep paths, timed rounds, a personal practice plan, and browser-local coins |
+| Mock interviews | 12 original system design and behavioral prompts with timers, drafts, and self-review rubrics |
 | Quiz | 12 starter questions (more wanted) |
 | Review | Quiz answers scheduled for recall in the web app |
 | Roadmaps | 5 stages per language, with curated official resources |
-| Service candidate | `apps/web/`, a separate Next.js implementation with Firebase and Grok wiring |
+| Account and AI setup | Public frontend has optional Firebase sign-in and a server-backed Grok hook; both need external configuration |
+| Python practice | 10 original problems with browser-run tests, saved drafts, and a worker timeout |
+| Service candidate | `apps/web/`, a separate Next.js implementation with the Grok API route |
 | Public interface | `apps/prototype/`, the original folder and workspace design |
 
 ### How the lessons were made (read this)

@@ -161,11 +161,11 @@ $("dash").innerHTML=`<div class="card" style="--d:0"><h4 class="mono">Course com
 <div class="card wide" style="--d:4"><h4 class="mono">By language</h4>${L.map(l=>`<div class="lr mono" style="--c:${l.c}"><span>${l.n}</span><div class="bar"><i style="width:${langDone(l)/langTot(l)*100}%"></i></div><span>${langDone(l)}/${langTot(l)}</span></div>`).join("")}</div>
 <div class="card wide" style="--d:5"><h4 class="mono">Badges</h4>${bd.map(b=>`<span class="bd mono${b[1]?" on":""}">${b[0]}</span>`).join("")}</div>`;
 setTimeout(()=>{const g=$("rg");if(g)g.style.strokeDashoffset=C*(1-pc)},80);board();heat()}
-const V=["courses","roadmap","play","practice","interview","resources","tutor","quiz","prog"];
+const V=["courses","roadmap","play","practice","python-practice","interview","plan","mock","resources","tutor","quiz","prog"];
 function go(){let h=location.hash.slice(1),sub="";if(h.startsWith("lang/")){sub=h.slice(5);h="lang"}if(h.startsWith("roadmap/")){sub=h.slice(8);h="roadmap"}if(h!=="lang"&&!V.includes(h))h="courses";document.body.dataset.v=h;
 document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="v-"+h));
 document.querySelectorAll("#nav a,.bn a").forEach(a=>a.setAttribute("aria-current",a.dataset.v===(h==="lang"?"courses":h)?"page":"false"));
-scrollTo(0,0);if(h==="lang")langPg(sub);if(h==="tutor")tutorInit();if(h==="courses"){grid();today()}if(h==="practice")prac();if(h==="interview")renderInterview();if(h==="resources")resPg();if(h==="roadmap"){const q=sub.split("/");if(q[0])rl=L.find(x=>x.id===q[0])||rl;road();if(q[1]){const t=R[rl.id].flatMap(x=>x.split(", ")).find(x=>slug(x)===q[1]);if(t)openTopic(rl,t)}}if(h==="quiz")qstart();if(h==="prog")dash();if(h==="play"){if(window.__pg){$("src").value=window.__pg;$("out").textContent="";$("pst").textContent="ready";window.__pg=null}else if(!$("src").value)loadP(0)}}
+scrollTo(0,0);if(h==="lang")langPg(sub);if(h==="tutor")tutorInit();if(h==="courses"){grid();today()}if(h==="practice")prac();if(h==="python-practice"&&!pythonProblems.length)loadPythonProblems();if(h==="interview")renderInterview();if(h==="plan")renderReadiness();if(h==="mock")renderMock();if(h==="resources")resPg();if(h==="roadmap"){const q=sub.split("/");if(q[0])rl=L.find(x=>x.id===q[0])||rl;road();if(q[1]){const t=R[rl.id].flatMap(x=>x.split(", ")).find(x=>slug(x)===q[1]);if(t)openTopic(rl,t)}}if(h==="quiz")qstart();if(h==="prog")dash();if(h==="play"){if(window.__pg){$("src").value=window.__pg;$("out").textContent="";$("pst").textContent="ready";window.__pg=null}else if(!$("src").value)loadP(0)}}
 
 /* ---- language pages ---- */
 const E={python:[["Variables hold values and print shows them. Python infers types, so there is no declaration step.","Store your age and favorite language in variables and print one sentence using both."],["A for loop walks over a sequence and while repeats until a condition fails. Indentation marks the loop body.","Print the multiplication table of 7, from 1 to 10."],["A function names a block of logic so you can reuse it. Parameters go in and return sends a value out.","Write a function that returns the largest number in a list without using max."],["A class bundles data with the functions that use it. __init__ runs when you create an object and self is that object.","Add a method to Bot that counts how many times hi() has been called."]],
@@ -290,26 +290,16 @@ async function reply(text){
   m.innerHTML=`<div class="t-ld" role="status">${px()}<span class="t-shm">Churning</span><span class="t-tm" data-t>0.0s</span></div>`;
   const t0=Date.now(),iv=setInterval(()=>{const q=m.querySelector("[data-t]");if(q)q.textContent=((Date.now()-t0)/1000).toFixed(1)+"s"},100);
   await sl(350);clearInterval(iv);m.innerHTML="";
-  await think(m,[`Matching the closest ${l.n} lesson`,"Loading lesson context","Using saved lesson notes"]);
-  await stream(m,l,await groundE(l,e,text),text);
-  m.append(mk('<p class="t-note">This guide uses saved lessons. Live Grok answers will be available after the server tutor is deployed.</p>'))}
+  const grounded=await groundE(l,e,text),context=`Language: ${l.n}\nClosest lesson: ${f[0]}\nLesson explanation: ${grounded[0]}\nExercise: ${grounded[1]}`;
+  try{const answer=await window.askGrok?.(text,context);if(answer){const card=mk('<div class="t-st t-ai-answer"><p></p></div>');card.querySelector("p").textContent=answer;m.append(card,mk('<p class="t-note">Grok answer grounded in the saved lesson. Check the course and official resources for details.</p>'));return}}catch(error){}
+  await stream(m,l,grounded,text);
+  m.append(mk('<p class="t-note">This guide uses saved lessons in your browser.</p>'))}
 const user=t=>{const em=$("tempty");if(em)em.remove();$("thread").append(mk(`<div class="t-user">${esc(t)}</div>`))};
-function approval(){
-  const Q=[["Which language first?","r",["Python","JavaScript","Rust"]],["How much time per day?","r",["30 min","1 hour","2+ hours"]],["What do you want to build?","c",["Websites","AI and data","Games"]]],a=[[],[],[]];let qi=0,tm;
-  const m=mk('<div class="t-msg"></div>');$("thread").append(m);
-  const draw=an=>{const q=Q[qi],last=qi===2;m.innerHTML=`<div class="t-ap"><div class="t-apb${an?" an":""}"><div class="t-q">${q[0]}</div>${q[2].map((o,i)=>`<button class="t-op" data-i="${i}" aria-pressed="${a[qi].includes(i)}"><span class="t-mk ${q[1]==="r"?"rd":"ck"}"></span><span>${o}</span></button>`).join("")}</div><div class="t-apf"><div class="t-ctr"><button data-n="-1" aria-label="Previous" ${qi?"":"disabled"}>${UP}</button><span>${qi+1} / 3</span><button data-n="1" aria-label="Next" ${last?"disabled":""}>${CH}</button></div><div><button class="t-gh" data-s>Skip</button><button class="t-pill" data-c ${a[qi].length?"":"disabled"}>${last?"Send":"Continue"}</button></div></div></div>`};
-  const go2=n=>{clearTimeout(tm);qi=Math.max(0,Math.min(2,qi+n));draw(1)},send=()=>{clearTimeout(tm);m.innerHTML=`<span class="t-ok"><i>${OK}</i>Answers sent</span>`;
-    const lang=Q[0][2][a[0][0]??0],time=Q[1][2][a[1][0]??1],ar=a[2].map(i=>Q[2][2][i]);
-    const t=`Plan: @${lang} · ${time}${ar.length?" · "+ar.join(", "):""}`;user(t);reply(t)};
-  m.onclick=e=>{const b=e.target.closest("button");if(!b)return;
-    if(b.dataset.i!==undefined){const i=+b.dataset.i,q=Q[qi];a[qi]=q[1]==="r"?[i]:a[qi].includes(i)?a[qi].filter(x=>x!==i):[...a[qi],i];draw();if(q[1]==="r"){tm=setTimeout(()=>qi===2?send():go2(1),480)}}
-    else if(b.dataset.n)go2(+b.dataset.n);else if(b.dataset.s!==undefined)qi===2?m.remove():go2(1);else if(b.dataset.c!==undefined)qi===2?send():go2(1)};
-  draw()}
-const MODELS=[["Devoal Pro","Flagship"],["Devoal Fast","Fast"],["Devoal Lite","Basic"]],CMDS=[["/plan","Build a study plan"],["/explain","Explain a concept"],["/quiz","Start a quiz"],["/roadmap","Open a roadmap"]];
+const CMDS=[["/plan","Open your practice plan"],["/explain","Explain a concept"],["/quiz","Start a quiz"],["/roadmap","Open a roadmap"]];
 let built=false;
 function bar(){
   if(built)return;built=true;
-  $("composer").innerHTML=`<div class="t-pb"><div class="t-pm" id="pm" hidden></div><div class="t-pm t-mm" id="mm" hidden></div><div class="t-cmp"><button class="t-ib" id="pplus" aria-label="Add a course">${sv('<path d="M12 5v14M5 12h14"/>',16)}</button><textarea id="pin" rows="1" placeholder="Ask about a language…" aria-label="Prompt"></textarea><button class="t-mb" id="pmod" aria-label="Choose model"><span>${MODELS[0][0]}</span>${sv('<path d="M6 9l6 6 6-6"/>',11)}</button><button class="t-ib" id="pmic" aria-label="Dictate">${sv('<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>',15)}</button><button class="t-sd" id="psend" aria-label="Send" disabled>${sv('<path d="M12 19V5M5 12l7-7 7 7"/>',16)}</button></div></div>`;
+  $("composer").innerHTML=`<div class="t-pb"><div class="t-pm" id="pm" hidden></div><div class="t-pm t-mm" id="mm" hidden></div><div class="t-cmp"><button class="t-ib" id="pplus" aria-label="Add a course">${sv('<path d="M12 5v14M5 12h14"/>',16)}</button><textarea id="pin" rows="1" placeholder="Ask about a language…" aria-label="Prompt"></textarea><span class="t-guide-label" id="t-guide-label">${window.devoalTutorApiEnabled?"Grok tutor":"Lesson guide"}</span><button class="t-ib" id="pmic" aria-label="Dictate">${sv('<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>',15)}</button><button class="t-sd" id="psend" aria-label="Send" disabled>${sv('<path d="M12 19V5M5 12l7-7 7 7"/>',16)}</button></div></div>`;
   const pin=$("pin"),pm=$("pm"),mm=$("mm");let items=[],act=0,plus=false,tok=null,mic=null;
   const grow=()=>{pin.style.height="0px";pin.style.height=Math.min(Math.max(pin.scrollHeight,28),100)+"px";$("psend").disabled=!pin.value.trim()};
   const place=()=>{const r=pm.children[act+1],g=pm.firstChild;if(r){g.style.top=r.offsetTop+"px";g.style.height=r.offsetHeight+"px"}};
@@ -327,15 +317,12 @@ function bar(){
     if((e.key==="Enter"&&!e.shiftKey)||e.key==="Tab"){e.preventDefault();pick(items[act]);return}}
     if(e.key==="Escape"){close();return}if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();submit()}};
   $("pplus").onclick=()=>{mm.hidden=true;plus=!plus;act=0;plus?menu():close();pin.focus()};
-  $("pmod").onclick=()=>{pm.hidden=true;plus=false;mm.hidden=!mm.hidden;mm.innerHTML='<span class="t-gl"></span>'+MODELS.map((m,i)=>`<button class="t-pr" data-i="${i}" style="height:30px"><b>${m[0]}</b><span class="d" style="text-align:right">${m[1]}</span><span style="color:var(--ink);${m[0]===$("pmod").firstChild.textContent?"":"visibility:hidden"}">${OK}</span></button>`).join("")};
-  mm.onmouseover=e=>{const b=e.target.closest(".t-pr"),g=mm.firstChild;if(b){g.style.top=b.offsetTop+"px";g.style.height=b.offsetHeight+"px"}};
-  mm.onclick=e=>{const b=e.target.closest(".t-pr");if(b){$("pmod").firstChild.textContent=MODELS[+b.dataset.i][0];mm.hidden=true}};
-  $("pmic").onclick=()=>{const b=$("pmic");if(mic){clearTimeout(mic);mic=null;b.innerHTML=b.dataset.h;return}b.dataset.h=b.innerHTML;b.innerHTML='<span class="t-eq"><i></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i></span>';pin.placeholder="Listening…";
-    mic=setTimeout(()=>{mic=null;b.innerHTML=b.dataset.h;pin.placeholder="Ask about a language…";pin.value=(pin.value?pin.value.trimEnd()+" ":"")+"Explain closures in JavaScript";grow();pin.focus()},2200)};
+  const Speech=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Speech)$("pmic").hidden=true;else $("pmic").onclick=()=>{const b=$("pmic");if(mic){mic.stop();return}mic=new Speech();mic.lang=navigator.language||"en-US";mic.interimResults=false;mic.onresult=e=>{const heard=e.results[0]?.[0]?.transcript?.trim();if(heard){pin.value+=(pin.value.trim()?" ":"")+heard;grow();pin.focus()}};mic.onerror=()=>{pin.placeholder="Dictation unavailable. Type your question."};mic.onend=()=>{mic=null;b.removeAttribute("aria-pressed");pin.placeholder="Ask about a language…"};b.setAttribute("aria-pressed","true");pin.placeholder="Listening…";mic.start()};
   addEventListener("pointerdown",e=>{if(!e.target.closest(".t-pb"))close()});
   $("psend").onclick=submit;window.tutorAsk=t=>{pin.value=t;grow();submit()};
   async function submit(){const t=pin.value.trim();if(!t||busy)return;pin.value="";grow();close();busy=true;
-    try{if(t.startsWith("/plan")){user(t);approval()}else if(t.startsWith("/quiz")){qf=t.includes(" ")?pickLang(t).id:"all";location.hash="quiz"}else if(t.startsWith("/roadmap")){rl=pickLang(t);location.hash="roadmap"}else{const q=t.replace(/^\/explain\s*/,"");user(t);await reply(q)}}finally{busy=false}}}
+    try{if(t.startsWith("/plan")){location.hash="plan"}else if(t.startsWith("/quiz")){qf=t.includes(" ")?pickLang(t).id:"all";location.hash="quiz"}else if(t.startsWith("/roadmap")){rl=pickLang(t);location.hash="roadmap"}else{const q=t.replace(/^\/explain\s*/,"");user(t);await reply(q)}}finally{busy=false}}}
 function insights(){
   const box=$("insights");let ip=0,sel=0;
   const draw=()=>{const ds=L.map(l=>[l,doneOf(l)]),tot=ds.reduce((a,x)=>a+x[1],0),top=ds.slice().sort((a,b)=>b[1]-a[1])[0];
@@ -444,8 +431,8 @@ async function board(){const d=$("dash");if(!d)return;const due=Object.values(S.
   try{const q=await DB.collection("board").orderBy("wxp","desc").limit(30).get(),rows=q.docs.map(x=>({id:x.id,...x.data()})).filter(r=>r.wk===wkKey()).slice(0,10);let nm={};try{nm=await UP.profiles(rows.map(r=>r.id))}catch(e){}
     $("lb").innerHTML='<h4 class="mono">Leaderboard · this week</h4>'+(rows.map((r,i)=>`<div class="lr mono"><span style="width:24px">${i+1}</span><span style="flex:1;width:auto">${esc((nm[r.id]&&nm[r.id].name)||"Someone")}${r.id===UID?" (you)":""}</span><span style="width:auto">${r.wxp||0} XP</span></div>`).join("")||'<p class="why">No one yet. You could be first.</p>')}
   catch(e){$("lb").innerHTML='<h4 class="mono">Leaderboard</h4><p class="why">Could not load it right now.</p>'}}
-const requiredBackupKeys=["coal-prog","dv-st","dv-practice-code","dv-gq"],backupKeys=[...requiredBackupKeys,"dv-interview.v1","dv-interview-history.v1","dv-coins-spent.v1"];
-const backupDefault=key=>key==="dv-gq"||key==="dv-interview-history.v1"?"[]":key==="dv-interview.v1"?"null":key==="dv-coins-spent.v1"?"0":"{}";
+const requiredBackupKeys=["coal-prog","dv-st","dv-practice-code","dv-gq"],backupKeys=[...requiredBackupKeys,"dv-interview.v1","dv-interview-history.v1","dv-coins-spent.v1","dv-attempts.v1","dv-mock.v1","dv-mock-history.v1","dv-python-code.v1"];
+const backupDefault=key=>key==="dv-gq"||key==="dv-interview-history.v1"||key==="dv-attempts.v1"||key==="dv-mock-history.v1"?"[]":key==="dv-interview.v1"||key==="dv-mock.v1"?"null":key==="dv-coins-spent.v1"?"0":"{}";
 $("dash").addEventListener("change",async e=>{if(e.target.id!=="pfile")return;const file=e.target.files?.[0],status=$("pbackup-status");if(!file)return;
   try{if(file.size>2_000_000)throw new Error("Backup is too large.");const backup=JSON.parse(await file.text());if(backup.format!=="devoal-backup"||backup.version!==1||!backup.data||typeof backup.data!=="object")throw new Error("This is not a Devoal backup.");
     for(const key of requiredBackupKeys)if(typeof backup.data[key]!=="string")throw new Error("Backup is missing "+key+".");
@@ -512,7 +499,7 @@ const road0=road;road=function(){road0();$("rrs").innerHTML=`<div class="rsl" st
 $("tl").addEventListener("click",e=>{const b=e.target.closest(".tp");if(b)location.hash="lang/"+rl.id+"/t/"+slug(b.dataset.t)});
 (()=>{const ov=document.createElement("div");ov.className="kp";ov.hidden=true;ov.innerHTML='<div class="kpb"><input aria-label="Search" placeholder="Search lessons, languages, pages…"><div class="kpl"></div></div>';document.body.append(ov);
   const inp=ov.querySelector("input"),list=ov.querySelector(".kpl");let items=[],act=0;
-  const all=()=>[...[["Courses","courses"],["Roadmap","roadmap"],["Playground","play"],["Practice","practice"],["Resources","resources"],["Tutor","tutor"],["Quiz","quiz"],["Progress","prog"]].map(x=>({n:x[0],d:"Page",h:"#"+x[1]})),...L.map(l=>({n:l.n+" course",d:l.lv,h:"#lang/"+l.id,c:l.c})),...L.flatMap(l=>l.l.map((x,i)=>({n:x[1],d:l.n+" · "+x[0],h:"#lang/"+l.id+"/"+i,c:l.c}))),...L.flatMap(l=>R[l.id].flatMap(z=>z.split(", ")).map(t=>({n:tc(t),d:l.n+" · roadmap topic",h:"#lang/"+l.id+"/t/"+slug(t),c:l.c})))];
+  const all=()=>[...[["Courses","courses"],["Roadmap","roadmap"],["Playground","play"],["Practice","practice"],["Python practice","python-practice"],["Interview preparation","interview"],["My plan","plan"],["Mock interviews","mock"],["Resources","resources"],["Tutor","tutor"],["Quiz","quiz"],["Progress","prog"]].map(x=>({n:x[0],d:"Page",h:"#"+x[1]})),...L.map(l=>({n:l.n+" course",d:l.lv,h:"#lang/"+l.id,c:l.c})),...L.flatMap(l=>l.l.map((x,i)=>({n:x[1],d:l.n+" · "+x[0],h:"#lang/"+l.id+"/"+i,c:l.c}))),...L.flatMap(l=>R[l.id].flatMap(z=>z.split(", ")).map(t=>({n:tc(t),d:l.n+" · roadmap topic",h:"#lang/"+l.id+"/t/"+slug(t),c:l.c})))];
   function draw(){const q=inp.value.toLowerCase().trim();items=all().filter(x=>!q||(x.n+" "+x.d).toLowerCase().includes(q)).map((x,i)=>[x,q?(x.n.toLowerCase()===q?0:x.n.toLowerCase().startsWith(q)?1:x.n.toLowerCase().includes(q)?2:3):0,i]).sort((u,v)=>u[1]-v[1]||u[2]-v[2]).slice(0,8).map(x=>x[0]);act=Math.min(act,Math.max(items.length-1,0));
     list.innerHTML=items.map((x,i)=>`<button data-i="${i}" class="${i===act?"on":""}"><span class="kd" style="background:${x.c||"#fff"}"></span><b>${esc(x.n)}</b><span>${esc(x.d)}</span></button>`).join("")||"<p>No matches</p>"}
   const open=()=>{ov.hidden=false;inp.value="";act=0;draw();inp.focus()},close=()=>ov.hidden=true,go2=x=>{close();location.hash=x.h};
@@ -547,7 +534,7 @@ let CH=[
 {i:"twosum",n:"Two sum",v:"Medium",f:"twoSum",p:"Return the indices of the two numbers that add up to the target, smaller index first. Exactly one pair exists.",s:"function twoSum(nums, target) {\n  // your code\n}",k:[[[[2,7,11,15],9],[0,1]],[[[3,2,4],6],[1,2]],[[[3,3],6],[0,1]]]},
 {i:"groupby",n:"Group by length",v:"Medium",f:"groupByLength",p:"Return an object whose keys are word lengths and whose values are arrays of the words with that length, in original order.",s:"function groupByLength(words) {\n  // your code\n}",k:[[[["a","bb","cc"]],{"1":["a"],"2":["bb","cc"]}],[[[]],{}],[[["abc","d"]],{"1":["d"],"3":["abc"]}]]}];
 let pc=CH[0],pcode={};try{pcode=JSON.parse(localStorage.getItem("dv-practice-code")||"{}")||{}}catch(e){}
-async function loadChallenges(){try{const response=await fetch("challenges.json");if(!response.ok)return;const data=await response.json();if(!Array.isArray(data)||!data.length)return;CH=data.map(c=>({i:c.id,n:c.title,v:c.level,topic:c.topic||"Algorithms",f:c.function,p:c.prompt,s:c.starter,k:c.tests.map(t=>[t.args,t.expected])}));pc=CH.find(c=>c.i===pc.i)||CH[0];if(location.hash==="#practice")prac();if(location.hash==="#interview")renderInterview()}catch(e){}}
+async function loadChallenges(){try{const response=await fetch("challenges.json");if(!response.ok)return;const data=await response.json();if(!Array.isArray(data)||!data.length)return;CH=data.map(c=>({i:c.id,n:c.title,v:c.level,topic:c.topic||"Algorithms",f:c.function,p:c.prompt,s:c.starter,k:c.tests.map(t=>[t.args,t.expected])}));pc=CH.find(c=>c.i===pc.i)||CH[0];if(location.hash==="#practice")prac();if(location.hash==="#interview")renderInterview();if(location.hash==="#plan")renderReadiness()}catch(e){}}
 const savePracticeCode=()=>{try{localStorage.setItem("dv-practice-code",JSON.stringify(pcode))}catch(e){}};
 const practiceFilter={level:"All",query:"",saved:false};
 function prac(){const done=c=>prog["c:"+c.i],filtered=CH.filter(c=>(practiceFilter.level==="All"||c.v===practiceFilter.level)&&(!practiceFilter.saved||prog["b:"+c.i])&&(c.n+" "+(c.topic||"")+" "+c.p).toLowerCase().includes(practiceFilter.query.toLowerCase()));
@@ -577,7 +564,8 @@ $("prg").addEventListener("click",async e=>{const t=e.target,b=t.closest(".lt");
   if(t.id==="pbookmark"){prog["b:"+pc.i]=!prog["b:"+pc.i];save();prac();return}
   if(b){pcode[pc.i]=$("pcode")?.value??pcode[pc.i];savePracticeCode();pc=CH[+b.dataset.i];prac();return}
   if(t.id==="prst"){delete pcode[pc.i];savePracticeCode();prac();return}
-  if(t.id==="prun"){const current=pc,code=$("pcode").value;pcode[current.i]=code;savePracticeCode();const o=$("pres");o.textContent="Running tests…";t.disabled=true;const r=await runTests(current,code),sh=a=>JSON.stringify(a)??"undefined";t.disabled=false;if(pc!==current)return;
+  if(t.id==="prun"){const current=pc,code=$("pcode").value,started=Date.now();pcode[current.i]=code;savePracticeCode();const o=$("pres");o.textContent="Running tests…";t.disabled=true;const r=await runTests(current,code),sh=a=>JSON.stringify(a)??"undefined";t.disabled=false;if(pc!==current)return;
+    if(!r.err||!r.err.includes("runner could not start")){const passed=!r.err&&r.rows.every(row=>row.ok);recordAttempt(current.i,passed,"practice",r.rows?.filter(row=>row.ok).length||0,r.rows?.length||current.k.length,0,Math.floor((Date.now()-started)/1000))}
     if(r.err){o.innerHTML=`<div class="tbn no">${esc(r.err)}</div>`;return}
     const n=r.rows.filter(x=>x.ok).length;
     o.innerHTML=`<div class="tres">${r.rows.map((x,i)=>i<2?`<div class="tr2 ${x.ok?"ok":"no"}" style="animation-delay:${i*70}ms"><b>${x.ok?"✓":"✗"}</b><code>${esc(pc.f+"("+x.a.map(sh).join(", ")+")")}</code><span>${x.ok?"":"expected "+esc(sh(x.x))+", got "+esc(sh(x.g))}</span></div>`:`<div class="tr2 ${x.ok?"ok":"no"}" style="animation-delay:${i*70}ms"><b>${x.ok?"✓":"✗"}</b><code>Additional test ${i-1}</code><span>${x.ok?"":"failed"}</span></div>`).join("")}</div><div class="tbn ${n===r.rows.length?"ok":"no"}">${n===r.rows.length?"All tests passed. +30 XP":n+" of "+r.rows.length+" passed"}</div>`;
@@ -608,4 +596,4 @@ $("bsearch").onclick=()=>$("kbtn").click();
   (async function loop(){while(true){const code=show();for(let i=1;i<=code.length;i++){box.innerHTML=hl(code.slice(0,i));await new Promise(r=>setTimeout(r,document.hidden?400:22))}await new Promise(r=>setTimeout(r,2600));li++}})()})();
 
 $("thread").addEventListener("click",e=>{const b=e.target.closest(".t-sug button");if(b&&window.tutorAsk)window.tutorAsk(b.textContent)});
-addEventListener("hashchange",go);go();loadChallenges();loadInterviewPatterns();
+addEventListener("hashchange",go);go();loadChallenges();loadInterviewPatterns();loadMockScenarios();

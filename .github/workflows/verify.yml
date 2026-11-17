@@ -18,7 +18,17 @@ jobs:
       - run: npm install --prefix tools
       - run: python tools/validate.py
       - run: python tools/validate_interview.py
+      - run: python tools/validate_mock.py
+      - run: python tools/validate_python.py
       - run: node --check apps/prototype/app.js
       - run: node --check apps/prototype/interview.js
+      - run: node --check apps/prototype/readiness.js
+      - run: node --check apps/prototype/mock.js
+      - run: node --check apps/prototype/python-practice.js
+      - run: node --check apps/prototype/python-worker.mjs
+      - run: node --check apps/prototype/auth.js
+      - run: node --check apps/prototype/auth-data.mjs
+      - run: node --check apps/prototype/tutor.js
       - run: node tools/verify_interview_core.mjs
+      - run: node tools/verify_auth_state.mjs
       - run: python tools/verify.py --strict

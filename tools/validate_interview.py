@@ -32,6 +32,6 @@ for company in companies:
 
 site = root / "apps" / "prototype"
 html = (site / "index.html").read_text(encoding="utf-8")
-for asset in ("style.css", "app.js", "interview.js"):
+for asset in ("style.css", "app.js", "interview.js", "readiness.js", "mock.js", "auth.js", "tutor.js"):
     assert (site / asset).is_file() and asset in html, f"Missing site asset: {asset}"
 print(f"{len(patterns)} interview patterns cover all {len(challenges)} challenges")

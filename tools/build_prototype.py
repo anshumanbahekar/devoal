@@ -1,6 +1,7 @@
 """Package the original Devoal interface with its real logos and prepared lessons."""
 
 import json
+import os
 import re
 import shutil
 from pathlib import Path
@@ -12,6 +13,23 @@ shutil.copy2(ROOT / "apps" / "prototype" / "index.html", DEST / "index.html")
 shutil.copy2(ROOT / "apps" / "prototype" / "style.css", DEST / "style.css")
 shutil.copy2(ROOT / "apps" / "prototype" / "app.js", DEST / "app.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "interview.js", DEST / "interview.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "readiness.js", DEST / "readiness.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "mock.js", DEST / "mock.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "python-practice.js", DEST / "python-practice.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "python-worker.mjs", DEST / "python-worker.js")
+shutil.copy2(ROOT / "content" / "python-practice.json", DEST / "python-practice.json")
+shutil.copy2(ROOT / "apps" / "prototype" / "auth.js", DEST / "auth.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "auth-data.mjs", DEST / "auth-data.js")
+tutor_url = os.environ.get("DEVOAL_TUTOR_API_URL", "")
+(DEST / "tutor-config.json").write_text(json.dumps({"apiUrl": tutor_url}), encoding="utf-8")
+shutil.copy2(ROOT / "apps" / "prototype" / "tutor.js", DEST / "tutor.js")
+firebase_config = {key: os.environ.get(env, "") for key, env in {
+    "apiKey": "DEVOAL_FIREBASE_API_KEY",
+    "authDomain": "DEVOAL_FIREBASE_AUTH_DOMAIN",
+    "projectId": "DEVOAL_FIREBASE_PROJECT_ID",
+    "appId": "DEVOAL_FIREBASE_APP_ID",
+}.items()}
+(DEST / "firebase-config.json").write_text(json.dumps(firebase_config), encoding="utf-8")
 company_icons = DEST / "company-icons"
 company_icons.mkdir(exist_ok=True)
 for source in (ROOT / "apps" / "prototype" / "company-icons").glob("*.svg"):
@@ -34,6 +52,7 @@ for challenge in challenges:
 (DEST / "interview-patterns.json").write_text(json.dumps(patterns), encoding="utf-8")
 shutil.copy2(ROOT / "content" / "interview-hints.json", DEST / "interview-hints.json")
 shutil.copy2(ROOT / "content" / "interview-companies.json", DEST / "interview-companies.json")
+shutil.copy2(ROOT / "content" / "mock-scenarios.json", DEST / "mock-scenarios.json")
 
 def slug(text: str) -> str:
     return re.sub(r"(^-|-$)", "", re.sub(r"[^a-z0-9]+", "-", text.lower()))[:60]
