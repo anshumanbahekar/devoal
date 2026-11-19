@@ -60,6 +60,21 @@ for challenge in challenges:
     if not challenge.get("topic"):
         challenge["topic"] = next((pattern["title"] for pattern in patterns if challenge["id"] in pattern["problems"]), "Algorithms")
 (DEST / "challenges.json").write_text(json.dumps(challenges), encoding="utf-8")
+companies = json.loads((ROOT / "content/interview-companies.json").read_text(encoding="utf-8"))
+python_problems = json.loads((DEST / "python-practice.json").read_text(encoding="utf-8"))
+library = []
+for language, problems in (("javascript", challenges), ("python", python_problems), ("sql", sql_problems)):
+    for problem in problems:
+        entry = {key: problem[key] for key in ("id", "title", "level", "topic")}
+        entry["language"] = language
+        entry["companies"] = [company["id"] for company in companies
+                              if language == "javascript" and problem["id"] in company["problems"]]
+        library.append(entry)
+(DEST / "library.json").write_text(json.dumps({
+    "problems": library,
+    "companies": {company["id"]: company["name"] for company in companies},
+}), encoding="utf-8")
+shutil.copy2(ROOT / "apps/prototype/library.js", DEST / "library.js")
 (DEST / "interview-patterns.json").write_text(json.dumps(patterns), encoding="utf-8")
 shutil.copy2(ROOT / "content" / "interview-hints.json", DEST / "interview-hints.json")
 shutil.copy2(ROOT / "content" / "interview-companies.json", DEST / "interview-companies.json")

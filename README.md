@@ -1,5 +1,7 @@
 # Devoal
 
+Devoal is a coding education product by Study Sharpener.
+
 An open-source platform for learning to code properly: short lessons, 62 original coding problems with browser tests, a tutor grounded in the lessons,
 and review that brings back what you forgot. Eight languages, five-stage roadmaps, all free.
 

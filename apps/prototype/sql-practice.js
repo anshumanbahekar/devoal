@@ -43,7 +43,7 @@ async function runSqlPractice(){
   finally{worker?.terminate();if(button.isConnected)button.disabled=false}
 }
 document.addEventListener("click",event=>{
-  const select=event.target.closest("[data-sql]");if(select){sqlCurrent=sqlProblems[Number(select.dataset.sql)];renderSqlPractice();return}
+  const select=event.target.closest("[data-sql]");if(select){sqlCurrent=sqlProblems[Number(select.dataset.sql)];syncProblemLink("sql",sqlCurrent.id);renderSqlPractice();return}
   if(event.target.id==="sql-run")runSqlPractice();
   if(event.target.id==="sql-reset"&&sqlCurrent){delete sqlDrafts[sqlCurrent.id];try{localStorage.setItem("dv-sql-code.v1",JSON.stringify(sqlDrafts))}catch{}renderSqlPractice()}
 });

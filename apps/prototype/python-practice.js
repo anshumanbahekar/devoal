@@ -40,7 +40,7 @@ async function runPythonPractice(){
   finally{worker?.terminate();if(button.isConnected)button.disabled=false}
 }
 document.addEventListener("click",event=>{
-  const select=event.target.closest("[data-python]");if(select){pythonCurrent=pythonProblems[Number(select.dataset.python)];renderPythonPractice();return}
+  const select=event.target.closest("[data-python]");if(select){pythonCurrent=pythonProblems[Number(select.dataset.python)];syncProblemLink("python",pythonCurrent.id);renderPythonPractice();return}
   if(event.target.id==="python-run")runPythonPractice();
   if(event.target.id==="python-reset"&&pythonCurrent){delete pythonCode[pythonCurrent.id];localStorage.setItem("dv-python-code.v1",JSON.stringify(pythonCode));renderPythonPractice()}
 });
