@@ -123,7 +123,11 @@ async function showProblemLibrary() {
   }
   form.oninput = () => draw(true);
   form.onsubmit = event => { event.preventDefault(); draw(true); };
-  form.onreset = () => queueMicrotask(() => draw(true));
+  form.onreset = event => {
+    event.preventDefault();
+    for (const name of fields) form.elements[name].value = "";
+    draw(true);
+  };
   results.onclick = event => {
     const button = event.target.closest("button[data-bookmark]");
     if (!button) return;
