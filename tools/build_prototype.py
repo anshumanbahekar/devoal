@@ -6,6 +6,8 @@ import re
 import shutil
 from pathlib import Path
 
+from validate_sql import checked_problems
+
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "apps" / "prototype" / "dist"
 DEST.mkdir(parents=True, exist_ok=True)
@@ -14,10 +16,19 @@ shutil.copy2(ROOT / "apps" / "prototype" / "style.css", DEST / "style.css")
 shutil.copy2(ROOT / "apps" / "prototype" / "app.js", DEST / "app.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "interview.js", DEST / "interview.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "readiness.js", DEST / "readiness.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "readiness-language.js", DEST / "readiness-language.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "mock.js", DEST / "mock.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "python-practice.js", DEST / "python-practice.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "python-worker.mjs", DEST / "python-worker.js")
 shutil.copy2(ROOT / "content" / "python-practice.json", DEST / "python-practice.json")
+sql_problems = checked_problems()
+(DEST / "sql-practice.json").write_text(json.dumps([{key: value for key, value in problem.items() if key != "solution"} for problem in sql_problems]), encoding="utf-8")
+shutil.copy2(ROOT / "apps" / "prototype" / "sql-practice.js", DEST / "sql-practice.js")
+shutil.copy2(ROOT / "apps" / "prototype" / "sql-worker.js", DEST / "sql-worker.js")
+sql_vendor = DEST / "vendor"
+sql_vendor.mkdir(exist_ok=True)
+for filename in ("sql-wasm.js", "sql-wasm.wasm", "sql-js-LICENSE.txt"):
+    shutil.copy2(ROOT / "apps" / "prototype" / "vendor" / filename, sql_vendor / filename)
 shutil.copy2(ROOT / "apps" / "prototype" / "auth.js", DEST / "auth.js")
 shutil.copy2(ROOT / "apps" / "prototype" / "auth-data.mjs", DEST / "auth-data.js")
 tutor_url = os.environ.get("DEVOAL_TUTOR_API_URL", "")

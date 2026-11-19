@@ -15,7 +15,7 @@ Each phase ends with something a learner can use. Checkboxes are the real tasks.
 - [x] Deploy the static learning app to GitHub Pages
 - [x] Original visual design is the live public frontend; split markup, style, and behavior into separate files
 - [x] 40 original JavaScript challenges, eight interview pattern guides, four company prep paths, timed two problem rounds, and local practice coins
-- [x] Browser-local attempt history, scheduled review, personal practice plan, and 12 mock interview scenarios
+- [x] Browser-local attempt history, scheduled review across three practice languages, personal practice plan, and 12 mock interview scenarios
 - [x] Public frontend hooks for Firebase account sync and a server-backed Grok tutor
 - [ ] Deploy the Grok API on a server host and enable it on the public site
 - [ ] Integrate the public frontend and server features into one deployed app
@@ -25,8 +25,9 @@ Each phase ends with something a learner can use. Checkboxes are the real tasks.
 - [x] JavaScript challenge runner (sandboxed iframe with timeout)
 - [ ] TypeScript runner
 - [x] Python browser runner with visible tests and a worker timeout (10 original problems)
-- [ ] SQL runner (sql.js)
-- [ ] Practice challenges and secure hidden tests for Python and SQL
+- [x] SQL browser runner with 12 original problems, two datasets each, and a worker timeout
+- [x] Practice challenges with visible tests for Python and SQL
+- [ ] Server judge with secure hidden tests for Python and SQL
 - **Done when:** a learner can edit a lesson's code, run it, and pass a hidden test, in the browser.
 
 ## Phase 3: accounts and community
@@ -53,5 +54,5 @@ Each phase ends with something a learner can use. Checkboxes are the real tasks.
 - Write a C++ or Rust lesson (see `CONTRIBUTING.md`)
 - Review any lesson and set `"review": "reviewed"`
 - Add 10 quiz questions for a language
-- Add Python or SQL practice challenges
+- Add reviewed Python or SQL practice challenges
 - Translate the explanations (open an issue first to agree on the format)

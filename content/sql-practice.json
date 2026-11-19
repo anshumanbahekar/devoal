@@ -1,0 +1,218 @@
+[
+  {
+    "id": "active-members",
+    "title": "Active members",
+    "level": "Easy",
+    "topic": "Filtering",
+    "prompt": "Return the names of active members, alphabetically. Active means active = 1. Output one name per row.",
+    "schema": "CREATE TABLE members (id INTEGER, name TEXT, active INTEGER);",
+    "starter": "SELECT name\nFROM members\nWHERE ...\nORDER BY name;",
+    "solution": "SELECT name FROM members WHERE active = 1 ORDER BY name;",
+    "cases": [
+      {
+        "seed": "INSERT INTO members VALUES (1,'Mira',1),(2,'Ben',0),(3,'Ada',1);"
+      },
+      {
+        "seed": "INSERT INTO members VALUES (1,'Zoe',0),(2,'Kai',1),(3,'Lia',1),(4,'Nia',0);"
+      }
+    ]
+  },
+  {
+    "id": "top-products",
+    "title": "Top three products",
+    "level": "Easy",
+    "topic": "Sorting and limits",
+    "prompt": "Return product names and prices for the three most expensive products. Break price ties by name alphabetically.",
+    "schema": "CREATE TABLE products (id INTEGER, name TEXT, price INTEGER);",
+    "starter": "SELECT name, price\nFROM products\nORDER BY ...\nLIMIT 3;",
+    "solution": "SELECT name, price FROM products ORDER BY price DESC, name ASC LIMIT 3;",
+    "cases": [
+      {
+        "seed": "INSERT INTO products VALUES (1,'Pen',5),(2,'Bag',30),(3,'Book',15),(4,'Lamp',40);"
+      },
+      {
+        "seed": "INSERT INTO products VALUES (1,'Alpha',20),(2,'Beta',20),(3,'Gamma',10),(4,'Delta',20),(5,'Epsilon',1);"
+      }
+    ]
+  },
+  {
+    "id": "missing-cities",
+    "title": "Missing city data",
+    "level": "Easy",
+    "topic": "NULL values",
+    "prompt": "Return customer IDs whose city is unknown (NULL), in ascending ID order. An empty string is a known value for this exercise.",
+    "schema": "CREATE TABLE customers (id INTEGER, city TEXT);",
+    "starter": "SELECT id\nFROM customers\nWHERE ...\nORDER BY id;",
+    "solution": "SELECT id FROM customers WHERE city IS NULL ORDER BY id;",
+    "cases": [
+      {
+        "seed": "INSERT INTO customers VALUES (1,'Pune'),(2,NULL),(3,''),(4,NULL);"
+      },
+      {
+        "seed": "INSERT INTO customers VALUES (7,'Delhi'),(3,NULL),(5,'Mumbai'),(2,NULL);"
+      }
+    ]
+  },
+  {
+    "id": "all-customer-orders",
+    "title": "Orders per customer",
+    "level": "Medium",
+    "topic": "LEFT JOIN",
+    "prompt": "Return every customer ID, name, and number of orders, including customers with zero orders. Order by customer ID.",
+    "schema": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE orders (id INTEGER, customer_id INTEGER);",
+    "starter": "SELECT c.id, c.name, COUNT(...)\nFROM customers c\nLEFT JOIN orders o ON ...\nGROUP BY c.id, c.name\nORDER BY c.id;",
+    "solution": "SELECT c.id, c.name, COUNT(o.id) FROM customers c LEFT JOIN orders o ON o.customer_id = c.id GROUP BY c.id, c.name ORDER BY c.id;",
+    "cases": [
+      {
+        "seed": "INSERT INTO customers VALUES (1,'Ada'),(2,'Mira'),(3,'Ben'); INSERT INTO orders VALUES (11,1),(12,1),(13,3);"
+      },
+      {
+        "seed": "INSERT INTO customers VALUES (4,'Kai'),(5,'Lia'); INSERT INTO orders VALUES (20,5),(21,5),(22,5);"
+      }
+    ]
+  },
+  {
+    "id": "category-revenue",
+    "title": "Revenue by category",
+    "level": "Medium",
+    "topic": "Joins and grouping",
+    "prompt": "Return each category name and total revenue, where revenue is quantity times unit price. Include categories with no sales as zero. Order by category name.",
+    "schema": "CREATE TABLE categories (id INTEGER, name TEXT); CREATE TABLE sales (id INTEGER, category_id INTEGER, quantity INTEGER, unit_price INTEGER);",
+    "starter": "SELECT c.name, COALESCE(SUM(...), 0)\nFROM categories c\nLEFT JOIN sales s ON ...\nGROUP BY c.id, c.name\nORDER BY c.name;",
+    "solution": "SELECT c.name, COALESCE(SUM(s.quantity * s.unit_price), 0) FROM categories c LEFT JOIN sales s ON s.category_id = c.id GROUP BY c.id, c.name ORDER BY c.name;",
+    "cases": [
+      {
+        "seed": "INSERT INTO categories VALUES (1,'Books'),(2,'Games'),(3,'Music'); INSERT INTO sales VALUES (1,1,2,10),(2,1,1,12),(3,2,3,7);"
+      },
+      {
+        "seed": "INSERT INTO categories VALUES (8,'Tools'),(9,'Art'); INSERT INTO sales VALUES (4,9,5,4),(5,9,2,9);"
+      }
+    ]
+  },
+  {
+    "id": "repeat-buyers",
+    "title": "Repeat buyers",
+    "level": "Medium",
+    "topic": "HAVING",
+    "prompt": "Return customer IDs and their order counts for customers with at least two orders. Sort by count descending, then customer ID ascending.",
+    "schema": "CREATE TABLE orders (id INTEGER, customer_id INTEGER);",
+    "starter": "SELECT customer_id, COUNT(*)\nFROM orders\nGROUP BY customer_id\nHAVING ...\nORDER BY ...;",
+    "solution": "SELECT customer_id, COUNT(*) FROM orders GROUP BY customer_id HAVING COUNT(*) >= 2 ORDER BY COUNT(*) DESC, customer_id ASC;",
+    "cases": [
+      {
+        "seed": "INSERT INTO orders VALUES (1,4),(2,2),(3,4),(4,2),(5,2),(6,7);"
+      },
+      {
+        "seed": "INSERT INTO orders VALUES (1,8),(2,8),(3,3),(4,3),(5,1),(6,1);"
+      }
+    ]
+  },
+  {
+    "id": "latest-ticket-status",
+    "title": "Latest ticket status",
+    "level": "Medium",
+    "topic": "Window functions",
+    "prompt": "Return each ticket ID and its most recent status. A larger event ID breaks ties on occurred_at. Order by ticket ID.",
+    "schema": "CREATE TABLE ticket_events (event_id INTEGER, ticket_id INTEGER, status TEXT, occurred_at TEXT);",
+    "starter": "WITH ranked AS (\n  SELECT ticket_id, status,\n         ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...) AS rn\n  FROM ticket_events\n)\nSELECT ticket_id, status FROM ranked WHERE rn = 1 ORDER BY ticket_id;",
+    "solution": "WITH ranked AS (SELECT ticket_id, status, ROW_NUMBER() OVER (PARTITION BY ticket_id ORDER BY occurred_at DESC, event_id DESC) AS rn FROM ticket_events) SELECT ticket_id, status FROM ranked WHERE rn = 1 ORDER BY ticket_id;",
+    "cases": [
+      {
+        "seed": "INSERT INTO ticket_events VALUES (1,10,'open','2026-01-01'),(2,10,'closed','2026-01-03'),(3,20,'open','2026-01-02');"
+      },
+      {
+        "seed": "INSERT INTO ticket_events VALUES (1,7,'new','2026-02-01'),(2,7,'pending','2026-02-01'),(3,9,'new','2026-02-02'),(4,9,'done','2026-02-04');"
+      }
+    ]
+  },
+  {
+    "id": "second-distinct-pay",
+    "title": "Second distinct salary",
+    "level": "Medium",
+    "topic": "Distinct ranking",
+    "prompt": "Return the second highest distinct salary as one row, one column. Each fixture has at least two distinct salaries.",
+    "schema": "CREATE TABLE employees (id INTEGER, salary INTEGER);",
+    "starter": "SELECT DISTINCT salary\nFROM employees\nORDER BY salary DESC\nLIMIT ... OFFSET ...;",
+    "solution": "SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1;",
+    "cases": [
+      {
+        "seed": "INSERT INTO employees VALUES (1,100),(2,90),(3,100),(4,70);"
+      },
+      {
+        "seed": "INSERT INTO employees VALUES (1,45),(2,45),(3,30),(4,20),(5,30);"
+      }
+    ]
+  },
+  {
+    "id": "running-account-balance",
+    "title": "Running account balance",
+    "level": "Hard",
+    "topic": "Window aggregates",
+    "prompt": "Return account ID, transaction ID, and running balance for every transaction. Credits are positive and debits negative. Order by account ID, then transaction ID.",
+    "schema": "CREATE TABLE transactions (id INTEGER, account_id INTEGER, amount INTEGER);",
+    "starter": "SELECT account_id, id,\n       SUM(amount) OVER (PARTITION BY ... ORDER BY ...) AS balance\nFROM transactions\nORDER BY account_id, id;",
+    "solution": "SELECT account_id, id, SUM(amount) OVER (PARTITION BY account_id ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS balance FROM transactions ORDER BY account_id, id;",
+    "cases": [
+      {
+        "seed": "INSERT INTO transactions VALUES (1,2,10),(2,1,100),(3,1,-25),(4,2,-4);"
+      },
+      {
+        "seed": "INSERT INTO transactions VALUES (5,3,7),(7,3,-9),(6,3,4),(1,4,20);"
+      }
+    ]
+  },
+  {
+    "id": "monthly-revenue-change",
+    "title": "Monthly revenue change",
+    "level": "Hard",
+    "topic": "CTEs and LAG",
+    "prompt": "Group sales by calendar month (YYYY-MM). Return month, total revenue, and change from the previous recorded month. For the first month, use its total as the change. Order by month.",
+    "schema": "CREATE TABLE sales (id INTEGER, sold_at TEXT, amount INTEGER);",
+    "starter": "WITH months AS (\n  SELECT strftime('%Y-%m', sold_at) AS month, SUM(amount) AS revenue\n  FROM sales GROUP BY 1\n)\nSELECT month, revenue, ...\nFROM months ORDER BY month;",
+    "solution": "WITH months AS (SELECT strftime('%Y-%m', sold_at) AS month, SUM(amount) AS revenue FROM sales GROUP BY 1) SELECT month, revenue, revenue - LAG(revenue, 1, 0) OVER (ORDER BY month) FROM months ORDER BY month;",
+    "cases": [
+      {
+        "seed": "INSERT INTO sales VALUES (1,'2026-01-02',10),(2,'2026-01-20',5),(3,'2026-02-01',21),(4,'2026-04-02',9);"
+      },
+      {
+        "seed": "INSERT INTO sales VALUES (1,'2025-11-04',100),(2,'2025-12-01',50),(3,'2025-12-03',10),(4,'2026-01-01',80);"
+      }
+    ]
+  },
+  {
+    "id": "longest-login-streak",
+    "title": "Longest login streak",
+    "level": "Hard",
+    "topic": "Gaps and islands",
+    "prompt": "Return each user ID and their longest run of consecutive distinct login dates. Order by user ID. A user can have duplicate logins on one date.",
+    "schema": "CREATE TABLE logins (user_id INTEGER, login_date TEXT);",
+    "starter": "WITH days AS (SELECT DISTINCT user_id, login_date FROM logins),\nnumbered AS (\n  SELECT user_id, login_date, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY login_date) AS rn\n  FROM days\n)\n-- Group by user_id and julianday(login_date) - rn.\nSELECT ...;",
+    "solution": "WITH days AS (SELECT DISTINCT user_id, login_date FROM logins), numbered AS (SELECT user_id, login_date, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY login_date) AS rn FROM days), runs AS (SELECT user_id, COUNT(*) AS streak FROM numbered GROUP BY user_id, julianday(login_date) - rn) SELECT user_id, MAX(streak) FROM runs GROUP BY user_id ORDER BY user_id;",
+    "cases": [
+      {
+        "seed": "INSERT INTO logins VALUES (1,'2026-01-01'),(1,'2026-01-02'),(1,'2026-01-02'),(1,'2026-01-04'),(2,'2026-02-01'),(2,'2026-02-02'),(2,'2026-02-03');"
+      },
+      {
+        "seed": "INSERT INTO logins VALUES (3,'2026-03-01'),(3,'2026-03-03'),(3,'2026-03-04'),(3,'2026-03-05'),(4,'2026-01-10');"
+      }
+    ]
+  },
+  {
+    "id": "team-depth",
+    "title": "Depth in the team tree",
+    "level": "Hard",
+    "topic": "Recursive CTEs",
+    "prompt": "Return each employee ID and their depth below the root manager. Roots have manager_id NULL and depth 0. Order by employee ID.",
+    "schema": "CREATE TABLE employees (id INTEGER, manager_id INTEGER);",
+    "starter": "WITH RECURSIVE tree(id, depth) AS (\n  SELECT id, 0 FROM employees WHERE manager_id IS NULL\n  UNION ALL\n  SELECT e.id, ... FROM employees e JOIN tree ON ...\n)\nSELECT id, depth FROM tree ORDER BY id;",
+    "solution": "WITH RECURSIVE tree(id, depth) AS (SELECT id, 0 FROM employees WHERE manager_id IS NULL UNION ALL SELECT e.id, tree.depth + 1 FROM employees e JOIN tree ON e.manager_id = tree.id) SELECT id, depth FROM tree ORDER BY id;",
+    "cases": [
+      {
+        "seed": "INSERT INTO employees VALUES (1,NULL),(2,1),(3,1),(4,2),(5,4);"
+      },
+      {
+        "seed": "INSERT INTO employees VALUES (10,NULL),(11,10),(12,NULL),(13,12),(14,13),(15,13);"
+      }
+    ]
+  }
+]
