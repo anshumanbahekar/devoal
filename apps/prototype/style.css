@@ -622,7 +622,7 @@ h1{font-size:clamp(46px,8vw,104px)}
 .ip-next{border-top:1px solid var(--line2);padding-top:14px;margin-top:18px!important}.ip-next b{color:#fff}
 .ip-section-head{margin-top:38px}.ip-section-head h3{font-size:22px;line-height:1.2;margin:0 0 4px}.ip-section-head p{margin:0;color:var(--mut);font-size:14px}.ip-company-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}.ip-company{display:flex;align-items:center;text-align:left;gap:15px;min-width:0;min-height:86px;padding:18px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);color:var(--tx);cursor:pointer;transition:border-color .2s,transform .2s,background .2s}.ip-company:hover{border-color:#5f74ad;transform:translateY(-2px)}.ip-company.on{border-color:var(--brand);background:#111829}.ip-company img{display:block;width:36px;height:36px;object-fit:contain;flex:none}.ip-company img[src$="amazon.svg"]{filter:invert(1)}.ip-company span{display:flex;flex-direction:column;min-width:0}.ip-company b{font-size:17px;line-height:1.25}.ip-company small{color:var(--mut);font-size:12px}.ip-company em{margin-left:auto;white-space:nowrap;color:#aeb7ce;font:11px "JetBrains Mono",monospace;font-style:normal}.ip-company-list{border:1px solid var(--line2);border-radius:12px;padding:14px 18px;margin:0 0 30px;background:#0b0c10}.ip-company-list p{color:var(--mut);font-size:13px;margin:0 0 12px}.ip-company-list a{display:flex;justify-content:space-between;gap:10px;padding:10px 2px;border-top:1px solid var(--line2);color:#eee;text-decoration:none;font-size:14px}.ip-company-list a:hover{color:#87aaff}.ip-company-list span{color:var(--mut);font:11px "JetBrains Mono",monospace}
 @media(max-width:760px){.ip-company-grid{grid-template-columns:1fr}.ip-company em{display:none}}
-.dv-wallet{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;color:#f9d988;font:600 12px "JetBrains Mono",monospace}.dv-wallet i{display:inline-block;width:17px;height:17px;border:2px solid #ffe1a0;border-radius:50%;background:linear-gradient(135deg,#fce8ab,#d89e37 70%);box-shadow:inset 0 0 0 2px #a66b1c,0 0 14px rgba(230,176,67,.22)}.ip-modes .dv-wallet{margin-left:auto;align-self:center}.ip-panel .dv-wallet{margin:8px 0}.practice-tools .dv-wallet{margin-left:auto}
+.dv-wallet{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;color:#f9d988;font:600 12px "JetBrains Mono",monospace}.dv-wallet img{width:24px;height:24px;object-fit:contain;flex:none}.ip-modes .dv-wallet{margin-left:auto;align-self:center}.ip-panel .dv-wallet{margin:8px 0}.practice-tools .dv-wallet{margin-left:auto}
 @media(max-width:760px){.ip-modes .dv-wallet{margin-left:0;width:100%}}
 .ip-official{margin:10px 0 0}.ip-official a{color:#a7c1ff;font-size:13px;text-decoration:underline;text-underline-offset:3px}.ip-official a:hover{color:#fff}
 .rp-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:26px 0}.rp-stats>div{border:1px solid var(--line2);border-radius:12px;padding:18px 20px;background:linear-gradient(145deg,#121318,#09090c);display:flex;flex-direction:column;gap:2px}.rp-stats b{font-size:29px;line-height:1.1;letter-spacing:-.05em}.rp-stats b small{font-size:15px;color:var(--mut);letter-spacing:0}.rp-stats span{color:var(--mut);font-size:12px}.rp-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:16px}.rp-list,.rp-patterns{border:1px solid var(--line2);border-radius:12px;background:var(--panel);padding:20px;min-width:0}.rp-layout h4{font-size:16px;margin:0 0 14px}.rp-list a{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line2);color:var(--tx);text-decoration:none}.rp-list a:hover b{color:#9bbcff}.rp-list em{font:12px "JetBrains Mono",monospace;color:#789dff;font-style:normal}.rp-list a>span{display:flex;flex-direction:column;min-width:0}.rp-list b{font-size:14px;line-height:1.4}.rp-list small{font-size:12px;color:var(--mut)}.rp-list strong{font:11px "JetBrains Mono",monospace;color:var(--mut);font-weight:400;margin-left:auto}.rp-pattern{margin:0 0 14px}.rp-pattern>div{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:6px}.rp-pattern b{font-weight:500}.rp-pattern span{color:var(--mut)}.rp-pattern>i{display:block;height:5px;background:#202127;border-radius:5px;overflow:hidden}.rp-pattern>i span{display:block;height:100%;background:#5389fa;border-radius:5px}.rp-note{color:var(--mut);font-size:12px;margin:16px 0}
@@ -661,3 +661,67 @@ h1{font-size:clamp(46px,8vw,104px)}
 .library-row { flex: 1; min-width: 0; }
 .library-save { width: 42px; min-height: 44px; border: 0; background: transparent; color: var(--mut); cursor: pointer; font-size: 21px; }
 .library-save:hover,.library-save:focus-visible,.library-save[aria-pressed="true"] { color: #f3cd78; }
+
+/* The homepage illustration shares the hero canvas with the existing introduction. */
+.home-hero {
+  overflow: hidden;
+  display: block;
+  padding-inline: clamp(20px, 4vw, 56px);
+}
+.home-hero .home-sky {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  width: 59%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 80%;
+  mask-image: linear-gradient(90deg, transparent, #000 30%),
+              linear-gradient(0deg, transparent, #000 14%);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+.home-hero .sub { max-width: min(46ch, 46%); color: #b4b4be; }
+@media (max-width: 720px) {
+  .home-hero { padding-top: 30px; }
+  .home-hero .home-sky {
+    width: 74%;
+    height: clamp(245px, 53vw, 340px);
+    object-position: 50% 77%;
+    mask-image: linear-gradient(90deg, transparent, #000 43%),
+                linear-gradient(0deg, transparent, #000 28%);
+  }
+  .home-hero .eyebrow { margin-bottom: 30px; }
+  .home-hero h1 { max-width: 8ch; font-size: clamp(48px, 9vw, 65px); }
+  .home-hero .sub { max-width: 46ch; margin-top: clamp(38px, 12vw, 85px); }
+}
+
+.roadmap-intro {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(24px, 4vw, 54px);
+}
+.roadmap-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 57%;
+  z-index: -1;
+  background: url("devoal-city.webp") 52% 68% / cover no-repeat;
+  mask-image: linear-gradient(90deg, transparent, #000 32%),
+              linear-gradient(0deg, transparent, #000 15%, #000 86%, transparent);
+  mask-composite: intersect;
+}
+.roadmap-intro .sub { max-width: min(44ch, 50%); color: #b4b4be; }
+@media (max-width: 720px) {
+  .roadmap-intro { padding-top: 54px; }
+  .roadmap-intro::before { width: 66%; height: 142px; }
+  .roadmap-intro .sub { max-width: 42ch; margin-top: 42px; }
+}
+.roadmap-art-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #c6d8ea;
+  font-size: 13px;
+  text-underline-offset: 3px;
+}

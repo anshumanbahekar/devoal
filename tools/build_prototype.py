@@ -46,6 +46,8 @@ company_icons.mkdir(exist_ok=True)
 for source in (ROOT / "apps" / "prototype" / "company-icons").glob("*.svg"):
     shutil.copy2(source, company_icons / source.name)
 shutil.copy2(ROOT / "apps" / "web" / "public" / "devoal-logo.png", DEST / "favicon.png")
+for image in ("devoal-night-sky.webp", "devoal-city.webp", "devoal-coin.webp"):
+    shutil.copy2(ROOT / "apps/web/public" / image, DEST / image)
 
 icons = DEST / "icons"
 icons.mkdir(exist_ok=True)

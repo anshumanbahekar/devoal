@@ -4,7 +4,7 @@ const coinSpentKey="dv-coins-spent.v1";
 const coinSpent=()=>{const value=Number(localStorage.getItem(coinSpentKey)||0);return Number.isFinite(value)&&value>=0?Math.floor(value):0};
 const coinBalance=()=>Math.max(0,5+Object.keys(prog).filter(key=>key.startsWith("c:")&&prog[key]).reduce((sum,key)=>sum+({Easy:10,Medium:20,Hard:30}[CH.find(problem=>problem.i===key.slice(2))?.v]||10),0)+Object.entries(prog).filter(([key,value])=>(key.startsWith("py:")||key.startsWith("sql:"))&&value).reduce((sum,[,value])=>sum+(typeof value==="number"?value:10),0)-coinSpent());
 const spendCoins=amount=>{if(coinBalance()<amount)return false;try{localStorage.setItem(coinSpentKey,String(coinSpent()+amount));return true}catch(e){return false}};
-const coinLabel=()=>`<span class="dv-wallet" title="Practice coins stay in this browser"><i aria-hidden="true"></i>${coinBalance()} coins</span>`;
+const coinLabel=()=>`<span class="dv-wallet" title="Practice coins stay in this browser"><img src="devoal-coin.webp" alt="" width="24" height="24">${coinBalance()} coins</span>`;
 const interviewModes={foundation:{name:"Foundation round",minutes:30,levels:["Easy","Medium"]},challenge:{name:"Interview round",minutes:45,levels:["Medium","Hard"]}};
 let interviewPatterns=[],interviewHints={},interviewCompanies=[],selectedPattern=null,selectedCompany=null,interviewState=null;
 try{const saved=JSON.parse(localStorage.getItem(interviewKey)||"null");if(saved&&interviewModes[saved.mode]&&Array.isArray(saved.questions)&&saved.questions.length===2&&saved.questions.every(id=>typeof id==="string")&&Number.isInteger(saved.current)&&saved.current>=0&&saved.current<2&&Array.isArray(saved.results)&&saved.drafts&&saved.hints&&Number.isFinite(saved.startedAt))interviewState=saved}catch(e){}
