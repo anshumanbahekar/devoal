@@ -27,10 +27,11 @@ jobs:
           DEVOAL_FIREBASE_PROJECT_ID: ${{ vars.DEVOAL_FIREBASE_PROJECT_ID }}
           DEVOAL_FIREBASE_APP_ID: ${{ vars.DEVOAL_FIREBASE_APP_ID }}
           DEVOAL_TUTOR_API_URL: ${{ vars.DEVOAL_TUTOR_API_URL }}
-      - name: Check problem discovery and saved drafts in Chrome
+      - name: Check problem discovery, saved drafts and account flows in Chrome
         run: |
           python -m pip install playwright==1.55.0
           python tools/verify_library_browser.py
+          python tools/verify_auth_browser.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

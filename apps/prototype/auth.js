@@ -1,35 +1,142 @@
-import {syncKeys,readBrowserState,mergeBrowserState} from "./auth-data.js";
+import {syncKeys, readBrowserState, mergeBrowserState} from "./auth-data.js";
 
-const accountButton=document.getElementById("account-button");
-let config;try{const response=await fetch("firebase-config.json",{cache:"no-store"});if(response.ok)config=await response.json()}catch(e){}
-if(config&&["apiKey","authDomain","projectId","appId"].every(key=>typeof config[key]==="string"&&config[key].trim())){
-  const dialog=document.createElement("dialog");dialog.className="dv-auth";
-  dialog.innerHTML='<div class="dv-auth-head"><h2>Devoal account</h2><button id="auth-close" aria-label="Close account dialog">×</button></div><p id="auth-description">Save your work across devices.</p><p id="auth-status" role="status"></p><div class="dv-auth-actions"><button id="auth-google"><img src="icons/google.svg" alt="">Continue with Google</button><button id="auth-github"><img src="icons/github.svg" alt="">Continue with GitHub</button><button id="auth-out" hidden>Sign out</button></div><p class="dv-auth-note">Your first sign-in merges completed work and practice attempts. Your account data is private to your Firebase user ID.</p>';
-  document.body.append(dialog);accountButton.hidden=false;
-  accountButton.addEventListener("click",()=>dialog.showModal());
-  dialog.querySelector("#auth-close").addEventListener("click",()=>dialog.close());
-  dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close()});
-  try{
-    const [{initializeApp},{getAuth,GoogleAuthProvider,GithubAuthProvider,signInWithPopup,signOut,onAuthStateChanged},{getFirestore,doc,getDoc,setDoc,serverTimestamp}]=await Promise.all([
-      import("https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js"),
-      import("https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js"),
-      import("https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js")
-    ]);
-    const app=initializeApp(config),auth=getAuth(app),db=getFirestore(app),status=dialog.querySelector("#auth-status"),description=dialog.querySelector("#auth-description");
-    const google=dialog.querySelector("#auth-google"),github=dialog.querySelector("#auth-github"),out=dialog.querySelector("#auth-out");
-    let currentUser=null,lastSynced="",syncing=false;
-    const showUser=user=>{currentUser=user;accountButton.textContent=user?"Account":"Sign in";description.textContent=user?`Signed in as ${user.displayName||user.email||"a developer"}. Your work syncs to this account.`:"Save your work across devices with Google or GitHub.";google.hidden=!!user;github.hidden=!!user;out.hidden=!user};
-    const writeCloud=async()=>{if(!currentUser||syncing)return;const state=readBrowserState(localStorage),serialized=JSON.stringify(state);if(serialized===lastSynced)return;if(serialized.length>750_000){status.textContent="Cloud sync is paused because your local work is too large. Export a backup from Progress.";return}syncing=true;try{await setDoc(doc(db,"users",currentUser.uid,"state","progress"),{state,clientAt:Date.now(),updatedAt:serverTimestamp()});lastSynced=serialized;status.textContent="Saved to your account."}catch(e){status.textContent="Cloud sync is paused. Your work is still in this browser."}finally{syncing=false}};
-    onAuthStateChanged(auth,async user=>{showUser(user);if(!user){status.textContent="";return}status.textContent="Loading your account…";
-      try{const ref=doc(db,"users",user.uid,"state","progress"),remote=await getDoc(ref),local=readBrowserState(localStorage),priorUid=localStorage.getItem("dv-last-uid"),merged=mergeBrowserState(local,remote.exists()?remote.data().state||{}:{},{differentUser:!!priorUid&&priorUid!==user.uid});
-        let changed=false;for(const key of syncKeys){const value=merged[key]??null;if(value!==local[key]){changed=true;if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value)}}
-        localStorage.setItem("dv-last-uid",user.uid);lastSynced="";await writeCloud();if(changed)location.reload()
-      }catch(e){status.textContent="Account connected, but cloud progress could not load. Browser progress is still available."}
-    },()=>{status.textContent="Could not check account status. Refresh and try again."});
-    setInterval(writeCloud,5000);
-    const signIn=async provider=>{status.textContent="Opening sign-in…";try{await signInWithPopup(auth,provider)}catch(error){status.textContent=error?.code==="auth/popup-closed-by-user"?"Sign-in window was closed.":error?.code==="auth/account-exists-with-different-credential"?"This email already uses another sign-in provider. Choose that provider first.":"Sign-in failed. Check the provider setup and try again."}};
-    google.addEventListener("click",()=>signIn(new GoogleAuthProvider()));
-    github.addEventListener("click",()=>signIn(new GithubAuthProvider()));
-    out.addEventListener("click",async()=>{try{await signOut(auth);dialog.close()}catch(e){status.textContent="Could not sign out. Try again."}});
-  }catch(e){dialog.querySelector("#auth-status").textContent="Account service could not load. Your work is still saved in this browser."}
+const byId = id => document.getElementById(id);
+const dialog = byId("auth-dialog");
+const entry = byId("account-button");
+const status = byId("auth-status");
+const google = byId("auth-google");
+const github = byId("auth-github");
+const logout = byId("auth-out");
+
+entry.addEventListener("click", () => dialog.showModal());
+dialog.addEventListener("click", event => {
+  if (event.target !== dialog) return;
+  const bounds = dialog.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+});
+
+const signInErrors = {
+  "auth/popup-blocked": "Allow pop-ups for Devoal and select your provider again.",
+  "auth/popup-closed-by-user": "Sign-in window closed. You can try again.",
+  "auth/account-exists-with-different-credential": "This email already has a Devoal account. Continue with the provider you used first.",
+  "auth/network-request-failed": "Check your connection and try again.",
+  "auth/operation-not-allowed": "This provider is unavailable. Try the other provider or continue as a guest.",
+  "auth/unauthorized-domain": "Sign-in is unavailable on this domain. You can continue as a guest."
+};
+
+async function startAccounts() {
+  const response = await fetch("firebase-config.json", {cache: "no-store"});
+  if (!response.ok) throw new Error("Account configuration unavailable");
+  const config = await response.json();
+  if (!["apiKey", "authDomain", "projectId", "appId"].every(key => config?.[key]?.trim())) {
+    status.textContent = "Google and GitHub sign-in are awaiting setup. You can practice as a guest and keep your progress in this browser.";
+    return;
+  }
+
+  const [{initializeApp}, {getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged}, {getFirestore, doc, getDoc, setDoc, serverTimestamp}] = await Promise.all([
+    import("https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js"),
+    import("https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js"),
+    import("https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js")
+  ]);
+  const app = initializeApp(config);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let session = null;
+  let busy = false;
+
+  function showUser(user) {
+    entry.textContent = user ? "Account" : "Sign in";
+    byId("auth-title").textContent = user ? "Your account" : "Sign in or sign up";
+    byId("auth-description").textContent = user
+      ? `Signed in as ${user.displayName || user.email || "a developer"}.`
+      : "Choose a provider to save your progress. Your first sign-in creates your Devoal account.";
+    byId("auth-done").textContent = user ? "Done" : "Continue as guest";
+    google.hidden = github.hidden = Boolean(user);
+    google.disabled = github.disabled = busy;
+    logout.hidden = !user;
+  }
+
+  async function writeCloud() {
+    const active = session;
+    if (!active?.ready || active.writing || active.user.uid !== auth.currentUser?.uid) return;
+    const state = readBrowserState(localStorage);
+    const serialized = JSON.stringify(state);
+    if (serialized === active.saved) return;
+    if (serialized.length > 750_000) {
+      status.textContent = "Cloud sync is paused because your work is too large. Export a backup from Progress.";
+      return;
+    }
+    active.writing = true;
+    try {
+      await setDoc(active.ref, {state, clientAt: Date.now(), updatedAt: serverTimestamp()});
+      active.saved = serialized;
+      if (session === active) status.textContent = "Progress saved to your account.";
+    } catch {
+      if (session === active) status.textContent = "Cloud sync is paused. Your work is still in this browser.";
+    } finally {
+      active.writing = false;
+    }
+  }
+
+  onAuthStateChanged(auth, async user => {
+    const active = user ? {user, ref: doc(db, "users", user.uid, "state", "progress"), ready: false, saved: "", writing: false} : null;
+    session = active;
+    showUser(user);
+    status.textContent = user ? "Loading your progress…" : "";
+    if (!active) return;
+    try {
+      const remote = await getDoc(active.ref);
+      if (session !== active || auth.currentUser?.uid !== user.uid) return;
+      const local = readBrowserState(localStorage);
+      const prior = localStorage.getItem("dv-last-uid");
+      const merged = mergeBrowserState(local, remote.exists() ? remote.data().state || {} : {}, {differentUser: Boolean(prior && prior !== user.uid)});
+      let changed = false;
+      for (const key of syncKeys) {
+        const value = merged[key] ?? null;
+        if (local[key] === value) continue;
+        changed = true;
+        if (value === null) localStorage.removeItem(key);
+        else localStorage.setItem(key, value);
+      }
+      localStorage.setItem("dv-last-uid", user.uid);
+      active.ready = true;
+      await writeCloud();
+      if (session === active && changed) location.reload();
+    } catch {
+      if (session === active) status.textContent = "Signed in. Refresh to retry cloud sync. Your progress is still in this browser.";
+    }
+  }, () => { status.textContent = "Could not check your account. Refresh to try again."; });
+  setInterval(writeCloud, 5000);
+
+  async function signIn(provider) {
+    if (busy) return;
+    busy = google.disabled = github.disabled = true;
+    status.textContent = "Opening sign-in…";
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      status.textContent = signInErrors[error?.code] || "Sign-in could not finish. Please try again.";
+    } finally {
+      busy = google.disabled = github.disabled = false;
+    }
+  }
+  google.addEventListener("click", () => signIn(new GoogleAuthProvider()));
+  github.addEventListener("click", () => signIn(new GithubAuthProvider()));
+  logout.addEventListener("click", async () => {
+    logout.disabled = true;
+    try {
+      await writeCloud();
+      await signOut(auth);
+      dialog.close();
+    } catch {
+      status.textContent = "Could not sign out. Try again.";
+    } finally {
+      logout.disabled = false;
+    }
+  });
 }
+
+startAccounts().catch(() => {
+  status.textContent = "Account service could not load. Refresh to retry or continue as a guest.";
+});

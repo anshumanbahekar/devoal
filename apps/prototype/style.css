@@ -725,3 +725,7 @@ h1{font-size:clamp(46px,8vw,104px)}
   font-size: 13px;
   text-underline-offset: 3px;
 }
+
+.dv-auth-actions button:disabled { opacity: .56; cursor: default; }
+.auth-dismiss { margin-top: 16px; }
+.auth-dismiss button { background: none; color: #c6d8ea; padding: 5px 0; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }

@@ -16,8 +16,20 @@
 <header>
   <div class="logo"><img data-logo alt="" width="28" height="28">Devoal</div>
   <nav id="nav" class="mono"><a href="#courses" data-v="courses">Courses</a><a href="#roadmap" data-v="roadmap">Roadmap</a><a href="#play" data-v="play">Playground</a><a href="#practice" data-v="practice">Practice</a><a href="#interview" data-v="interview">Interview</a><a href="#plan" data-v="plan">My plan</a><a href="#mock" data-v="mock">Mock</a><a href="#resources" data-v="resources">Resources</a><a href="#tutor" data-v="tutor">Tutor</a><a href="#quiz" data-v="quiz">Quiz</a><a href="#prog" data-v="prog">Progress</a></nav>
-  <button class="kb" id="kbtn" aria-label="Open command palette"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd></button><button class="account-button" id="account-button" hidden>Sign in</button>
+  <button class="kb" id="kbtn" aria-label="Open command palette"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span><kbd>⌘K</kbd></button><button class="account-button" id="account-button" aria-haspopup="dialog" aria-controls="auth-dialog">Sign in</button>
 </header>
+<dialog id="auth-dialog" class="dv-auth" aria-labelledby="auth-title" aria-describedby="auth-description">
+  <div class="dv-auth-head"><h2 id="auth-title">Sign in or sign up</h2><form method="dialog"><button aria-label="Close account dialog">&times;</button></form></div>
+  <p id="auth-description">Choose a provider to save your progress. Your first sign-in creates your Devoal account.</p>
+  <div class="dv-auth-actions">
+    <button id="auth-google" disabled><img src="icons/google.svg" alt="">Continue with Google</button>
+    <button id="auth-github" disabled><img src="icons/github.svg" alt="">Continue with GitHub</button>
+    <button id="auth-out" hidden>Sign out</button>
+  </div>
+  <p id="auth-status" role="status">Checking sign-in availability&hellip;</p>
+  <form method="dialog" class="auth-dismiss"><button id="auth-done">Continue as guest</button></form>
+</dialog>
+
 
 <div class="view on" id="v-courses"><section class="hero home-hero"><img class="home-sky" src="devoal-night-sky.webp" width="1055" height="1491" alt="" fetchpriority="high">
   <a class="eyebrow" href="#roadmap"><span class="pulse"></span>8 languages · 5-stage roadmaps · AI tutor<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a><span id="crumb" hidden></span><span id="typed" hidden></span>
@@ -85,6 +97,6 @@
 <script src="sql-practice.js"></script>
 <script src="tutor.js"></script>
 <script src="app.js"></script>
-<script type="module" src="auth.js"></script>
+<script type="module" src="auth.js?v=2"></script>
 </body>
 </html>
