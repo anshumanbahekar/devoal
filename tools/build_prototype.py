@@ -34,19 +34,25 @@ shutil.copy2(ROOT / "apps" / "prototype" / "auth-data.mjs", DEST / "auth-data.js
 tutor_url = os.environ.get("DEVOAL_TUTOR_API_URL", "")
 (DEST / "tutor-config.json").write_text(json.dumps({"apiUrl": tutor_url}), encoding="utf-8")
 shutil.copy2(ROOT / "apps" / "prototype" / "tutor.js", DEST / "tutor.js")
-firebase_config = {key: os.environ.get(env, "") for key, env in {
+firebase_config = json.loads((ROOT / "firebase/web-config.json").read_text(encoding="utf-8"))
+firebase_overrides = {key: os.environ.get(env, "").strip() for key, env in {
     "apiKey": "DEVOAL_FIREBASE_API_KEY",
     "authDomain": "DEVOAL_FIREBASE_AUTH_DOMAIN",
     "projectId": "DEVOAL_FIREBASE_PROJECT_ID",
     "appId": "DEVOAL_FIREBASE_APP_ID",
 }.items()}
+if any(firebase_overrides.values()):
+    if not all(firebase_overrides.values()):
+        raise ValueError("Set all four DEVOAL_FIREBASE_* variables together to override the Firebase project")
+    firebase_config = firebase_overrides
 (DEST / "firebase-config.json").write_text(json.dumps(firebase_config), encoding="utf-8")
 company_icons = DEST / "company-icons"
 company_icons.mkdir(exist_ok=True)
 for source in (ROOT / "apps" / "prototype" / "company-icons").glob("*.svg"):
     shutil.copy2(source, company_icons / source.name)
 shutil.copy2(ROOT / "apps" / "web" / "public" / "devoal-logo.png", DEST / "favicon.png")
-for image in ("devoal-night-sky.webp", "devoal-city.webp", "devoal-coin.webp"):
+for image in ("devoal-night-sky.webp", "devoal-city.webp", "devoal-coin.webp",
+              "devoal-interview.webp", "devoal-practice.webp", "devoal-resources.webp"):
     shutil.copy2(ROOT / "apps/web/public" / image, DEST / image)
 
 icons = DEST / "icons"

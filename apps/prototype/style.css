@@ -718,14 +718,42 @@ h1{font-size:clamp(46px,8vw,104px)}
   .roadmap-intro::before { width: 66%; height: 142px; }
   .roadmap-intro .sub { max-width: 42ch; margin-top: 42px; }
 }
-.roadmap-art-link {
-  display: inline-block;
-  margin-top: 10px;
-  color: #c6d8ea;
-  font-size: 13px;
-  text-underline-offset: 3px;
-}
 
 .dv-auth-actions button:disabled { opacity: .56; cursor: default; }
 .auth-dismiss { margin-top: 16px; }
 .auth-dismiss button { background: none; color: #c6d8ea; padding: 5px 0; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Page artwork gives each learning area its own illustrated introduction. */
+.page-illustration {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 290px;
+  padding-block: 30px;
+  margin-bottom: 24px;
+}
+.page-illustration::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 52%;
+  z-index: -1;
+  background: var(--page-art) var(--art-position, 50% 48%) / cover no-repeat;
+  mask-image: linear-gradient(90deg, transparent, #000 32%),
+              linear-gradient(0deg, transparent, #000 15%, #000 85%, transparent);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+.page-illustration .pt { max-width: 57%; }
+.page-illustration .sub { max-width: min(48ch, 52%); color: #b4b4be; }
+.practice-illustration { --page-art: url("devoal-practice.webp"); --art-position: 50% 43%; }
+.interview-illustration { --page-art: url("devoal-interview.webp"); --art-position: 65% 44%; }
+.resources-illustration { --page-art: url("devoal-resources.webp"); --art-position: 62% 22%; }
+@media (max-width: 720px) {
+  .page-illustration { min-height: 0; padding-top: 178px; padding-bottom: 0; margin-bottom: 26px; }
+  .page-illustration::before { width: 100%; height: 178px; }
+  .page-illustration .pt, .page-illustration .sub { max-width: 100%; }
+  .page-illustration .pt { font-size: clamp(36px, 7vw, 52px); }
+}
