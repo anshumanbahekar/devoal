@@ -11,13 +11,14 @@ function renderSqlPractice(){
   const root=sqlRoot();if(!root||!sqlCurrent)return;
   const problem=sqlCurrent;
   root.innerHTML=`<div class="sql-layout"><div class="sql-list">${sqlProblems.map((entry,index)=>`<button data-sql="${index}" class="lt ${entry===problem?"on":""} ${prog["sql:"+entry.id]?"done":""}"><em>${index+1}</em>${sqlEscape(entry.title)}<span class="lv">${entry.level}</span></button>`).join("")}</div><article class="les"><h3>${sqlEscape(problem.title)} <span class="lv">${problem.level}</span></h3><p class="why mono">${sqlEscape(problem.topic)} · ${problem.cases.length} datasets · SQLite</p><p>${sqlEscape(problem.prompt)}</p><details class="sql-data"><summary>Inspect schema and sample data</summary><pre class="mono">${sqlEscape(problem.schema+"\n"+problem.cases[0].seed)}</pre></details><textarea id="sql-editor" class="mono" spellcheck="false" aria-label="SQL query">${sqlEscape(sqlDrafts[problem.id]??problem.starter)}</textarea><div class="acts"><button class="btn" id="sql-run">Run SQL tests</button><button class="btn off" id="sql-reset">Reset query</button></div><div id="sql-output" aria-live="polite"></div></article></div>`;
+  mountProblemWorkspace(root.querySelector("article"),"sql",sqlCurrent.id,"sql-editor");
 }
 function sqlTable(values,columns){
   if(!values?.length)return '<p>No rows returned.</p>';
   return `<div class="sql-table-scroll"><table><thead><tr>${columns.map(column=>`<th>${sqlEscape(column)}</th>`).join("")}</tr></thead><tbody>${values.slice(0,12).map(row=>`<tr>${row.map(cell=>`<td>${sqlEscape(cell===null?"NULL":cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${values.length>12?`<small>Showing 12 of ${values.length} rows</small>`:""}`;
 }
 async function runSqlPractice(){
-  const button=document.getElementById("sql-run"),output=document.getElementById("sql-output");if(!button||!output)return;
+  const button=document.getElementById("sql-run"),output=document.getElementById("sql-output");if(!button||!output||button.disabled)return;
   button.disabled=true;output.textContent="Starting SQLite…";
   const problem=sqlCurrent,query=document.getElementById("sql-editor").value,started=Date.now();let worker;
   sqlDrafts[problem.id]=query;try{localStorage.setItem("dv-sql-code.v1",JSON.stringify(sqlDrafts))}catch{}

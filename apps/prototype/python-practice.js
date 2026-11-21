@@ -10,9 +10,10 @@ async function loadPythonProblems(){
 function renderPythonPractice(){
   const root=pythonRoot();if(!root||!pythonCurrent)return;
   root.innerHTML=`<div class="python-layout"><div class="python-list">${pythonProblems.map((problem,index)=>`<button data-python="${index}" class="lt ${problem===pythonCurrent?"on":""} ${prog["py:"+problem.id]?"done":""}"><em>${index+1}</em>${pythonEscape(problem.title)}<span class="lv">${problem.level}</span></button>`).join("")}</div><article class="les"><h3>${pythonEscape(pythonCurrent.title)} <span class="lv">${pythonCurrent.level}</span></h3><p class="why mono">${pythonEscape(pythonCurrent.topic)} · ${pythonCurrent.tests.length} visible tests</p><p>${pythonEscape(pythonCurrent.prompt)}</p><textarea id="python-editor" class="mono" spellcheck="false" aria-label="Python code">${pythonEscape(pythonCode[pythonCurrent.id]??pythonCurrent.starter)}</textarea><div class="acts"><button class="btn" id="python-run">Run Python tests</button><button class="btn off" id="python-reset">Reset code</button></div><div id="python-output" aria-live="polite"></div></article></div>`;
+  mountProblemWorkspace(root.querySelector("article"),"python",pythonCurrent.id,"python-editor");
 }
 async function runPythonPractice(){
-  const button=document.getElementById("python-run"),output=document.getElementById("python-output");if(!button||!output)return;
+  const button=document.getElementById("python-run"),output=document.getElementById("python-output");if(!button||!output||button.disabled)return;
   button.disabled=true;output.textContent="Loading Python runtime…";
   const problem=pythonCurrent,code=document.getElementById("python-editor").value,started=Date.now();
   pythonCode[problem.id]=code;try{localStorage.setItem("dv-python-code.v1",JSON.stringify(pythonCode))}catch{}

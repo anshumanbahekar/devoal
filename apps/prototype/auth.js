@@ -1,4 +1,4 @@
-import {syncKeys, readBrowserState, mergeBrowserState} from "./auth-data.js";
+import {syncKeys, readBrowserState, mergeBrowserState, switchBrowserAccount} from "./auth-data.js?v=3";
 
 const byId = id => document.getElementById(id);
 const dialog = byId("auth-dialog");
@@ -59,7 +59,9 @@ async function startAccounts() {
 
   async function writeCloud() {
     const active = session;
-    if (!active?.ready || active.writing || active.user.uid !== auth.currentUser?.uid) return;
+    if (!active?.ready || active.user.uid !== auth.currentUser?.uid || localStorage.getItem("dv-last-uid") !== active.user.uid) return;
+    if (active.writing) await active.writing;
+    if (session !== active || active.user.uid !== auth.currentUser?.uid) return;
     const state = readBrowserState(localStorage);
     const serialized = JSON.stringify(state);
     if (serialized === active.saved) return;
@@ -67,9 +69,9 @@ async function startAccounts() {
       status.textContent = "Cloud sync is paused because your work is too large. Export a backup from Progress.";
       return;
     }
-    active.writing = true;
     try {
-      await setDoc(active.ref, {state, clientAt: Date.now(), updatedAt: serverTimestamp()});
+      active.writing = setDoc(active.ref, {state, clientAt: Date.now(), updatedAt: serverTimestamp()});
+      await active.writing;
       active.saved = serialized;
       if (session === active) status.textContent = "Progress saved to your account.";
     } catch {
@@ -82,6 +84,16 @@ async function startAccounts() {
   onAuthStateChanged(auth, async user => {
     const active = user ? {user, ref: doc(db, "users", user.uid, "state", "progress"), ready: false, saved: "", writing: false} : null;
     session = active;
+    try {
+      if (switchBrowserAccount(localStorage, user?.uid || null)) {
+        location.reload();
+        return;
+      }
+    } catch {
+      session = null;
+      status.textContent = "Could not switch browser profiles. Export a backup from Progress and free browser storage before retrying.";
+      return;
+    }
     showUser(user);
     status.textContent = user ? "Loading your progress…" : "";
     if (!active) return;
@@ -107,7 +119,12 @@ async function startAccounts() {
       if (session === active) status.textContent = "Signed in. Refresh to retry cloud sync. Your progress is still in this browser.";
     }
   }, () => { status.textContent = "Could not check your account. Refresh to try again."; });
-  setInterval(writeCloud, 5000);
+  setInterval(() => writeCloud().catch(() => {
+    status.textContent = "Cloud sync is paused. Your work is still in this browser.";
+  }), 5000);
+  window.addEventListener("storage", event => {
+    if (event.key === "dv-last-uid") location.reload();
+  });
 
   async function signIn(provider) {
     if (busy) return;
@@ -126,7 +143,9 @@ async function startAccounts() {
   logout.addEventListener("click", async () => {
     logout.disabled = true;
     try {
-      await writeCloud();
+      // Keep the latest local version even if the network write remains pending.
+      if (session?.user) localStorage.setItem(`dv-account-state.v1:${session.user.uid}`, JSON.stringify(readBrowserState(localStorage)));
+      await Promise.race([writeCloud().catch(() => {}), new Promise(resolve => setTimeout(resolve, 3000))]);
       await signOut(auth);
       dialog.close();
     } catch {

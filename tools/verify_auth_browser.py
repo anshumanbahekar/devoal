@@ -32,18 +32,18 @@ def verify():
         modules = {
             "firebase-app.js": "export const initializeApp = () => ({});",
             "firebase-auth.js": """
-                const auth = {currentUser:null};
+                const auth = {currentUser:JSON.parse(sessionStorage.getItem('test-user')||'null')};
                 let listener;
                 export const getAuth = () => auth;
-                export const onAuthStateChanged = (_, fn) => {listener = fn; fn(null)};
+                export const onAuthStateChanged = (_, fn) => {listener = fn; fn(auth.currentUser)};
                 export class GoogleAuthProvider {id = 'Google'}
                 export class GithubAuthProvider {id = 'GitHub'}
                 export async function signInWithPopup(_, provider) {
                     if (window.blockPopup) throw {code:'auth/popup-blocked'};
                     auth.currentUser = {uid:provider.id, displayName:provider.id+' learner'};
-                    listener(auth.currentUser);
+                    sessionStorage.setItem('test-user', JSON.stringify(auth.currentUser)); listener(auth.currentUser);
                 }
-                export async function signOut() {auth.currentUser=null; listener(null)}
+                export async function signOut() {auth.currentUser=null; sessionStorage.removeItem('test-user'); listener(null)}
             """,
             "firebase-firestore.js": """
                 export const getFirestore = () => ({});
@@ -69,9 +69,13 @@ def verify():
             page.get_by_role("button", name=f"Continue with {provider}").click()
             expect(page.locator("#auth-description")).to_contain_text(provider + " learner")
             expect(page.locator("#auth-status")).to_contain_text("retry cloud sync")
+            assert page.evaluate('localStorage.getItem("dv-practice-code")') is None
+            page.evaluate('(provider)=>localStorage.setItem("dv-practice-code",JSON.stringify({draft:provider}))', provider)
             page.get_by_role("button", name="Sign out", exact=True).click()
             expect(entry).to_have_text("Sign in")
+            assert page.evaluate('localStorage.getItem("dv-practice-code")') is None
             assert not page.evaluate("Boolean(window.unexpectedCloudWrite)")
+            expect(page.locator("#auth-google")).to_be_enabled()
             entry.click()
         browser.close()
         server.shutdown()

@@ -28,6 +28,8 @@ assert.match(root.innerHTML,/Next five JavaScript problems/);
 assert.match(root.innerHTML,/data-language="py:"/);
 assert.match(root.innerHTML,/data-language="sql:"/);
 assert.match(root.innerHTML,/SQL practice[\s\S]*Due for review/);
+assert.match(root.innerHTML,/Recent attempts/);
+assert.match(root.innerHTML,/href="#problem\/sql\/sql-one"/);
 const sqlLink={dataset:{language:"sql:",languageId:"sql-one"}};
 for(const listener of listeners)listener({target:{closest:selector=>selector==="[data-language]"?sqlLink:null}});
 assert.equal(context.sqlCurrent.id,"sql-one");

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {mergeBrowserState,syncKeys} from '../apps/prototype/auth-data.mjs';
+import {mergeBrowserState,syncKeys,switchBrowserAccount} from '../apps/prototype/auth-data.mjs';
 
 const local={
   'coal-prog':JSON.stringify({'python0':true,'c:sum':true,'py:easy':10}),
@@ -30,5 +30,29 @@ assert.equal(merged['dv-coins-spent.v1'],'10');
 const switched=mergeBrowserState(local,remote,{differentUser:true});
 assert.equal(switched['coal-prog'],remote['coal-prog']);
 assert.equal(switched['dv-practice-code'],remote['dv-practice-code']);
-assert.equal(syncKeys.length,12);
+assert.equal(syncKeys.length,14);
+const values = new Map([
+  ['dv-last-uid','account-a'],
+  ['dv-practice-code',JSON.stringify({sum:'private draft A'})],
+  ['dv-problem-notes.v1',JSON.stringify({'javascript/sum':{text:'private note A',updatedAt:1}})],
+]);
+const storage = {getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};
+assert.equal(switchBrowserAccount(storage,'account-b'),true);
+assert.equal(storage.getItem('dv-practice-code'),null);
+assert.equal(storage.getItem('dv-problem-notes.v1'),null);
+storage.setItem('dv-practice-code',JSON.stringify({sum:'private draft B'}));
+switchBrowserAccount(storage,null);
+assert.equal(storage.getItem('dv-practice-code'),null);
+switchBrowserAccount(storage,'account-a');
+assert.equal(JSON.parse(storage.getItem('dv-practice-code')).sum,'private draft A');
+assert.equal(JSON.parse(storage.getItem('dv-problem-notes.v1'))['javascript/sum'].text,'private note A');
+const noteMerge=mergeBrowserState({
+  'dv-problem-notes.v1':JSON.stringify({'javascript/sum':{text:'',updatedAt:5}}),
+  'dv-code-checkpoints.v1':JSON.stringify({'javascript/sum':[{id:'v2',code:'new',name:'v2',at:2}]})
+},{
+  'dv-problem-notes.v1':JSON.stringify({'javascript/sum':{text:'deleted note',updatedAt:2}}),
+  'dv-code-checkpoints.v1':JSON.stringify({'javascript/sum':[{id:'v1',code:'old',name:'v1',at:1}]})
+});
+assert.equal(JSON.parse(noteMerge['dv-problem-notes.v1'])['javascript/sum'].text,'');
+assert.deepEqual(JSON.parse(noteMerge['dv-code-checkpoints.v1'])['javascript/sum'].map(row=>row.id),['v1','v2']);
 console.log('Account state merge and account isolation checked');

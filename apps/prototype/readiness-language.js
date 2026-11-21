@@ -1,4 +1,22 @@
 /* Python and SQL review suggestions alongside the JavaScript pattern plan. */
+function attemptHistoryHtml() {
+  const problems = new Map([
+    ...CH.map(problem => [problem.i, {title: problem.n, language: "javascript", id: problem.i}]),
+    ...pythonProblems.map(problem => ["py:" + problem.id, {title: problem.title, language: "python", id: problem.id}]),
+    ...sqlProblems.map(problem => ["sql:" + problem.id, {title: problem.title, language: "sql", id: problem.id}])
+  ]);
+  const rows = readAttempts().filter(row => problems.has(row.id) && Number.isFinite(new Date(row.at).getTime()))
+    .sort((a, b) => b.at - a.at).slice(0, 10);
+  const entries = rows.map(row => {
+    const problem = problems.get(row.id);
+    const date = new Date(row.at);
+    const tests = row.testsTotal > 0 ? `${row.testsPassed || 0}/${row.testsTotal} tests` : "";
+    const language = {javascript: "JavaScript", python: "Python", sql: "SQL"}[problem.language];
+    return `<li><a href="#problem/${problem.language}/${encodeURIComponent(problem.id)}"><span><strong>${esc(problem.title)}</strong><small>${language}${tests ? " · " + tests : ""}</small></span><span class="${row.passed ? "passed" : "retry"}">${row.passed ? "Passed" : "Retry"}</span><time datetime="${date.toISOString()}">${esc(date.toLocaleString())}</time></a></li>`;
+  });
+  return `<section class="attempt-history" aria-labelledby="attempt-history-title"><h3 id="attempt-history-title">Recent attempts</h3>${rows.length ? '<p class="why">Your last ' + rows.length + ' test runs. Open a problem to revisit your code and notes.</p><ol>' + entries.join("") + '</ol>' : '<p class="why">Run a problem’s tests to start your history.</p><a class="text-link" href="#library">Find a problem</a>'}</section>`;
+}
+
 function languageReviewHtml(){
   const sets=[{label:"Python",prefix:"py:",route:"python-practice",icon:"python.svg",items:pythonProblems},{label:"SQL",prefix:"sql:",route:"sql-practice",icon:"sql.svg",items:sqlProblems}].filter(set=>set.items.length);
   if(!sets.length)return "";
