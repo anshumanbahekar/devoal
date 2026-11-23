@@ -77,6 +77,64 @@ def verify():
             assert not page.evaluate("Boolean(window.unexpectedCloudWrite)")
             expect(page.locator("#auth-google")).to_be_enabled()
             entry.click()
+
+        # Cloud hydration must refresh the editor even when its next write stalls.
+        modules["firebase-firestore.js"] = """
+            window.cloudWrites = [];
+            window.pendingWrites = [];
+            export const getFirestore = () => ({});
+            export const doc = (_, ...path) => path.join('/');
+            export async function getDoc() {
+                sessionStorage.setItem('test-cloud-reads', String(Number(sessionStorage.getItem('test-cloud-reads') || 0) + 1));
+                const result = {exists:()=>true, data:()=>({state:JSON.parse(sessionStorage.getItem('test-cloud-state'))})};
+                if (sessionStorage.getItem('test-defer-read')) return new Promise(resolve=>{window.finishCloudRead=()=>resolve(result)});
+                return result;
+            }
+            export function setDoc(path, data) {
+                window.cloudWrites.push({path, data});
+                return new Promise(resolve=>window.pendingWrites.push(resolve));
+            }
+            export const serverTimestamp = () => 0;
+        """
+        remote_code = "function sum(nums) { return nums.reduce((a, b) => a + b, 0); }"
+        page.evaluate("""code => {
+            sessionStorage.setItem('test-user', JSON.stringify({uid:'Google', displayName:'Google learner'}));
+            sessionStorage.setItem('test-cloud-state', JSON.stringify({'dv-practice-code':JSON.stringify({sum:code})}));
+            localStorage.setItem('dv-last-uid', 'Google');
+        }""", remote_code)
+        page.goto(url.replace('#interview', '#problem/javascript/sum'))
+        page.reload()
+        page.wait_for_function("Number(sessionStorage.getItem('test-cloud-reads')) >= 2 && window.cloudWrites?.length === 1")
+        expect(page.locator('#pcode')).to_have_value(remote_code)
+
+        # Let the normal sync timer wait on the pending write, then change ownership
+        # before the corresponding storage event can reload the current page.
+        page.wait_for_timeout(5100)
+        page.evaluate("""() => {
+            localStorage.setItem('dv-last-uid', 'GitHub');
+            localStorage.setItem('dv-practice-code', JSON.stringify({sum:'GitHub private draft'}));
+            window.pendingWrites.shift()();
+        }""")
+        page.wait_for_timeout(100)
+        assert page.evaluate('window.cloudWrites.length') == 1
+        assert page.evaluate('JSON.parse(window.cloudWrites[0].data.state["dv-practice-code"]).sum') == remote_code
+
+        # An older account's delayed read must also leave the new owner's data alone.
+        page.evaluate("""() => {
+            sessionStorage.setItem('test-defer-read', 'true');
+            localStorage.setItem('dv-last-uid', 'Google');
+        }""")
+        page.reload()
+        page.wait_for_function('typeof window.finishCloudRead === "function"')
+        page.evaluate("""() => {
+            localStorage.setItem('dv-last-uid', 'GitHub');
+            localStorage.setItem('dv-practice-code', JSON.stringify({sum:'GitHub private draft'}));
+            window.finishCloudRead();
+        }""")
+        page.wait_for_timeout(100)
+        assert page.evaluate('localStorage.getItem("dv-last-uid")') == 'GitHub'
+        assert page.evaluate('JSON.parse(localStorage.getItem("dv-practice-code")).sum') == 'GitHub private draft'
+        assert page.evaluate('window.cloudWrites.length') == 0
         browser.close()
         server.shutdown()
 

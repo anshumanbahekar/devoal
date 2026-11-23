@@ -12,7 +12,7 @@ function attemptHistoryHtml() {
     const date = new Date(row.at);
     const tests = row.testsTotal > 0 ? `${row.testsPassed || 0}/${row.testsTotal} tests` : "";
     const language = {javascript: "JavaScript", python: "Python", sql: "SQL"}[problem.language];
-    return `<li><a href="#problem/${problem.language}/${encodeURIComponent(problem.id)}"><span><strong>${esc(problem.title)}</strong><small>${language}${tests ? " · " + tests : ""}</small></span><span class="${row.passed ? "passed" : "retry"}">${row.passed ? "Passed" : "Retry"}</span><time datetime="${date.toISOString()}">${esc(date.toLocaleString())}</time></a></li>`;
+    return `<li><a href="#problem/${problem.language}/${encodeURIComponent(problem.id)}"><span><strong>${esc(problem.title)}</strong><small>${language}${tests ? " · " + esc(tests) : ""}</small></span><span class="${row.passed ? "passed" : "retry"}">${row.passed ? "Passed" : "Retry"}</span><time datetime="${date.toISOString()}">${esc(date.toLocaleString())}</time></a></li>`;
   });
   return `<section class="attempt-history" aria-labelledby="attempt-history-title"><h3 id="attempt-history-title">Recent attempts</h3>${rows.length ? '<p class="why">Your last ' + rows.length + ' test runs. Open a problem to revisit your code and notes.</p><ol>' + entries.join("") + '</ol>' : '<p class="why">Run a problem’s tests to start your history.</p><a class="text-link" href="#library">Find a problem</a>'}</section>`;
 }

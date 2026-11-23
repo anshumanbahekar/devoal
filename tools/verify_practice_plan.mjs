@@ -14,7 +14,7 @@ const context=createContext({
   interviewCompanies:[],
   interviewPattern:()=>({id:"arrays",title:"Arrays"}),
   prog:{"py:py-one":10},
-  esc:value=>String(value),
+  esc:value=>String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[char]),
   location:{hash:"#plan"},
   practiceFilter:{level:"All",query:"",saved:false},
   pythonCurrent:null,sqlCurrent:null,pc:null,
@@ -35,4 +35,25 @@ for(const listener of listeners)listener({target:{closest:selector=>selector==="
 assert.equal(context.sqlCurrent.id,"sql-one");
 runInContext('recordAttempt("py:py-one",true,"python-practice",2,2)',context);
 assert.equal(JSON.parse(values.get("dv-attempts.v1")).length,2);
-console.log("Three-language practice plan, due review, navigation, and attempt capture checked");
+values.set("dv-attempts.v1",JSON.stringify([
+  {id:"js-one",at:Date.now(),passed:false,testsPassed:'<img src=x onerror="window.injected=true">',testsTotal:3},
+  {id:"py:py-one",at:Date.now(),passed:true,testsPassed:99,testsTotal:"2.9",hintsUsed:-2,elapsedSec:"Infinity"},
+  {id:"sql:sql-one",at:Date.now(),passed:false,testsPassed:1,testsTotal:'<svg onload="window.injected=true">'}
+]));
+const imported=runInContext("readAttempts()",context);
+assert.equal(imported[0].testsPassed,0);
+assert.equal(imported[1].testsPassed,2);
+assert.equal(imported[1].testsTotal,2);
+assert.equal(imported[1].hintsUsed,0);
+assert.equal(imported[1].elapsedSec,0);
+assert.equal(imported[2].testsTotal,0);
+runInContext("renderReadiness()",context);
+assert.doesNotMatch(runInContext("attemptHistoryHtml()",context),/<img|<svg|onerror=|onload=/);
+assert.match(root.innerHTML,/0\/3 tests/);
+assert.match(root.innerHTML,/2\/2 tests/);
+runInContext('recordAttempt("js-one",false,"practice",-3,Infinity,-1,-2)',context);
+const recorded=JSON.parse(values.get("dv-attempts.v1")).at(-1);
+assert.equal(recorded.testsTotal,0);
+assert.equal(recorded.testsPassed,0);
+assert.equal(recorded.elapsedSec,0);
+console.log("Three-language practice plan, due review, navigation, attempt capture and imported counters checked");

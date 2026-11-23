@@ -1,7 +1,14 @@
 /* Browser-local practice evidence. Scores describe practice coverage, not hiring odds. */
 const attemptKey="dv-attempts.v1";
+function attemptCount(value) {
+  const count = Number(value);
+  return Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
+}
 function readAttempts(){
-  try{const rows=JSON.parse(localStorage.getItem(attemptKey)||"[]");return Array.isArray(rows)?rows.filter(row=>row&&typeof row.id==="string"&&Number.isFinite(row.at)&&typeof row.passed==="boolean").slice(-500):[]}
+  try{const rows=JSON.parse(localStorage.getItem(attemptKey)||"[]");return Array.isArray(rows)?rows.filter(row=>row&&typeof row.id==="string"&&Number.isFinite(row.at)&&typeof row.passed==="boolean").slice(-500).map(row=>{
+    const testsTotal=attemptCount(row.testsTotal);
+    return {...row,testsTotal,testsPassed:Math.min(testsTotal,attemptCount(row.testsPassed)),hintsUsed:attemptCount(row.hintsUsed),elapsedSec:attemptCount(row.elapsedSec)};
+  }):[]}
   catch(e){return[]}
 }
 function attemptStats(){
@@ -15,7 +22,8 @@ function recordAttempt(id,passed,source,testsPassed,testsTotal,hintsUsed=0,elaps
   if(!CH.some(problem=>problem.i===id)&&!pythonProblems?.some(problem=>"py:"+problem.id===id)&&!sqlProblems?.some(problem=>"sql:"+problem.id===id))return;
   const rows=readAttempts(),prior=attemptStats()[id],streak=passed?(prior?.streak||0)+1:0;
   const days=passed?streak===1?3:streak===2?7:14:1;
-  rows.push({id,at:Date.now(),passed:!!passed,source,testsPassed:Number(testsPassed)||0,testsTotal:Number(testsTotal)||0,hintsUsed:Number(hintsUsed)||0,elapsedSec:Math.max(0,Number(elapsedSec)||0),reviewAt:Date.now()+days*86_400_000});
+  const total=attemptCount(testsTotal);
+  rows.push({id,at:Date.now(),passed:!!passed,source,testsPassed:Math.min(total,attemptCount(testsPassed)),testsTotal:total,hintsUsed:attemptCount(hintsUsed),elapsedSec:attemptCount(elapsedSec),reviewAt:Date.now()+days*86_400_000});
   try{localStorage.setItem(attemptKey,JSON.stringify(rows.slice(-500)))}catch(e){}
 }
 function buildPracticePlan(companyId=null){

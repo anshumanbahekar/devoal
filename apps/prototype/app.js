@@ -433,13 +433,53 @@ async function board(){const d=$("dash");if(!d)return;const quizDue=Object.value
   catch(e){$("lb").innerHTML='<h4 class="mono">Leaderboard</h4><p class="why">Could not load it right now.</p>'}}
 const requiredBackupKeys=["coal-prog","dv-st","dv-practice-code","dv-gq"],backupKeys=[...requiredBackupKeys,"dv-interview.v1","dv-interview-history.v1","dv-coins-spent.v1","dv-attempts.v1","dv-mock.v1","dv-mock-history.v1","dv-python-code.v1","dv-sql-code.v1","dv-problem-notes.v1","dv-code-checkpoints.v1"];
 const backupDefault=key=>key==="dv-gq"||key==="dv-interview-history.v1"||key==="dv-attempts.v1"||key==="dv-mock-history.v1"?"[]":key==="dv-interview.v1"||key==="dv-mock.v1"?"null":key==="dv-coins-spent.v1"?"0":"{}";
-$("dash").addEventListener("change",async e=>{if(e.target.id!=="pfile")return;const file=e.target.files?.[0],status=$("pbackup-status");if(!file)return;
-  try{if(file.size>2_000_000)throw new Error("Backup is too large.");const backup=JSON.parse(await file.text());if(backup.format!=="devoal-backup"||backup.version!==1||!backup.data||typeof backup.data!=="object")throw new Error("This is not a Devoal backup.");
-    for(const key of requiredBackupKeys)if(typeof backup.data[key]!=="string")throw new Error("Backup is missing "+key+".");
-    for(const key of backupKeys)if(backup.data[key]!==undefined){if(typeof backup.data[key]!=="string")throw new Error("Invalid backup field: "+key);JSON.parse(backup.data[key])}
-    if(!confirm("Replace this browser's Devoal progress with the selected backup?")){status.textContent="Import canceled.";return}
-    for(const key of backupKeys)if(backup.data[key]!==undefined)localStorage.setItem(key,backup.data[key]);location.reload()}
-  catch(error){status.textContent=error.message||"Could not import this backup."}});
+$("dash").addEventListener("change", async event => {
+  if (event.target.id !== "pfile") return;
+  const file = event.target.files?.[0], status = $("pbackup-status");
+  if (!file) return;
+  try {
+    const backup = JSON.parse(await file.text());
+    if (backup?.format !== "devoal-backup" || backup.version !== 1 || !backup.data || typeof backup.data !== "object" || Array.isArray(backup.data)) {
+      throw new Error("This is not a Devoal backup.");
+    }
+    for (const key of requiredBackupKeys) {
+      if (typeof backup.data[key] !== "string") throw new Error("Backup is missing " + key + ".");
+    }
+    const incoming = {};
+    for (const key of backupKeys) {
+      const text = backup.data[key] ?? backupDefault(key);
+      if (typeof text !== "string") throw new Error("Invalid backup field: " + key);
+      const value = JSON.parse(text), fallback = JSON.parse(backupDefault(key));
+      const matches = Array.isArray(fallback) ? Array.isArray(value)
+        : typeof fallback === "number" ? Number.isFinite(value) && value >= 0
+        : value === null ? fallback === null
+        : typeof value === "object" && !Array.isArray(value);
+      if (!matches) throw new Error("Invalid backup field: " + key);
+      incoming[key] = text;
+    }
+    if (!confirm("Replace this browser's Devoal progress with the selected backup?")) {
+      status.textContent = "Import canceled.";
+      return;
+    }
+    const previous = Object.fromEntries(backupKeys.map(key => [key, localStorage.getItem(key)]));
+    const written = [];
+    try {
+      for (const key of backupKeys) {
+        localStorage.setItem(key, incoming[key]);
+        written.push(key);
+      }
+    } catch (error) {
+      for (const key of written) localStorage.removeItem(key);
+      for (const key of written) if (previous[key] !== null) localStorage.setItem(key, previous[key]);
+      throw error;
+    }
+    location.reload();
+  } catch (error) {
+    status.textContent = error.message || "Could not import this backup.";
+  } finally {
+    event.target.value = "";
+  }
+});
 $("dash").addEventListener("click",async e=>{const t=e.target;if(t.id==="rvw"){if(Object.values(attemptStats()).some(x=>x.last?.reviewAt<=Date.now()))location.hash="plan";else{qf="all";location.hash="quiz"}}
   if(t.id==="pimport"){$("pfile").click();return}
   if(t.id==="pexport"){try{const backup={format:"devoal-backup",version:1,createdAt:new Date().toISOString(),data:Object.fromEntries(backupKeys.map(key=>[key,localStorage.getItem(key)||backupDefault(key)]))};const url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:"application/json"})),link=document.createElement("a");link.href=url;link.download="devoal-backup.json";document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$("pbackup-status").textContent="Backup downloaded."}catch(error){$("pbackup-status").textContent="Could not export backup."}return}
@@ -550,10 +590,19 @@ function runTests(c,code){return new Promise(resolve=>{
   let timer=setTimeout(()=>done({err:"Practice runner could not start."}),8000);
   addEventListener("message",receive);
   frame.srcdoc=`<!doctype html><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; form-action 'none'"><script>
+  function sameResult(actual, expected) {
+    if (actual === expected) return true;
+    if (!actual || !expected || typeof actual !== "object" || typeof expected !== "object") return false;
+    if (Object.prototype.toString.call(actual) !== Object.prototype.toString.call(expected)) return false;
+    if (Array.isArray(actual) && actual.length !== expected.length) return false;
+    const keys = Object.keys(expected);
+    return keys.length === Object.keys(actual).length && keys.every(key =>
+      Object.prototype.hasOwnProperty.call(actual, key) && sameResult(actual[key], expected[key]));
+  }
   addEventListener('message',async e=>{const {token,code,name,tests}=e.data;let result;
     try{const fn=new Function(code+'\\nreturn typeof '+name+'===\"function\"?'+name+':null;')();
       if(!fn)throw new Error('Define a function named '+name+'.');
-      result={rows:[]};for(const [a,x] of tests){try{const actual=await fn(...JSON.parse(JSON.stringify(a))),got=JSON.stringify(actual),ok=got===JSON.stringify(x);result.rows.push({a,x,g:got===undefined?'undefined':JSON.parse(got),ok})}catch(error){result.rows.push({a,x,g:'Error: '+error.message,ok:false})}}
+      result={rows:[]};for(const [a,x] of tests){try{const actual=await fn(...JSON.parse(JSON.stringify(a))),got=JSON.stringify(actual),ok=sameResult(actual,x);result.rows.push({a,x,g:got===undefined?'undefined':JSON.parse(got),ok})}catch(error){result.rows.push({a,x,g:'Error: '+error.message,ok:false})}}
     }catch(error){result={err:error.name+': '+error.message}}
     parent.postMessage({token,result},'*')});<\/script>`;
   frame.addEventListener("load",()=>{clearTimeout(timer);timer=setTimeout(()=>done({err:"Time limit exceeded (3 seconds). Check for an infinite loop."}),3000);frame.contentWindow?.postMessage({token,code,name:c.f,tests:c.k},"*")},{once:true});

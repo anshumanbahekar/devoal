@@ -61,7 +61,7 @@ async function startAccounts() {
     const active = session;
     if (!active?.ready || active.user.uid !== auth.currentUser?.uid || localStorage.getItem("dv-last-uid") !== active.user.uid) return;
     if (active.writing) await active.writing;
-    if (session !== active || active.user.uid !== auth.currentUser?.uid) return;
+    if (session !== active || active.user.uid !== auth.currentUser?.uid || localStorage.getItem("dv-last-uid") !== active.user.uid) return;
     const state = readBrowserState(localStorage);
     const serialized = JSON.stringify(state);
     if (serialized === active.saved) return;
@@ -99,7 +99,7 @@ async function startAccounts() {
     if (!active) return;
     try {
       const remote = await getDoc(active.ref);
-      if (session !== active || auth.currentUser?.uid !== user.uid) return;
+      if (session !== active || auth.currentUser?.uid !== user.uid || localStorage.getItem("dv-last-uid") !== user.uid) return;
       const local = readBrowserState(localStorage);
       const prior = localStorage.getItem("dv-last-uid");
       const merged = mergeBrowserState(local, remote.exists() ? remote.data().state || {} : {}, {differentUser: Boolean(prior && prior !== user.uid)});
@@ -112,9 +112,12 @@ async function startAccounts() {
         else localStorage.setItem(key, value);
       }
       localStorage.setItem("dv-last-uid", user.uid);
+      if (changed) {
+        location.reload();
+        return;
+      }
       active.ready = true;
       await writeCloud();
-      if (session === active && changed) location.reload();
     } catch {
       if (session === active) status.textContent = "Signed in. Refresh to retry cloud sync. Your progress is still in this browser.";
     }

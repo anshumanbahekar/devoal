@@ -69,6 +69,48 @@ def verify():
         data = json.loads(Path(pending.value.path()).read_text())['data']
         assert len(json.loads(data['dv-problem-notes.v1'])) == 3
         assert len(json.loads(data['dv-code-checkpoints.v1'])) == 3
+        page.goto(base + '#problem/javascript/countwords')
+        page.locator('#pcode').fill('function countWords(text) { const counts = {}; for (const word of text.split(" ").filter(Boolean).sort()) counts[word] = (counts[word] || 0) + 1; return counts; }')
+        page.get_by_role('button', name='Run tests', exact=True).click()
+        expect(page.locator('#pres')).to_contain_text('All tests passed')
+        page.locator('#pcode').fill('function countWords(text) { return {}; }')
+        page.get_by_role('button', name='Run tests', exact=True).click()
+        expect(page.locator('#pres')).not_to_contain_text('All tests passed')
+        expect(page.locator('#pres .tr2.no')).to_have_count(2)
+        page.goto(base + '#prog')
+        page.on('dialog', lambda dialog: dialog.accept())
+        legacy = {'format': 'devoal-backup', 'version': 1, 'data': {
+            key: data[key] for key in ['coal-prog', 'dv-st', 'dv-practice-code', 'dv-gq']
+        }}
+        snapshot = page.evaluate('(keys)=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)]))', list(data))
+        # A failed write must restore every value already replaced by the import.
+        page.evaluate("""() => {
+            const set = Storage.prototype.setItem;
+            let failed = false;
+            Storage.prototype.setItem = function(key, value) {
+                if (key === 'dv-practice-code' && !failed) {
+                    failed = true;
+                    throw new Error('Simulated storage full');
+                }
+                return set.call(this, key, value);
+            };
+        }""")
+        upload = {'name': 'legacy.json', 'mimeType': 'application/json', 'buffer': json.dumps(legacy).encode()}
+        page.locator('#pfile').set_input_files(upload)
+        expect(page.locator('#pbackup-status')).to_contain_text('Simulated storage full')
+        assert page.evaluate('(keys)=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)]))', list(data)) == snapshot
+        with page.expect_navigation():
+            page.locator('#pfile').set_input_files(upload)
+        expect(page.locator('#pfile')).to_be_attached()
+        assert page.evaluate('JSON.parse(localStorage.getItem("dv-problem-notes.v1"))') == {}
+        assert page.evaluate('JSON.parse(localStorage.getItem("dv-code-checkpoints.v1"))') == {}
+        assert page.evaluate('JSON.parse(localStorage.getItem("dv-attempts.v1"))') == []
+        # The app must accept a backup larger than the previous arbitrary 2 MB limit.
+        large = {'format': 'devoal-backup', 'version': 1, 'data': dict(data)}
+        large['data']['dv-practice-code'] = json.dumps({'sum': 'x' * 2_050_000})
+        with page.expect_navigation():
+            page.locator('#pfile').set_input_files({'name': 'large.json', 'mimeType': 'application/json', 'buffer': json.dumps(large).encode()})
+        assert page.evaluate('JSON.parse(localStorage.getItem("dv-practice-code")).sum.length') == 2_050_000
         browser.close()
         server.shutdown()
 
