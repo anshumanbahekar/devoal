@@ -31,6 +31,10 @@ sql_vendor.mkdir(exist_ok=True)
 for filename in ("sql-wasm.js", "sql-wasm.wasm", "sql-js-LICENSE.txt"):
     shutil.copy2(ROOT / "apps" / "prototype" / "vendor" / filename, sql_vendor / filename)
 shutil.copy2(ROOT / "apps" / "prototype" / "auth.js", DEST / "auth.js")
+shutil.copy2(ROOT / "apps/prototype/profile.js", DEST / "profile.js")
+shutil.copy2(ROOT / "apps/prototype/run-insights.js", DEST / "run-insights.js")
+for filename in ("theme.js", "theme.css"):
+    shutil.copy2(ROOT / "apps/prototype" / filename, DEST / filename)
 shutil.copy2(ROOT / "apps" / "prototype" / "auth-data.mjs", DEST / "auth-data.js")
 tutor_url = os.environ.get("DEVOAL_TUTOR_API_URL", "")
 (DEST / "tutor-config.json").write_text(json.dumps({"apiUrl": tutor_url}), encoding="utf-8")

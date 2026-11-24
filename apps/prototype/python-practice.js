@@ -19,7 +19,7 @@ async function runPythonPractice(){
   pythonCode[problem.id]=code;try{localStorage.setItem("dv-python-code.v1",JSON.stringify(pythonCode))}catch{}
   let worker;
   try{
-    worker=new Worker("python-worker.js",{type:"module"});
+    worker=new Worker("python-worker.js?v=20261124",{type:"module"});
     const result=await new Promise((resolve,reject)=>{
       let phase="load";
       let timer=setTimeout(()=>reject(Error("Python runtime took too long to load. Check your connection and retry.")),60000);
@@ -32,12 +32,14 @@ async function runPythonPractice(){
       };
       worker.onerror=event=>{clearTimeout(timer);reject(Error(event.message|| (phase==="load"?"Python runtime could not start.":"Python runner failed.")))};
     });
-    if(problem!==pythonCurrent)return;
-    const rows=result.rows||[],passed=rows.length===problem.tests.length&&rows.every(row=>row.ok);
-    output.innerHTML=`<div class="python-result ${passed?"passed":"failed"}"><b>${result.error?"Code error":passed?"All tests passed":`${rows.filter(row=>row.ok).length} of ${problem.tests.length} passed`}</b>${result.error?`<pre>${pythonEscape(result.error)}</pre>`:rows.map((row,index)=>`<p>${row.ok?"✓":"×"} Test ${index+1}: expected <code>${pythonEscape(row.expected)}</code>, got <code>${pythonEscape(row.actual)}</code></p>`).join("")}</div>`;
-    recordAttempt("py:"+problem.id,passed,"python-practice",rows.filter(row=>row.ok).length,problem.tests.length,0,Math.floor((Date.now()-started)/1000));
+    if(problem!==pythonCurrent||!output.isConnected||document.body.dataset.v!=="python-practice")return;
+    const rows=result.rows||[],passed=rows.length===problem.tests.length&&rows.every(row=>row.ok),testsPassed=rows.filter(row=>row.ok).length;
+    const runtimeMs=Number.isFinite(result.runtimeMs)&&result.runtimeMs>=0?result.runtimeMs:null;
+    const insights=runInsightsHtml("py:"+problem.id,{runtimeMs,passed,testsPassed,testsTotal:problem.tests.length,benchmark:"browser-v1"});
+    output.innerHTML=insights+`<div class="python-result ${passed?"passed":"failed"}"><b>${result.error?"Code error":passed?"All tests passed":`${testsPassed} of ${problem.tests.length} passed`}</b>${result.error?`<pre>${pythonEscape(result.error)}</pre>`:rows.map((row,index)=>`<p>${row.ok?"✓":"×"} Test ${index+1}: expected <code>${pythonEscape(row.expected)}</code>, got <code>${pythonEscape(row.actual)}</code></p>`).join("")}</div>`;
+    recordAttempt("py:"+problem.id,passed,"python-practice",testsPassed,problem.tests.length,0,Math.floor((Date.now()-started)/1000),runtimeMs,"browser-v1");
     if(passed){const key="py:"+problem.id;if(!prog[key]||prog[key]===true){const first=!prog[key];prog[key]={Easy:10,Medium:20,Hard:30}[problem.level];if(first)bump();save();if(first)toast("Python problem solved · coins earned");const feedback=output.innerHTML;renderPythonPractice();document.getElementById("python-output").innerHTML=feedback}}
-  }catch(error){if(problem===pythonCurrent)output.textContent=error.message}
+  }catch(error){if(problem===pythonCurrent&&output.isConnected&&document.body.dataset.v==="python-practice")output.innerHTML=runInsightsHtml("py:"+problem.id,{runtimeMs:null,passed:false,testsPassed:0,testsTotal:problem.tests.length,benchmark:"browser-v1"})+`<p class="python-result failed">${pythonEscape(error.message)}</p>`}
   finally{worker?.terminate();if(button.isConnected)button.disabled=false}
 }
 document.addEventListener("click",event=>{

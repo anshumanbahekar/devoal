@@ -23,24 +23,26 @@ async function runSqlPractice(){
   const problem=sqlCurrent,query=document.getElementById("sql-editor").value,started=Date.now();let worker;
   sqlDrafts[problem.id]=query;try{localStorage.setItem("dv-sql-code.v1",JSON.stringify(sqlDrafts))}catch{}
   try{
-    worker=new Worker("sql-worker.js");
-    const rows=await new Promise((resolve,reject)=>{
+    worker=new Worker("sql-worker.js?v=20261124");
+    const result=await new Promise((resolve,reject)=>{
       let timer=setTimeout(()=>reject(Error("SQLite took too long to load. Retry the query.")),30000);
       worker.onmessage=event=>{
         if(event.data.kind==="ready"){
           clearTimeout(timer);timer=setTimeout(()=>reject(Error("Query exceeded the 5 second limit.")),5000);
           worker.postMessage({kind:"run",query,problem});
-        }else if(event.data.kind==="result"){clearTimeout(timer);resolve(event.data.rows)}
+        }else if(event.data.kind==="result"){clearTimeout(timer);resolve(event.data)}
         else if(event.data.kind==="error"){clearTimeout(timer);reject(Error(event.data.error))}
       };
       worker.onerror=event=>{clearTimeout(timer);reject(Error(event.message||"SQLite worker failed."))};
     });
-    if(problem!==sqlCurrent)return;
-    const passed=rows.length===problem.cases.length&&rows.every(row=>row.ok);
-    output.innerHTML=`<div class="sql-result ${passed?"passed":"failed"}"><b>${passed?"All datasets passed":`${rows.filter(row=>row.ok).length} of ${problem.cases.length} datasets passed`}</b>${rows.map((row,index)=>`<section><h4>${row.ok?"✓":"×"} Dataset ${index+1}</h4>${row.error?`<p class="sql-error">${sqlEscape(row.error)}</p>`:`${sqlTable(row.actual,row.columns)}${row.ok?"":`<details><summary>Expected rows</summary>${sqlTable(row.expected,row.expected[0]?.map((_,i)=>"Column "+(i+1))||[])}</details>`}`}</section>`).join("")}</div>`;
-    recordAttempt("sql:"+problem.id,passed,"sql-practice",rows.filter(row=>row.ok).length,problem.cases.length,0,Math.floor((Date.now()-started)/1000));
+    if(problem!==sqlCurrent||!output.isConnected||document.body.dataset.v!=="sql-practice")return;
+    const rows=result.rows||[],passed=rows.length===problem.cases.length&&rows.every(row=>row.ok),testsPassed=rows.filter(row=>row.ok).length;
+    const runtimeMs=Number.isFinite(result.runtimeMs)&&result.runtimeMs>=0?result.runtimeMs:null;
+    const insights=runInsightsHtml("sql:"+problem.id,{runtimeMs,passed,testsPassed,testsTotal:problem.cases.length,benchmark:"browser-v1"});
+    output.innerHTML=insights+`<div class="sql-result ${passed?"passed":"failed"}"><b>${passed?"All datasets passed":`${testsPassed} of ${problem.cases.length} datasets passed`}</b>${rows.map((row,index)=>`<section><h4>${row.ok?"✓":"×"} Dataset ${index+1}</h4>${row.error?`<p class="sql-error">${sqlEscape(row.error)}</p>`:`${sqlTable(row.actual,row.columns)}${row.ok?"":`<details><summary>Expected rows</summary>${sqlTable(row.expected,row.expected[0]?.map((_,i)=>"Column "+(i+1))||[])}</details>`}`}</section>`).join("")}</div>`;
+    recordAttempt("sql:"+problem.id,passed,"sql-practice",testsPassed,problem.cases.length,0,Math.floor((Date.now()-started)/1000),runtimeMs,"browser-v1");
     if(passed){const key="sql:"+problem.id;if(!prog[key]){prog[key]={Easy:10,Medium:20,Hard:30}[problem.level];bump();save();toast("SQL problem solved");const feedback=output.innerHTML;renderSqlPractice();document.getElementById("sql-output").innerHTML=feedback}}
-  }catch(error){if(problem===sqlCurrent)output.textContent=error.message}
+  }catch(error){if(problem===sqlCurrent&&output.isConnected&&document.body.dataset.v==="sql-practice")output.innerHTML=runInsightsHtml("sql:"+problem.id,{runtimeMs:null,passed:false,testsPassed:0,testsTotal:problem.cases.length,benchmark:"browser-v1"})+`<p class="sql-error">${sqlEscape(error.message)}</p>`}
   finally{worker?.terminate();if(button.isConnected)button.disabled=false}
 }
 document.addEventListener("click",event=>{

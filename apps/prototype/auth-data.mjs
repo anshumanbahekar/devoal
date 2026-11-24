@@ -1,12 +1,25 @@
-export const syncKeys=["coal-prog","dv-st","dv-practice-code","dv-python-code.v1","dv-sql-code.v1","dv-gq","dv-interview.v1","dv-interview-history.v1","dv-coins-spent.v1","dv-attempts.v1","dv-mock.v1","dv-mock-history.v1","dv-problem-notes.v1","dv-code-checkpoints.v1"];
+export const syncKeys=["coal-prog","dv-st","dv-practice-code","dv-python-code.v1","dv-sql-code.v1","dv-gq","dv-interview.v1","dv-interview-history.v1","dv-coins-spent.v1","dv-attempts.v1","dv-mock.v1","dv-mock-history.v1","dv-problem-notes.v1","dv-code-checkpoints.v1","dv-profile.v1"];
 export const readBrowserState=storage=>Object.fromEntries(syncKeys.map(key=>[key,storage.getItem(key)]));
 const parse=(text,fallback)=>{try{return text?JSON.parse(text):fallback}catch{return fallback}};
 const parseObject=text=>{const value=parse(text,{});return value&&typeof value==="object"&&!Array.isArray(value)?value:{}};
 const parseArray=text=>{const value=parse(text,[]);return Array.isArray(value)?value:[]};
+export function normalizeProfile(value) {
+  if (!value || typeof value !== "object" || !Number.isFinite(value.updatedAt) || value.updatedAt < 0) return null;
+  return {
+    bio: typeof value.bio === "string" ? value.bio.slice(0, 280) : "",
+    xUsername: typeof value.xUsername === "string" && /^[A-Za-z0-9_]{1,15}$/.test(value.xUsername) ? value.xUsername : "",
+    linkedinUsername: typeof value.linkedinUsername === "string" && /^[A-Za-z0-9][A-Za-z0-9_-]{1,98}[A-Za-z0-9]$/.test(value.linkedinUsername) ? value.linkedinUsername : "",
+    language: ["python", "javascript", "typescript", "cpp", "rust", "go", "java", "sql"].includes(value.language) ? value.language : "python",
+    goal: [1, 2, 3, 5, 10].includes(value.goal) ? value.goal : 2,
+    updatedAt: value.updatedAt
+  };
+}
 const arrayUnion=(a,b,identity)=>[...a,...b].filter((item,index,rows)=>item&&rows.findIndex(other=>other&&identity(other)===identity(item))===index).sort((x,y)=>(x.at||x.startedAt||x.finishedAt||0)-(y.at||y.startedAt||y.finishedAt||0));
 export function mergeBrowserState(local,remote,{differentUser=false}={}){
   if(differentUser)return Object.fromEntries(syncKeys.map(key=>[key,remote?.[key]??null]));
   const result={...local,...Object.fromEntries(syncKeys.filter(key=>remote?.[key]!=null).map(key=>[key,remote[key]]))};
+  const localProfile=normalizeProfile(parseObject(local["dv-profile.v1"])),remoteProfile=normalizeProfile(parseObject(remote?.["dv-profile.v1"]));
+  result["dv-profile.v1"]=JSON.stringify(localProfile&&(!remoteProfile||localProfile.updatedAt>=remoteProfile.updatedAt)?localProfile:remoteProfile||{});
   const localProgress=parseObject(local["coal-prog"]),remoteProgress=parseObject(remote?.["coal-prog"]);
   result["coal-prog"]=JSON.stringify({...localProgress,...remoteProgress,...Object.fromEntries(Object.keys({...localProgress,...remoteProgress}).filter(key=>localProgress[key]||remoteProgress[key]).map(key=>[key,typeof localProgress[key]==="number"||typeof remoteProgress[key]==="number"?Math.max(Number(localProgress[key])||0,Number(remoteProgress[key])||0):true]))});
   const localStats=parseObject(local["dv-st"]),remoteStats=parseObject(remote?.["dv-st"]),stats={...remoteStats,...localStats};

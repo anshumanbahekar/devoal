@@ -56,4 +56,8 @@ const recorded=JSON.parse(values.get("dv-attempts.v1")).at(-1);
 assert.equal(recorded.testsTotal,0);
 assert.equal(recorded.testsPassed,0);
 assert.equal(recorded.elapsedSec,0);
+runInContext('recordAttempt("js-one",true,"practice",3,3,0,2,1.25)',context);
+assert.equal(JSON.parse(values.get("dv-attempts.v1")).at(-1).runtimeMs,1.25);
+runInContext('recordAttempt("js-one",false,"practice",0,3,0,2,"<svg onload=bad>")',context);
+assert.equal(JSON.parse(values.get("dv-attempts.v1")).at(-1).runtimeMs,null);
 console.log("Three-language practice plan, due review, navigation, attempt capture and imported counters checked");

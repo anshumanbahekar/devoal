@@ -33,6 +33,10 @@ jobs:
           python tools/verify_library_browser.py
           python tools/verify_auth_browser.py
           python tools/verify_workspace_browser.py
+          python tools/verify_navigation_browser.py
+          python tools/verify_mock_browser.py
+          python tools/verify_run_insights_browser.py
+          python tools/verify_theme_browser.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

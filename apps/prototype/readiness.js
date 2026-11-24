@@ -4,10 +4,11 @@ function attemptCount(value) {
   const count = Number(value);
   return Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
 }
+function measuredRuntime(value){return typeof value==="number"&&Number.isFinite(value)&&value>=0?value:null}
 function readAttempts(){
   try{const rows=JSON.parse(localStorage.getItem(attemptKey)||"[]");return Array.isArray(rows)?rows.filter(row=>row&&typeof row.id==="string"&&Number.isFinite(row.at)&&typeof row.passed==="boolean").slice(-500).map(row=>{
     const testsTotal=attemptCount(row.testsTotal);
-    return {...row,testsTotal,testsPassed:Math.min(testsTotal,attemptCount(row.testsPassed)),hintsUsed:attemptCount(row.hintsUsed),elapsedSec:attemptCount(row.elapsedSec)};
+    return {...row,testsTotal,testsPassed:Math.min(testsTotal,attemptCount(row.testsPassed)),hintsUsed:attemptCount(row.hintsUsed),elapsedSec:attemptCount(row.elapsedSec),runtimeMs:measuredRuntime(row.runtimeMs),benchmark:row.benchmark==="browser-v1"?row.benchmark:null};
   }):[]}
   catch(e){return[]}
 }
@@ -18,13 +19,15 @@ function attemptStats(){
     current.last=row;stats[row.id]=current
   }return stats
 }
-function recordAttempt(id,passed,source,testsPassed,testsTotal,hintsUsed=0,elapsedSec=0){
+function recordAttempt(id,passed,source,testsPassed,testsTotal,hintsUsed=0,elapsedSec=0,runtimeMs=null,benchmark="browser-v1"){
   if(!CH.some(problem=>problem.i===id)&&!pythonProblems?.some(problem=>"py:"+problem.id===id)&&!sqlProblems?.some(problem=>"sql:"+problem.id===id))return;
   const rows=readAttempts(),prior=attemptStats()[id],streak=passed?(prior?.streak||0)+1:0;
   const days=passed?streak===1?3:streak===2?7:14:1;
   const total=attemptCount(testsTotal);
-  rows.push({id,at:Date.now(),passed:!!passed,source,testsPassed:Math.min(total,attemptCount(testsPassed)),testsTotal:total,hintsUsed:attemptCount(hintsUsed),elapsedSec:attemptCount(elapsedSec),reviewAt:Date.now()+days*86_400_000});
+  const row={id,at:Date.now(),passed:!!passed,source,testsPassed:Math.min(total,attemptCount(testsPassed)),testsTotal:total,hintsUsed:attemptCount(hintsUsed),elapsedSec:attemptCount(elapsedSec),runtimeMs:measuredRuntime(runtimeMs),benchmark:benchmark==="browser-v1"?benchmark:null,reviewAt:Date.now()+days*86_400_000};
+  rows.push(row);
   try{localStorage.setItem(attemptKey,JSON.stringify(rows.slice(-500)))}catch(e){}
+  return row;
 }
 function buildPracticePlan(companyId=null){
   const company=interviewCompanies.find(item=>item.id===companyId),pool=company?CH.filter(item=>company.problems.includes(item.i)):CH,stats=attemptStats(),now=Date.now();

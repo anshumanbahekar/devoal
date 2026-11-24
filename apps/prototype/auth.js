@@ -1,4 +1,5 @@
-import {syncKeys, readBrowserState, mergeBrowserState, switchBrowserAccount} from "./auth-data.js?v=3";
+import {syncKeys, readBrowserState, mergeBrowserState, switchBrowserAccount, normalizeProfile} from "./auth-data.js?v=4";
+import {mountProfilePanel, renderProfileAvatar} from "./profile.js?v=1";
 
 const byId = id => document.getElementById(id);
 const dialog = byId("auth-dialog");
@@ -34,7 +35,7 @@ async function startAccounts() {
     return;
   }
 
-  const [{initializeApp}, {getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged}, {getFirestore, doc, getDoc, setDoc, serverTimestamp}] = await Promise.all([
+  const [{initializeApp}, {getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged, updateProfile}, {getFirestore, doc, getDoc, setDoc, serverTimestamp}] = await Promise.all([
     import("https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js"),
     import("https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js"),
     import("https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js")
@@ -44,9 +45,62 @@ async function startAccounts() {
   const db = getFirestore(app);
   let session = null;
   let busy = false;
+  let savingProfile = false;
+
+  function preferences() {
+    try {
+      const profile = normalizeProfile(JSON.parse(localStorage.getItem("dv-profile.v1") || "null"));
+      if (profile) return profile;
+      const stats = JSON.parse(localStorage.getItem("dv-st") || "{}");
+      return normalizeProfile({language: stats?.pl?.lang, goal: stats?.goal, updatedAt: 0});
+    } catch { return {bio: "", language: "python", goal: 2, updatedAt: 0}; }
+  }
+
+  const profilePanel = mountProfilePanel(byId("auth-profile"), {
+    async saveProfile(values) {
+      const user = auth.currentUser;
+      if (savingProfile || !user || localStorage.getItem("dv-last-uid") !== user.uid) throw new Error("Your account changed. Reopen your account settings and try again.");
+      const displayName = String(values.displayName || "").trim();
+      if (!displayName || displayName.length > 60) throw new Error("Use a display name between 1 and 60 characters.");
+      const profile = normalizeProfile({...values, updatedAt: Date.now()});
+      savingProfile = logout.disabled = true;
+      try {
+        if (displayName !== user.displayName) await updateProfile(user, {displayName});
+        if (auth.currentUser?.uid !== user.uid || localStorage.getItem("dv-last-uid") !== user.uid) throw new Error("Your account changed. Reopen your account settings and try again.");
+        try { localStorage.setItem("dv-profile.v1", JSON.stringify(profile)); }
+        catch { throw new Error("Your name is saved, but learning preferences could not be saved. Export a backup and free browser storage."); }
+        showUser(user);
+        window.dispatchEvent(new Event("devoal:preferences"));
+        writeCloud().catch(() => { status.textContent = "Cloud sync is paused. Your work is still in this browser."; });
+      } catch (error) {
+        if (error?.code) throw new Error(signInErrors[error.code] || "Your profile could not be saved. Check your connection and try again.");
+        throw error;
+      } finally {
+        savingProfile = logout.disabled = false;
+      }
+    },
+    exportBackup() { window.downloadProgressBackup(); },
+    openProgress() { dialog.close(); location.hash = "prog"; }
+  });
+
+  function showAvatar(user) {
+    const avatar = byId("account-avatar");
+    avatar.replaceChildren();
+    const name = user?.displayName || user?.email || "Developer";
+    if (user) {
+      renderProfileAvatar(avatar, user);
+    } else {
+      avatar.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>';
+    }
+    byId("account-label").textContent = user ? "Account" : "Sign in";
+    entry.setAttribute("aria-label", user ? "Account settings for " + name : "Sign in");
+    entry.title = user ? name : "Sign in";
+  }
 
   function showUser(user) {
-    entry.textContent = user ? "Account" : "Sign in";
+    showAvatar(user);
+    profilePanel.render(user, user ? preferences() : {});
+    dialog.classList.toggle("has-profile", Boolean(user));
     byId("auth-title").textContent = user ? "Your account" : "Sign in or sign up";
     byId("auth-description").textContent = user
       ? `Signed in as ${user.displayName || user.email || "a developer"}.`
@@ -56,6 +110,7 @@ async function startAccounts() {
     google.disabled = github.disabled = busy;
     logout.hidden = !user;
   }
+  entry.addEventListener("click", () => { if (!savingProfile) showUser(auth.currentUser); });
 
   async function writeCloud() {
     const active = session;
@@ -145,6 +200,7 @@ async function startAccounts() {
   github.addEventListener("click", () => signIn(new GithubAuthProvider()));
   logout.addEventListener("click", async () => {
     logout.disabled = true;
+    profilePanel.setBusy(true);
     try {
       // Keep the latest local version even if the network write remains pending.
       if (session?.user) localStorage.setItem(`dv-account-state.v1:${session.user.uid}`, JSON.stringify(readBrowserState(localStorage)));
@@ -155,6 +211,7 @@ async function startAccounts() {
       status.textContent = "Could not sign out. Try again.";
     } finally {
       logout.disabled = false;
+      profilePanel.setBusy(false);
     }
   });
 }
